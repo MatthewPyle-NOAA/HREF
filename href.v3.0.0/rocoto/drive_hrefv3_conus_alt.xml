@@ -18,7 +18,7 @@
 <!ENTITY HOMEhref "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_fork/href.v3.0.0">
 <!ENTITY domain "conus">
 <!ENTITY machine "WCOSS_C">
-<!ENTITY envir "rocpara">
+<!ENTITY envir "test">
 <!ENTITY JOBS "&HOMEhref;/jobs">
 <!ENTITY SCRIPTS "&HOMEhref;/scripts">
 <!ENTITY COMINfv3sar "/gpfs/gp2/ptmp/Benjamin.Blake/com/fv3cam/para/fv3sar">

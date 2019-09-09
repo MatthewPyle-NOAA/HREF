@@ -369,10 +369,10 @@ date
 
 fi
 
-## deleting preprocessing outputs from 3 cycles prior to ${PDY}${cyc}
+## deleting preprocessing outputs from 6 cycles prior to ${PDY}${cyc}
 
 
-pdycycdel=`$NDATE -18 ${PDY}${cyc}`
+pdycycdel=`$NDATE -36 ${PDY}${cyc}`
 
 PDYdel=`echo $pdycycdel | cut -c1-8`
 cycdel=`echo $pdycycdel | cut -c9-10`
