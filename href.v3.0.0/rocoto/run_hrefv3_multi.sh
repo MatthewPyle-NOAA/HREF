@@ -17,11 +17,11 @@ module load gcc/4.9.2
 
 export WGRIB2=$WGRIB2
 
-doms="hi pr conus ak ak_alt conus_alt"
+doms="conus"
 
 echo WGRIB2 is $WGRIB2
 
-dir="/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_fork/href.v3.0.0/rocoto"
+dir="/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_ffair/href.v3.0.0/rocoto"
 
 for dom in $doms
 do
