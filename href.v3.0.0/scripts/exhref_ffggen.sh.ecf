@@ -31,17 +31,21 @@ echo here with PDYm2 $PDYm2
 for RFC in $RFC_LIST
 do
 
-if [ -e $DCOMROOT/us007003/${PDY}/wgrbbul/FFG.009.${RFC} ]
+if [ -e $DCOMROOT/prod/${PDY}/wgrbbul/FFG.009.${RFC} ]
 then
-cp $DCOMROOT/us007003/${PDY}/wgrbbul/FFG.009.${RFC}  ffg.${PDY}.009.${RFC}_full
-elif [ -e $DCOMROOT/us007003/${PDYm1}/wgrbbul/FFG.009.${RFC} ]
+cp $DCOMROOT/prod/${PDY}/wgrbbul/FFG.009.${RFC}  ffg.${PDY}.009.${RFC}_full
+elif [ -e $DCOMROOT/prod/${PDYm1}/wgrbbul/FFG.009.${RFC} ]
 then
 echo COPY DAY OLD FFG.009.${RFC}
-cp $DCOMROOT/us007003/${PDYm1}/wgrbbul/FFG.009.${RFC}  ffg.${PDY}.009.${RFC}_full
-elif [ -e $DCOMROOT/us007003/${PDYm2}/wgrbbul/FFG.009.${RFC} ]
+cp $DCOMROOT/prod/${PDYm1}/wgrbbul/FFG.009.${RFC}  ffg.${PDY}.009.${RFC}_full
+elif [ -e $DCOMROOT/prod/${PDYm2}/wgrbbul/FFG.009.${RFC} ]
 then
 echo COPY TWO DAY OLD FFG.009.${RFC}
-cp $DCOMROOT/us007003/${PDYm2}/wgrbbul/FFG.009.${RFC}  ffg.${PDY}.009.${RFC}_full
+cp $DCOMROOT/prod/${PDYm2}/wgrbbul/FFG.009.${RFC}  ffg.${PDY}.009.${RFC}_full
+
+else
+echo BIG TROUBLE
+exit 99
 fi
 
 

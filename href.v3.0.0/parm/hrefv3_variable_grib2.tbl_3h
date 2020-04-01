@@ -1,13 +1,4 @@
-  24      row variables and mean/spread/prob info
-RH    1  1  100  M1  700
-PWAT  1  3  200  M1  0  P1  0   > T3 25 37.5 50
-VSBY  19 0    1  M1  0  P1 0 < T5 400 800 1600 3200 6400
-CLDB  3  5    2  M1  0
-LCLD  6  3  214  M1  0
-MCLD  6  4  224  M1  0
-HCLD  6  5  234  M1  0
-TCDC  6  1  200  M1  0
-LTNG  17 192  1  M0  M1 0 > M1 0.2
+  15      row variables and mean/spread/prob info
 AP1h   1 8     1 L1  0  P1  0   > P2 0.25 6.35 
 AP3h   1 8     1 L1  0  P1  0   > P2 0.25 6.35
 AP6h   1 8     1 L1  0  P1  0   > P2 0.25 6.35
