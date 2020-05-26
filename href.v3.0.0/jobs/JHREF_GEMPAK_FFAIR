@@ -89,7 +89,8 @@ env
 rm -f poescript.*
 
 echo "$HOMEhref/scripts/exnawips_href.sh.ecf_ffair mean &> $DATA/${NEST}_mean.$$ &"  >> poescript.a
-# echo "$HOMEhref/scripts/exnawips_href.sh.ecf_ffair pmmn &> $DATA/${NEST}_pmmn.$$ &"  >> poescript.a
+echo "$HOMEhref/scripts/exnawips_href.sh.ecf_ffair pmmn &> $DATA/${NEST}_pmmn.$$ &"  >> poescript.a
+echo "$HOMEhref/scripts/exnawips_href.sh.ecf_ffair lpmm &> $DATA/${NEST}_lpmm.$$ &"  >> poescript.a
 # echo "$HOMEhref/scripts/exnawips_href.sh.ecf_ffair avrg &> $DATA/${NEST}_avrg.$$ &"  >> poescript.a
 # echo "$HOMEhref/scripts/exnawips_href.sh.ecf_ffair ffri &> $DATA/${NEST}_ffri.$$  &" >> poescript.a
 echo "$HOMEhref/scripts/exnawips_href.sh.ecf_ffair eas &> $DATA/${NEST}_eas.$$  &"   >> poescript.a
