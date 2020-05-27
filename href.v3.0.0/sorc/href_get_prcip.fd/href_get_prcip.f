@@ -1403,7 +1403,7 @@ c      so use previously saved gfld_save
 	write(6,*) 'gfld%idrtmpl(2): ', gfld%idrtmpl(2)
 	write(6,*) 'gfld%idrtmpl(3): ', gfld%idrtmpl(3)
 
-	gfld%idrtmpl(2)=5
+	gfld%idrtmpl(2)=-5
 	gfld%idrtmpl(3)=0
 
 	allocate(grnd(gfld%ngrdpts))
