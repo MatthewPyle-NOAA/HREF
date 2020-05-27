@@ -1,0 +1,127 @@
+#!/bin/sh
+
+set -xa
+# #### 08/25/1999 ###################
+# SET SHELL PROCESSING VARIABLES
+# ###################################
+export PS4='$SECONDS + ' 
+date
+
+###############################
+# Specify NET and RUN name
+###############################
+export NET=${NET:-hiresw}
+export RUN=${RUN:-href} 
+  
+###########################################################
+# obtain unique process id (pid) and make temp directories
+###########################################################
+export pid=$$
+export DATA=${DATA:-${DATAROOT}/href_gribscp_${cyc}_${envir}.${pid}}
+mkdir $DATA
+cd $DATA 
+
+####################################
+# File To Log Msgs
+####################################
+export jlogfile=${jlogfile:-/com/logs/jlogfiles/jlogfile.${job}.${pid}}
+
+####################################
+# Determine Job Output Name on System
+####################################
+export outid="LL$job"
+export jobid="${outid}.o${pid}"
+export pgmout="OUTPUT.${pid}"
+
+export cycle=${cycle:-t${cyc}z}
+
+##################################################
+# SENDECF  - Flag Events on ecFLOW
+# SENDCOM  - Copy Files From TMPDIR to $COMOUT
+# SENDDBN  - Issue DBNet Client Calls
+##################################################
+export SENDCOM=${SENDCOM:-YES}
+export SENDECF=${SENDECF:-YES}
+export SENDDBN=${SENDDBN:-YES}
+
+export HOMEhref=${HOMEhref:-$NWROOT/href.${href_ver}}
+export GEMPAKhref=${GEMPAKhref:-$HOMEhref/gempak}
+
+export finc=1
+export fend=48
+export fstart=01
+
+export DBN_ALERT_TYPE=${DBN_ALERT_TYPE:-HREF_GEMPAK}
+
+#
+# Copy model specific GEMPAK tables into working directory
+#
+
+#cp $GEMPAKhref/fix/*.tbl .
+
+
+#
+# Now set up GEMPAK/NTRANS environment
+#
+
+# . /nwprod/gempak/.gempak
+
+# Run setpdy and initialize PDY variables
+setpdy.sh
+. PDY
+
+
+
+ssh -l mpyle emcrzdm.ncep.noaa.gov "mkdir -p /home/ftp/emc/mmb/WRFtesting/mpyle/href/ffair/href.${PDY}_expv3/ensprod/"
+
+if [ "$RUN_ENVIR" != nco ] ; then
+ export COMOUT=${COMOUT:-${MYCOMROOT}/nawips/${envir}/${RUN}.${PDY}_exp}
+ export COMIN=${COMIN:-${MYCOMROOT}/${NET}/ffair/href.${PDY}_expv3/ensprod}
+else
+ export COMOUT=${COMOUT:-${COMROOT}/nawips/${envir}/href.${PDY}}
+ export COMIN=${COMIN:-${COMROOT}/${NET}/${envir}/href.${PDY}/ensprod}
+fi
+
+if [ ! -f $COMOUT ] ; then
+  mkdir -p -m 775 $COMOUT
+fi
+ 
+env
+
+#################################################################
+# Execute the script
+# rm -f poescript.*
+
+$HOMEhref/scripts/exgribscp_href.sh.ecf_ffair mean &> $DATA/${NEST}_mean.$$ 
+export err=$?
+
+echo back in main job with err $err
+err_chk
+
+echo to pmmn processing
+$HOMEhref/scripts/exgribscp_href.sh.ecf_ffair pmmn &> $DATA/${NEST}_pmmn.$$ 
+export err=$?; err_chk
+
+$HOMEhref/scripts/exgribscp_href.sh.ecf_ffair lpmm &> $DATA/${NEST}_lpmm.$$ 
+export err=$?; err_chk
+
+$HOMEhref/scripts/exgribscp_href.sh.ecf_ffair ffri &> $DATA/${NEST}_ffri.$$ 
+export err=$?; err_chk
+
+$HOMEhref/scripts/exgribscp_href.sh.ecf_ffair eas &> $DATA/${NEST}_eas.$$ 
+export err=$?; err_chk
+
+$HOMEhref/scripts/exgribscp_href.sh.ecf_ffair prob &> $DATA/${NEST}_prob.$$ 
+export err=$?; err_chk
+
+cat $DATA/${NEST}_mean.$$
+cat $DATA/${NEST}_pmmn.$$
+cat $DATA/${NEST}_avrg.$$
+cat $DATA/${NEST}_prob.$$
+cat $DATA/${NEST}_ffri.$$
+cat $DATA/${NEST}_eas.$$
+#################################################################
+
+cd ${DATAROOT}
+if [ $KEEPDATA = NO ]; then rm -rf $DATA; fi
+date

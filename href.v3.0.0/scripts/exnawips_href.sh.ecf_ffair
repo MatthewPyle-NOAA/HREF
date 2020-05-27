@@ -61,10 +61,10 @@ while [ $fhcnt -le $fend ] ; do
   fhr3=$fhcnt
   fhr3=$(printf "%03d" $fhr3)
 
-  GRIBIN=$COMIN/${RUN}.t${cyc}z.${NEST}.${TYPE}hmt.f${fhr}.grib2
-  GEMGRD=${RUN}_${NEST}_${TYPE}hmt_${PDY}${cyc}f${fhr3} 
+  GRIBIN=$COMIN/${RUN}.t${cyc}z.${NEST}.${TYPE}.f${fhr}.grib2
+  GEMGRD=${RUN}_${NEST}_${TYPE}_${PDY}${cyc}f${fhr3} 
 #  GRIBIN_chk=$COMIN/${RUN}.t${cyc}z.${NEST}.${TYPE}.f${fhr}.grib2.idx
-  GRIBIN_chk=$COMIN/${RUN}.t${cyc}z.${NEST}.${TYPE}hmt.f${fhr}.grib2
+  GRIBIN_chk=$COMIN/${RUN}.t${cyc}z.${NEST}.${TYPE}.f${fhr}.grib2
 
   icnt=1
   while [ $icnt -lt 1000 ]
@@ -73,6 +73,7 @@ while [ $fhcnt -le $fend ] ; do
       break
     else
       let "icnt=icnt+1"
+      echo did not find $GRIBIN_chk
       sleep 20
     fi
     if [ $icnt -ge $maxtries ]
@@ -85,6 +86,8 @@ while [ $fhcnt -le $fend ] ; do
   sleep 10
 
   cp $GRIBIN grib$fhr
+
+ scp $GRIBIN mpyle@emcrzdm.ncep.noaa.gov:/home/ftp/emc/mmb/WRFtesting/mpyle/href/ffair/href.${PDY}_expv3/ensprod/
 
   export pgm="nagrib2 F$fhr"
 

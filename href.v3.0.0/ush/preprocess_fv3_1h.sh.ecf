@@ -71,7 +71,8 @@ fi
 
         else
 
-        echo ERR_EXIT $filecheck missing
+        msg="FATAL ERROR: $filecheck missing"
+         err_exit $msg
 
         fi
 

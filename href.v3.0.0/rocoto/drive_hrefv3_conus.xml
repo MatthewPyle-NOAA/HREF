@@ -69,7 +69,7 @@
   <cycledef group="regional_justontime">&STARTYEAR;&STARTMONTH;&STARTDAY;&STARTHOUR;00 &ENDYEAR;&ENDMONTH;&ENDDAY;&ENDHOUR;00 12:00:00</cycledef>
 
   <log>
-    <cyclestr>&OUTDIR;/logfiles_href/workflow_regional_&domain;_@Y@m@d@H.log</cyclestr>
+    <cyclestr>&OUTDIR;/logfiles_href_ffair/workflow_regional_&domain;_@Y@m@d@H.log</cyclestr>
   </log>
 
 
@@ -83,7 +83,7 @@
     <nodes>1:ppn=1</nodes>
       <command>&JOBS;/launch.ksh &JOBS;/JHREF_FFG_GEN</command>
       <jobname><cyclestr>ffg_gen_&domain;_@Hz</cyclestr></jobname>
-      <join><cyclestr>&OUTDIR;/logfiles_href/ffg_gen_&domain;@H.log</cyclestr></join>
+      <join><cyclestr>&OUTDIR;/logfiles_href_ffair/ffg_gen_&domain;@H.log</cyclestr></join>
    
       <envar>
         <name>HOMEhref</name>
@@ -142,7 +142,7 @@
       <dependency>
      <and>
        <datadep age="05:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.conus.f60.grib2</cyclestr></datadep>
-       <datadep age="05:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/hrrr.t@Hz.conus.f36.grib2</cyclestr></datadep>
+       <datadep age="05:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/hrrr.t@Hz.conus.f48.grib2</cyclestr></datadep>
        <datadep age="05:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/nam.t@Hz.f54.grib2</cyclestr></datadep>
        <datadep age="05:00" minsize="100000000"><cyclestr>&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conus.grib2</cyclestr></datadep>
        <datadep age="05:00" minsize="100000000"><cyclestr>&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conusmem2.grib2</cyclestr></datadep>
@@ -161,7 +161,7 @@
     <nodes>10:ppn=12</nodes>
       <command>&JOBS;/launch.ksh &JOBS;/JHREF_EAS</command>
       <jobname><cyclestr>easgen_&domain;_@Hz</cyclestr></jobname>
-      <join><cyclestr>&OUTDIR;/logfiles_href/eas_gen_&domain;@H.log</cyclestr></join>
+      <join><cyclestr>&OUTDIR;/logfiles_href_ffair/eas_gen_&domain;@H.log</cyclestr></join>
    
       <envar>
         <name>HOMEhref</name>
@@ -239,7 +239,7 @@
       <dependency>
         <and>
            <datadep age="05:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.conus.f60.grib2</cyclestr></datadep>
-           <datadep age="05:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/hrrr.t@Hz.conus.f36.grib2</cyclestr></datadep>
+           <datadep age="05:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/hrrr.t@Hz.conus.f48.grib2</cyclestr></datadep>
            <datadep age="05:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/nam.t@Hz.f54.grib2</cyclestr></datadep>
            <datadep age="05:00" minsize="100000000"><cyclestr>&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conus.grib2</cyclestr></datadep>
            <datadep age="05:00" minsize="100000000"><cyclestr>&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conusmem2.grib2</cyclestr></datadep>
@@ -257,7 +257,7 @@
   <nodes>16:ppn=3</nodes>
     <command>&JOBS;/launch.ksh &JOBS;/JHREF_ENSPROD</command>
     <jobname><cyclestr>ensprod_&domain;_@H</cyclestr></jobname>
-    <join><cyclestr>&OUTDIR;/logfiles_href/ensprod_&domain;_@H.log</cyclestr></join>
+    <join><cyclestr>&OUTDIR;/logfiles_href_ffair/ensprod_&domain;_@H.log</cyclestr></join>
 
     <envar>
       <name>HOMEhref</name>
@@ -335,7 +335,7 @@
      <and>
      <taskdep task="ffg_gen"/>
      <datadep age="05:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.conus.f60.grib2</cyclestr></datadep>
-     <datadep age="05:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/hrrr.t@Hz.conus.f36.grib2</cyclestr></datadep>
+     <datadep age="05:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/hrrr.t@Hz.conus.f48.grib2</cyclestr></datadep>
      <datadep age="05:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/nam.t@Hz.f54.grib2</cyclestr></datadep>
      <datadep age="05:00" minsize="100000000"><cyclestr>&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conus.grib2</cyclestr></datadep>
      <datadep age="05:00" minsize="100000000"><cyclestr>&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conusmem2.grib2</cyclestr></datadep>
@@ -349,18 +349,17 @@
 <!--  ***********************************************************************  -->
 <!--  ************************* GEMPAK piece *****************************  -->
 
-  <task name="href_gempak" cycledefs="regional" maxtries="1">
-  &RESERVATION;
-  &GEMPAK_RESOURCES;
-  <nodes>1:ppn=6</nodes>
-    <command>&JOBS;/launch.ksh &JOBS;/JHREF_GEMPAK</command>
+  <task name="href_gribscp" cycledefs="regional" maxtries="1">
+  &RESERVATION_TRANSFER;
+  &TRANSFER_RESOURCES;
+    <command>&JOBS;/launch.ksh &JOBS;/JHREF_GRIBSCP_FFAIR</command>
     <jobname><cyclestr>gempak_&domain;_@H</cyclestr></jobname>
-    <join><cyclestr>&OUTDIR;/logfiles_href/gempak_&domain;_@H.log</cyclestr></join>
+    <join><cyclestr>&OUTDIR;/logfiles_href_ffair/gribscp_&domain;_@H.log</cyclestr></join>
 
 
     <envar>
       <name> PTILE </name>
-      <value>6</value>
+      <value>1</value>
     </envar>
     <envar>
       <name>HOMEhref</name>
@@ -368,7 +367,7 @@
     </envar>
     <envar>
       <name>job</name>
-      <value><cyclestr>gempak_&domain;_@Y@m@d</cyclestr></value>
+      <value><cyclestr>gribscp_&domain;_@Y@m@d</cyclestr></value>
     </envar>
     <envar>
       <name>machine</name>

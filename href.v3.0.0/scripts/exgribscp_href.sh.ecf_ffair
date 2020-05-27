@@ -1,0 +1,82 @@
+#!/bin/ksh
+###################################################################
+echo "----------------------------------------------------"
+echo "exnawips - convert NCEP GRIB files into GEMPAK Grids"
+echo "----------------------------------------------------"
+echo "History: Mar 2000 - First implementation of this new script."
+#####################################################################
+
+cd $DATA
+
+set -xa
+
+export TYPE=$1
+export  'PS4=$TYPE:$SECONDS + '
+mkdir -p $DATA/$TYPE
+cd $DATA/$TYPE
+
+msg="Begin job for $job"
+postmsg "$jlogfile" "$msg"
+
+maxtries=180
+fhcnt=$fstart
+
+echo fhcnt is $fhcnt
+echo fend is $fend
+
+while [ $fhcnt -le $fend ] ; do
+  if [ $fhcnt -ge 100 ] ; then
+    fhcnt=$(printf "%03d" $fhcnt)
+  else
+    fhcnt=$(printf "%02d" $fhcnt)
+  fi
+  fhr=$fhcnt
+
+  fhr3=$fhcnt
+  fhr3=$(printf "%03d" $fhr3)
+
+  GRIBIN=$COMIN/${RUN}.t${cyc}z.${NEST}.${TYPE}.f${fhr}.grib2
+  GRIBIN_chk=$COMIN/${RUN}.t${cyc}z.${NEST}.${TYPE}.f${fhr}.grib2
+
+  icnt=1
+  while [ $icnt -lt 1000 ]
+  do
+    if [ -r $GRIBIN_chk ] ; then
+      break
+    else
+      let "icnt=icnt+1"
+      echo did not find $GRIBIN_chk
+      sleep 20
+    fi
+    if [ $icnt -ge $maxtries ]
+    then
+      msg="FATAL ERROR: ABORTING after 1 hour of waiting for F$fhr to end."
+      err_exit $msg
+    fi
+  done
+
+  sleep 2
+
+#  cp $GRIBIN grib$fhr
+
+ scp $GRIBIN mpyle@emcrzdm.ncep.noaa.gov:/home/ftp/emc/mmb/WRFtesting/mpyle/href/ffair/href.${PDY}_expv3/ensprod/
+  export err=$?;err_chk
+
+  let fhcnt=fhcnt+finc
+done # while fhcnt -lt fend
+
+
+#####################################################################
+# GOOD RUN
+set +x
+echo "**************JOB HREF NAWIPS COMPLETED NORMALLY "
+echo "**************JOB HREF NAWIPS COMPLETED NORMALLY "
+echo "**************JOB HREF NAWIPS COMPLETED NORMALLY "
+set -x
+#####################################################################
+
+msg='script completed normally for $TYPE '
+echo $msg
+# postmsg "$jlogfile" "$msg"
+
+############################### END OF SCRIPT #######################

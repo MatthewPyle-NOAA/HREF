@@ -233,7 +233,9 @@ echo working things with ff as $ff and  fcheck as $fcheck
 
         else
 
-        echo ERR_EXIT $filecheck missing
+#        echo ERR_EXIT $filecheck missing
+        msg="FATAL ERROR: $filecheck missing but required"
+         err_exit $msg
 
 	fi
 
@@ -289,7 +291,8 @@ typeset -Z2 fcheckloc
          ln -sf $filecheck  $DATA/href.m${m}.t${cyc}z.f${ff}
          ln -sf $DATA/href.m${m}.t${cyc}z.f${ff}  $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
         else
-         echo ERR_EXIT $filecheck missing
+         msg="FATAL ERROR: $filecheck missing but required"
+         err_exit $msg
 	fi
 
 	fcheckloc=$fcheck
@@ -335,14 +338,18 @@ typeset -Z2 fcheckloc
 
 	echo "in HIRESWarw block"
 
-	if [ -e ${COMINhireswp}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}.grib2 ]
+        filecheck=${COMINhiresw}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}.grib2
+	if [ -e $filecheck ]
         then
-        ln -sf ${COMINhireswp}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}.grib2 $DATA/href.m${m}.t${cyc}z.f${ff}
-        ln -sf ${COMINhireswp}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}.grib2 $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
-	elif [ -e ${COMINhiresw}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}.grib2 ]
-        then
-        ln -sf ${COMINhiresw}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}.grib2 $DATA/href.m${m}.t${cyc}z.f${ff}
-        ln -sf ${COMINhiresw}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}.grib2 $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
+
+        ln -sf $filecheck  $DATA/href.m${m}.t${cyc}z.f${ff}
+        ln -sf $DATA/href.m${m}.t${cyc}z.f${ff}  $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
+
+        else
+
+         msg="FATAL ERROR: $filecheck missing but required"
+         err_exit $msg
+
 	fi
 
 	echo ${dom}arw $m $ff
@@ -391,15 +398,20 @@ typeset -Z2 fcheckloc
       if [ ${file[$m]} = ${dom}'mem2arw' -a $fcst -le 48  ] ; then
 	echo ${dom}mem2arw check
 
-        if [ -e ${COMINhireswp}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}mem2.grib2 ]
+        filecheck=${COMINhiresw}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}mem2.grib2
+
+	if [ -e $filecheck ]
         then
-        ln -sf ${COMINhireswp}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}mem2.grib2 $DATA/href.m${m}.t${cyc}z.f${ff}
-        ln -sf ${COMINhireswp}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}mem2.grib2 $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
-        elif [ -e ${COMINhiresw}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}mem2.grib2 ]
-        then
-        ln -sf ${COMINhiresw}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}mem2.grib2 $DATA/href.m${m}.t${cyc}z.f${ff}
-        ln -sf ${COMINhiresw}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}mem2.grib2 $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
-        fi
+
+        ln -sf $filecheck  $DATA/href.m${m}.t${cyc}z.f${ff}
+        ln -sf $DATA/href.m${m}.t${cyc}z.f${ff}  $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
+
+        else
+
+         msg="FATAL ERROR: $filecheck missing but required"
+         err_exit $msg
+
+	fi
 
         echo ${dom}mem2arw $m $ff
 
@@ -441,7 +453,7 @@ typeset -Z2 fcheckloc
 
 ###### HRRR
 
-      if [ ${file[$m]} = 'hrrr' -a $fcst -le 36  ] ; then
+      if [ ${file[$m]} = 'hrrr' -a $fcst -le 48  ] ; then
 
 	echo "in HRRR block"
 
@@ -478,10 +490,12 @@ typeset -Z2 fcheckloc
         echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 ${dom} |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip1h.m${m}.f${ff} 2>&1
         export err=$? ; err_chk
 
+	echo here with ff $ff
         if [ ${ff}%3 -eq 0 ]
         then
+         
          echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 ${dom} |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip3h.m${m}.f${ff}
-        export err=$? ; err_chk
+         export err=$? ; print get_prcip err $err ; echo m $m ff $ff ; err_chk
          echo HRRR precip return err $err
         fi
 
@@ -497,7 +511,7 @@ typeset -Z2 fcheckloc
 
 ###### HRRRAK
 
-      if [ ${file[$m]} = 'hrrrak' -a $fcst -le 36  ] ; then
+      if [ ${file[$m]} = 'hrrrak' -a $fcst -le 48  ] ; then
 
 	echo "in HRRRAK block"
 
