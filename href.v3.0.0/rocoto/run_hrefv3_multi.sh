@@ -10,8 +10,10 @@ module load NetCDF-intel-haswell/4.2
 ### for using latest WGRIB2
 ###
 module use -a /gpfs/hps/nco/ops/nwprod/modulefiles
-# module switch grib_util/1.1.1
-module load grib_util/1.1.1
+# surge
+module switch grib_util/1.1.1
+# luna
+# module load grib_util/1.1.1
 
 module use -a /opt/modulefiles
 module load gcc/4.9.2

@@ -74,6 +74,14 @@ setpdy.sh
 
 ssh -l mpyle emcrzdm.ncep.noaa.gov "mkdir -p /home/ftp/emc/mmb/WRFtesting/mpyle/href/ffair/href.${PDY}_expv3/ensprod/"
 
+
+DAYDEL=`$NDATE -72 ${PDY}00 | cut -c1-8`
+
+echo DAYDEL is $DAYDEL
+
+ssh -l mpyle emcrzdm.ncep.noaa.gov "rm /home/ftp/emc/mmb/WRFtesting/mpyle/href/ffair/href.${DAYDEL}_expv3/ensprod/*"
+ssh -l mpyle emcrzdm.ncep.noaa.gov "rm -rf /home/ftp/emc/mmb/WRFtesting/mpyle/href/ffair/href.${DAYDEL}_expv3"
+
 if [ "$RUN_ENVIR" != nco ] ; then
  export COMOUT=${COMOUT:-${MYCOMROOT}/nawips/${envir}/${RUN}.${PDY}_exp}
  export COMIN=${COMIN:-${MYCOMROOT}/${NET}/ffair/href.${PDY}_expv3/ensprod}
