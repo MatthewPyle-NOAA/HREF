@@ -198,7 +198,7 @@ ff=$fhr
         elif [  $ff = '12' -o  $ff = '15' -o $ff = '18' -o $ff = '21' ]
         then
         fcheck=` expr $ff - 09`
-        elif [  $ff = '24' -o  $ff = '27' -o $ff = '30' -o $ff = '33' -o $ff = '36' -o  $ff = '39' -o $ff = '42' -o $ff = '45' -o $ff = '48' ]
+        elif [  $ff = '24' -o  $ff = '27' -o $ff = '30' -o $ff = '33' -o $ff = '36' ]
         then
         fcheck=` expr $ff - 21`
         elif [ $ff -gt 0 ]
@@ -453,7 +453,7 @@ typeset -Z2 fcheckloc
 
 ###### HRRR
 
-      if [ ${file[$m]} = 'hrrr' -a $fcst -le 48  ] ; then
+      if [ ${file[$m]} = 'hrrr' -a $fcst -le 36  ] ; then
 
 	echo "in HRRR block"
 
@@ -509,7 +509,7 @@ typeset -Z2 fcheckloc
 
 ###### HRRRAK
 
-      if [ ${file[$m]} = 'hrrrak' -a $fcst -le 48  ] ; then
+      if [ ${file[$m]} = 'hrrrak' -a $fcst -le 36  ] ; then
 
 	echo "in HRRRAK block"
 
