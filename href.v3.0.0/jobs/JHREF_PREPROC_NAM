@@ -197,8 +197,7 @@ echo "wait" >> poe.hh
 
 chmod 775 ${DATA}/poe.aa  ${DATA}/poe.bb ${DATA}/poe.cc
 chmod 775 ${DATA}/poe.dd  ${DATA}/poe.ee ${DATA}/poe.ff ${DATA}/poe.gg
-chmod 775 ${DATA}/poe.hh 
-
+chmod 775 ${DATA}/poe.hh  
 
 aprun -n 1 -N 1 -d 7 ${DATA}/poe.aa &
 aprun -n 1 -N 1 -d 7 ${DATA}/poe.bb &

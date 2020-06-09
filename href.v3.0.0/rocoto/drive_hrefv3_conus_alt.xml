@@ -18,11 +18,11 @@
 <!ENTITY HOMEhref "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_fork/href.v3.0.0">
 <!ENTITY domain "conus">
 <!ENTITY machine "WCOSS_C">
-<!ENTITY envir "test">
+<!ENTITY envir "36htest">
 <!ENTITY JOBS "&HOMEhref;/jobs">
 <!ENTITY SCRIPTS "&HOMEhref;/scripts">
 <!ENTITY COMINfv3sar "/gpfs/hps2/ptmp/Matthew.Pyle/hiresw/com/hiresw/para/hiresw">
-<!ENTITY COMINhrrr "/gpfs/hps/nco/ops/com/hrrr/para/hrrr">
+<!ENTITY COMINhrrr "/gpfs/hps/nco/ops/com/hrrr/prod/hrrr">
 <!ENTITY COMINhiresw "/gpfs/hps/nco/ops/com/hiresw/prod/hiresw">
 <!ENTITY COMINnam "/gpfs/dell1/nco/ops/com/nam/prod/nam">
 <!ENTITY COMINall "/gpfs/hps2/ptmp/Matthew.Pyle/com/hiresw/prod/hrefinput">
@@ -85,7 +85,7 @@
   <task name="preproc_hrrr" cycledefs="regional" maxtries="3">
   &RESERVATION;
   &PREPROC_RESOURCES;
-  <nodes>8:ppn=7</nodes>
+  <nodes>6:ppn=7</nodes>
     <command>&JOBS;/launch.ksh &JOBS;/JHREF_PREPROC_HRRR</command>
     <jobname><cyclestr>preprochrrr_&domain;_@H</cyclestr></jobname>
     <join><cyclestr>&OUTDIR;/logfiles_href/preprochrrr_&domain;_@H.log</cyclestr></join>
@@ -175,7 +175,7 @@
     </envar>
 
     <dependency>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf48.grib2</cyclestr></datadep>
+       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf36.grib2</cyclestr></datadep>
     </dependency>
 
   </task>
@@ -360,7 +360,7 @@
   <task name="eas_gen" cycledefs="regional" maxtries="2">
     &RESERVATION;
     &EAS_RESOURCES;
-    <nodes>10:ppn=12</nodes>
+    <nodes>8:ppn=12</nodes>
       <command>&JOBS;/launch.ksh &JOBS;/JHREF_EAS</command>
       <jobname><cyclestr>easgen_&domain;_@Hz</cyclestr></jobname>
       <join><cyclestr>&OUTDIR;/logfiles_href/eas_gen_&domain;@H.log</cyclestr></join>
@@ -458,7 +458,7 @@
   <task name="ensprod" cycledefs="regional" maxtries="2">
   &RESERVATION;
   &ENSPROD_RESOURCES;
-  <nodes>16:ppn=3</nodes>
+  <nodes>12:ppn=3</nodes>
     <command>&JOBS;/launch.ksh &JOBS;/JHREF_ENSPROD</command>
     <jobname><cyclestr>ensprod_&domain;_@H</cyclestr></jobname>
     <join><cyclestr>&OUTDIR;/logfiles_href/ensprod_&domain;_@H.log</cyclestr></join>

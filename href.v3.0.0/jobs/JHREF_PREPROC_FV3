@@ -185,27 +185,10 @@ echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 47 ${NEST} &" >> poe.hhh
 echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 48 ${NEST} &" >> poe.hhh
 echo "wait" >> poe.hhh
 
-echo "#!/bin/sh  "                             >  poe.iii
-echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 49 ${NEST} &" >> poe.iii
-echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 50 ${NEST} &" >> poe.iii
-echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 51 ${NEST} &" >> poe.iii
-echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 52 ${NEST} &" >> poe.iii
-echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 53 ${NEST} &" >> poe.iii
-echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 54 ${NEST} &" >> poe.iii
-echo "wait" >> poe.iii
-
-echo "#!/bin/sh  "                             >  poe.jjj
-echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 55 ${NEST} &" >> poe.jjj
-echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 56 ${NEST} &" >> poe.jjj
-echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 57 ${NEST} &" >> poe.jjj
-echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 58 ${NEST} &" >> poe.jjj
-echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 59 ${NEST} &" >> poe.jjj
-echo "$USHhref/preprocess_fv3_1h.sh.ecf ${cyc} 60 ${NEST} &" >> poe.jjj
-echo "wait" >> poe.jjj
 
 chmod 775 ${DATA}/poe.aaa  ${DATA}/poe.bbb ${DATA}/poe.ccc
 chmod 775 ${DATA}/poe.ddd  ${DATA}/poe.eee ${DATA}/poe.fff
-chmod 775 ${DATA}/poe.ggg  ${DATA}/poe.hhh ${DATA}/poe.iii ${DATA}/poe.jjj
+chmod 775 ${DATA}/poe.ggg  ${DATA}/poe.hhh
 
 aprun -n 1 -N 1 -d 7 ${DATA}/poe.aaa &
 aprun -n 1 -N 1 -d 6 ${DATA}/poe.bbb &
@@ -215,8 +198,6 @@ aprun -n 1 -N 1 -d 6 ${DATA}/poe.eee &
 aprun -n 1 -N 1 -d 6 ${DATA}/poe.fff &
 aprun -n 1 -N 1 -d 6 ${DATA}/poe.ggg &
 aprun -n 1 -N 1 -d 6 ${DATA}/poe.hhh &
-aprun -n 1 -N 1 -d 6 ${DATA}/poe.iii &
-aprun -n 1 -N 1 -d 6 ${DATA}/poe.jjj &
 wait
 
 

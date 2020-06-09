@@ -25,7 +25,7 @@ doms="hi pr conus ak ak_alt conus_alt"
 
 echo WGRIB2 is $WGRIB2
 
-dir="/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_fork/href.v3.0.0/rocoto"
+dir="/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_36h/href.v3.0.0/rocoto"
 
 for dom in $doms
 do

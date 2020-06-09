@@ -18,7 +18,7 @@
 <!ENTITY HOMEhref "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_fork/href.v3.0.0">
 <!ENTITY domain "hi">
 <!ENTITY machine "WCOSS_C">
-<!ENTITY envir "test">
+<!ENTITY envir "36htest">
 <!ENTITY JOBS "&HOMEhref;/jobs">
 <!ENTITY SCRIPTS "&HOMEhref;/scripts">
 <!ENTITY COMINfv3sar "/gpfs/tp2/ptmp/Benjamin.Blake/com/fv3cam/para/fv3sar">
@@ -63,7 +63,7 @@
  <task name="preproc_fv3" cycledefs="regional" maxtries="3">
   &RESERVATION;
   &PREPROC_RESOURCES;
-  <nodes>10:ppn=7</nodes>
+  <nodes>8:ppn=7</nodes>
     <command>&JOBS;/launch.ksh &JOBS;/JHREF_PREPROC_FV3</command>
     <jobname><cyclestr>preprocfv3_&domain;_@H</cyclestr></jobname>
     <join><cyclestr>&OUTDIR;/logfiles_href/preprocfv3_&domain;_@H.log</cyclestr></join>
