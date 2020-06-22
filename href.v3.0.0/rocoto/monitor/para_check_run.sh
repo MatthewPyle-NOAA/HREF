@@ -23,7 +23,7 @@ module load grib_util/1.0.3
 
 
 export PSLOT=${1:-${PSLOT:-conus}}
-export EXPDIR=${EXPDIR:-/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_fork/href.v3.0.0/rocoto}
+export EXPDIR=${EXPDIR:-/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_ffair/href.v3.0.0/rocoto}
 
 module load rocoto
 export CDATE=`rocotostat -d ${EXPDIR}/drive_hrefv3_${PSLOT}.db -w ${EXPDIR}/drive_hrefv3_${PSLOT}.xml -c all -s | grep -v Active | tail -1 | cut -c1-10`
@@ -39,7 +39,7 @@ echo passing PSLOT $PSLOT
 # Who to send this to
 PARA_CHECK_MAIL=${PARA_CHECK_MAIL:-"Matthew.Pyle@noaa.gov"}
 # What script to run
-PARA_CHECKSH=${PARA_CHECKSH:-/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_fork/href.v3.0.0/rocoto/monitor/para_check_status.sh}
+PARA_CHECKSH=${PARA_CHECKSH:-/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_ffair/href.v3.0.0/rocoto/monitor/para_check_status.sh}
 
 # Run the script
 
@@ -55,5 +55,5 @@ echo " "  >> temp.msg
 rocotostat -d ${EXPDIR}/drive_hrefv3_${PSLOT}.db -w ${EXPDIR}/drive_hrefv3_${PSLOT}.xml -c ${CDATE}00 >> temp.msg
 
 # Email the results to PARA_CHECK_MAIL list
-mail -s "HREFv3 $PSLOT $CDATE status" $PARA_CHECK_MAIL < temp.msg
+mail -s "HREFv3 FFAIR $PSLOT $CDATE status" $PARA_CHECK_MAIL < temp.msg
 

@@ -5,7 +5,7 @@
 CDATE=$1
 PSLOT=$2
 
-EXPDIR=/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_fork/href.v3.0.0/rocoto
+EXPDIR=/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_ffair/href.v3.0.0/rocoto
 
 #Script control variables
 CHECK_ERR=${CHECK_ERR:-YES}
