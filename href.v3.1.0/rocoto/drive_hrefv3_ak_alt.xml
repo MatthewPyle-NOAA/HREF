@@ -15,7 +15,8 @@
 <!ENTITY USER "Matthew.Pyle">
 <!ENTITY ACCOUNT "HREF-T2O">
 
-<!ENTITY HOMEhref "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_fork/href.v3.0.0">
+<!ENTITY HOMEhref "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_FAA/href.v3.1.0/">
+
 <!ENTITY domain "ak">
 <!ENTITY machine "WCOSS_C">
 <!ENTITY envir "test">

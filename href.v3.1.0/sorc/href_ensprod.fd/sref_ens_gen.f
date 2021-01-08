@@ -896,11 +896,17 @@ c Loop 1-1: Read direct variable's GRIB2 data from all members
      +        trim(Psignal(nv)).eq.'M'.or. trim(Psignal(nv)).eq.'C' .or.
      +        trim(Psignal(nv)).eq.'D' ) then
              
-            write(*,*) 'Call  neighborhood_max .......'
+            write(*,*) 'Call neighborhood_max or neighborhood_min'
 
 !! this modifies rawdata_pr
+
+             if (vname(nv).eq.'VSBY') then
+             call neighborhood_min(rawdata_pr(:,irun,lv),
+     +                          jf,im,jm,Psignal(nv))     
+             else
              call neighborhood_max(rawdata_pr(:,irun,lv),
      +                          jf,im,jm,Psignal(nv))     
+             endif
            end if
 
            !Get neighborhood avrage value, where H,I for different

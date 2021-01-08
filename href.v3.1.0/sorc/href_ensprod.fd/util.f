@@ -598,6 +598,7 @@ cvsref         mean = mean / n
          return
          end
 
+c -------------------------------
  
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c   subroutine get_cond_mean: compute conditional mean and spread of one dimension array
@@ -656,6 +657,69 @@ ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
          return
          end
 
+c -------------------------------
+ 
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c   subroutine get_cond_lpm_mean: compute conditional mean and spread of one dimension array
+c      Conditional mean is the mean under some condition, if equal to certain
+c      very large value, then it is not taken into mean, but spread still
+c      count it (only "less than" case)
+c
+c   Author: Binbin Zhou
+c   Aug. 3, 2005
+c   Dec. 15, 2008: Use dominant numbers as mean
+c   Apr. 7, 2009: Zhou B. Add weight (wgt) for VSREF
+c   Jan 8, 2021: M. Pyle create an LPM mean version
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+                                                                                                     
+        subroutine get_cond_lpm_mean (x,n,alarge,mean,spread,miss,wgt)
+         real x(*),wgt(30), mean, spread, alarge,count, half
+         integer n,miss(*)
+                                                                                                     
+         mean = 0.
+         count = 0.
+
+         wsum=0.0
+         count = 0.
+       loop1:       do i=1,n
+           if(miss(i).eq.0) then
+             if(x(i).ge.alarge) cycle loop1
+             wsum=wsum+wgt(i)
+             count = count + 1.0
+           end if
+         end do loop1
+
+         half=count/2.0
+    
+        loop2:       do  i=1,n
+          if (miss(i).eq.0) then
+           if(x(i).ge.alarge) cycle loop2 
+            mean = mean + x(i)*(wgt(i)/wsum)
+          end if
+           end do loop2
+                     
+         if( count .le. half ) then           !only most of member happen   
+           mean = alarge
+         end if 
+                                                                                            
+         spread = 0.
+         loop3:      do i = 1, n                         
+          if(x(i).ge.alarge.or.miss(i).eq.1) cycle loop3                       !!! modified in Apr. 9 2008 
+           spread = spread + (wgt(i)/wsum)*(x(i)-mean)**2
+         end do loop3
+            
+         if (mean.eq.alarge) then
+             spread=0.0              !!! for VSREF, assume this. Apr. 22, 2009
+         else 
+             spread = sqrt (spread )
+         end if
+       
+         return
+         end
+
+
+
+c -------------------------------
 
         subroutine get_cond_mean_test(igrid,x,n,alarge,mean,spread,
      +         miss,wgt)
@@ -1078,6 +1142,8 @@ c
        end 
        
 
+c ------------------------------------------------
+
 c   subroutine neighborhood_max. Purpose:
 c     Get neiborhood max value within a circle with radius nbr 
 c     Currently, 4 radius are set: 5,10,15,20 (grids), depending
@@ -1156,6 +1222,89 @@ c
        return
        end
 
+c ------------------------------------------------
+
+c   subroutine neighborhood_min. Purpose:
+c     Get neighborhood min value within a circle with radius nbr 
+c     Currently, 4 radius are set: 5,10,15,20 (grids), depending
+c           on user-defined in the product table 
+c   Input:
+c          A: gridded field 
+c      im,jm: X and Y dimension of field A
+c          s: sign (A,or B, or C, or D)  
+c   Output:
+c          A: modified gridded field
+c   Programmer:
+c         2015-12-09: Binbin Zhou, NCEP/EMC
+c         2021-01-08: Matthew Pyle, NCEP/EMC
+c
+
+       subroutine neighborhood_min (A,jf,im,jm,s)
+         real A(jf), Amin(jf)
+         real nbr,dist 
+         character s 
+
+	 write(0,*) 'in neighborhood_min with sign s: ', s
+
+	write(0,*) 'shape(A): ', shape(A)
+        write(0,*) 'jf, im, jm: ', jf, im,jm
+
+         if(s.eq.'A') then
+           nbr=8.  ! to mimic the 40 km radius
+         else if (s.eq.'K') then
+           nbr=4. ! try small neighborhood for mountain snow
+         else if (s.eq.'L') then
+           nbr=2. ! try very small neighborhood for lightning
+         else if (s.eq.'M') then
+           nbr=1. ! try very small neighborhood for lightning
+         else if (s.eq.'B') then
+           nbr=10.
+         else if (s.eq.'C') then
+           nbr=15.
+         else if (s.eq.'D') then
+           nbr=20.
+         else 
+           nbr=1.
+         end if
+
+        write(*,*) 'In neighborhood: nbr=', nbr
+
+         do jp = 1,jm
+          do ip = 1,im
+
+           ijp=(jp-1)*im + ip
+
+           i1 = ip - int(nbr)
+           i2 = ip + int(nbr)
+           j1 = jp - int(nbr)
+           j2 = jp + int(nbr)
+           if ( i1.le.1 ) i1=1
+           if ( j1.le.1 ) j1=1
+           if ( i2.ge.im ) i2=im
+           if ( j2.ge.jm ) j2=jm 
+           !The searching radius-nbr circle is just within the 2nbx2nbr squre:
+           ! i2-i1 x j2-j1 
+
+           Amin(ijp)=A(ijp)
+           !Search max value within the circle (radius=nbr with center grid ip,jp) 
+           do j = j1,j2
+            do i = i1,i2
+              ij = (j-1)*im + i
+              dist=sqrt((ip-i)*(ip-i)+1.*(jp-j)*(jp-j)) 
+              if(A(ij).lt.Amin(ijp).and.dist.le.nbr) Amin(ijp)=A(ij)
+            end do
+           end do
+
+          end do
+         end do
+
+         A=Amin
+
+       return
+       end
+
+
+c ------------------------------------------------
 
 c   subroutine neighborhood_fraction. Purpose:
 c     Get neiborhood fraction  within a circle with radius nbr
@@ -1237,6 +1386,8 @@ c          write(*,*) A(398918), Afrc(398918)
 
        return
        end
+
+c ------------------------------------------------
 
 c   subroutine neighborhood_average. Purpose:
 c     Get neiborhood average within a circle with radius nbr

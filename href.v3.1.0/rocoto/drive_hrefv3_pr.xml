@@ -7,7 +7,7 @@
 <!ENTITY STARTDAY "19">
 <!ENTITY STARTHOUR "06">
 
-<!ENTITY ENDYEAR "2020">
+<!ENTITY ENDYEAR "2021">
 <!ENTITY ENDMONTH "12">
 <!ENTITY ENDDAY "31">
 <!ENTITY ENDHOUR "18">
@@ -15,7 +15,7 @@
 <!ENTITY USER "Matthew.Pyle">
 <!ENTITY ACCOUNT "HREF-T2O">
 
-<!ENTITY HOMEhref "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_fork/href.v3.0.0">
+<!ENTITY HOMEhref "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_FAA/href.v3.1.0/">
 <!ENTITY domain "pr">
 <!ENTITY machine "WCOSS_C">
 <!ENTITY envir "test">
@@ -28,12 +28,12 @@
 <!ENTITY COMINhrrr "/gpfs/hps/nco/ops/com/hrrr/prod/hrrr">
 <!ENTITY COMINhiresw "/gpfs/hps/nco/ops/com/hiresw/prod/hiresw">
 <!ENTITY COMINnam "/gpfs/dell1/nco/ops/com/nam/prod/nam">
-<!ENTITY COMINall "/gpfs/hps2/ptmp/Matthew.Pyle/nwges/&envir;/hiresw/href">
-<!ENTITY GESROOT "/gpfs/hps2/ptmp/Matthew.Pyle/nwges">
+<!ENTITY COMINall "/gpfs/hps2/ptmp/Matthew.Pyle/nwges_test/&envir;/hiresw/href">
+<!ENTITY GESROOT "/gpfs/hps2/ptmp/Matthew.Pyle/nwges_test">
 <!ENTITY OUTDIR "/gpfs/hps2/ptmp/&USER;">
-<!ENTITY MYCOMROOT "/gpfs/hps2/ptmp/&USER;/com">
-<!ENTITY MYCOMROOTPERM "/gpfs/hps3/emc/meso/noscrub/&USER;/com">
-<!ENTITY DATAROOT "/gpfs/hps2/stmp/&USER;/tmpnwprd">
+<!ENTITY MYCOMROOT "/gpfs/hps2/ptmp/&USER;/com_test">
+<!ENTITY MYCOMROOTPERM "/gpfs/hps3/emc/meso/noscrub/&USER;/com_test">
+<!ENTITY DATAROOT "/gpfs/hps2/stmp/&USER;/tmpnwprd_test">
 <!ENTITY KEEPDATA "NO">
 <!ENTITY TIMEOFFSET12 "-00:12:00:00">
 
@@ -60,7 +60,7 @@
   <cycledef group="regional">&STARTYEAR;&STARTMONTH;&STARTDAY;&STARTHOUR;00 &ENDYEAR;&ENDMONTH;&ENDDAY;&ENDHOUR;00 12:00:00</cycledef>
 
   <log>
-    <cyclestr>&OUTDIR;/logfiles_href/workflow_regional_&domain;_@Y@m@d@H.log</cyclestr>
+    <cyclestr>&OUTDIR;/logfiles_href_test/workflow_regional_&domain;_@Y@m@d@H.log</cyclestr>
   </log>
 
 
@@ -72,7 +72,7 @@
   <nodes>10:ppn=7</nodes>
     <command>&PRE; &JOBS;/JHREF_PREPROC_FV3</command>
     <jobname><cyclestr>preprocfv3_&domain;_@H</cyclestr></jobname>
-    <join><cyclestr>&OUTDIR;/logfiles_href/preprocfv3_&domain;_@H.log</cyclestr></join>
+    <join><cyclestr>&OUTDIR;/logfiles_href_test/preprocfv3_&domain;_@H.log</cyclestr></join>
 
     <envar>
      <name>NEST</name>
@@ -168,7 +168,7 @@
     <nodes>4:ppn=23</nodes>
       <command>&PRE; &JOBS;/JHREF_EAS</command>
       <jobname><cyclestr>easgen_&domain;_@Hz</cyclestr></jobname>
-      <join><cyclestr>&OUTDIR;/logfiles_href/eas_gen_&domain;@H.log</cyclestr></join>
+      <join><cyclestr>&OUTDIR;/logfiles_href_test/eas_gen_&domain;@H.log</cyclestr></join>
    
       <envar>
         <name>HOMEhref</name>
@@ -268,7 +268,7 @@
   <nodes>4:ppn=12</nodes>
     <command>&PRE; &JOBS;/JHREF_ENSPROD</command>
     <jobname><cyclestr>ensprod_&domain;_@H</cyclestr></jobname>
-    <join><cyclestr>&OUTDIR;/logfiles_href/ensprod_&domain;_@H.log</cyclestr></join>
+    <join><cyclestr>&OUTDIR;/logfiles_href_test/ensprod_&domain;_@H.log</cyclestr></join>
 
     <envar>
       <name>HOMEhref</name>
@@ -365,7 +365,7 @@
   <nodes>1:ppn=1</nodes>
     <command>&PRE; &JOBS;/JHREF_AWIPS</command>
     <jobname><cyclestr>awips_&domain;_@H</cyclestr></jobname>
-    <join><cyclestr>&OUTDIR;/logfiles_href/awips_&domain;_@H.log</cyclestr></join>
+    <join><cyclestr>&OUTDIR;/logfiles_href_test/awips_&domain;_@H.log</cyclestr></join>
 
 
     <envar>
@@ -440,7 +440,7 @@
   <nodes>1:ppn=7</nodes>
     <command>&PRE; &JOBS;/JHREF_GEMPAK</command>
     <jobname><cyclestr>gempak_&domain;_@H</cyclestr></jobname>
-    <join><cyclestr>&OUTDIR;/logfiles_href/gempak_&domain;_@H.log</cyclestr></join>
+    <join><cyclestr>&OUTDIR;/logfiles_href_test/gempak_&domain;_@H.log</cyclestr></join>
 
 
     <envar>

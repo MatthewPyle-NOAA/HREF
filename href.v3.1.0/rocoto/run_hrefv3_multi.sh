@@ -15,21 +15,23 @@ module use -a /gpfs/hps/nco/ops/nwprod/modulefiles
 #  behaving differenetly on luna and surge.  Do I have different modules being loaded on each machine?  Should I purge?
 
 # luna version
-# module load grib_util/1.1.1
+module load grib_util/1.1.1
 
 # surge version
-module switch grib_util/1.1.1
+# module switch grib_util/1.1.1
 
 module use -a /opt/modulefiles
 module load gcc/4.9.2
 
 export WGRIB2=$WGRIB2
 
-doms="hi pr conus ak ak_alt conus_alt"
+# doms="hi pr conus ak ak_alt conus_alt"
+doms="pr"
 
 echo WGRIB2 is $WGRIB2
 
 dir="/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_fork/href.v3.0.0/rocoto"
+dir="/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_FAA/href.v3.1.0/rocoto"
 
 for dom in $doms
 do
