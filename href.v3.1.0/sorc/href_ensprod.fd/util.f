@@ -1008,8 +1008,10 @@ c
 
          if(ns.eq.'A'.or.ns.eq.'E'.or.ns.eq.'H') then
            nbr=5
-         else if (ns.eq.'K') then
+         else if (ns.eq.'J') then
            nbr=3
+         else if (ns.eq.'K') then
+           nbr=4
          else if (ns.eq.'L') then
            nbr=2
          else if (ns.eq.'M') then
@@ -1172,6 +1174,8 @@ c
            nbr=8.  ! to mimic the 40 km radius
          else if (s.eq.'K') then
            nbr=4. ! try small neighborhood for mountain snow
+         else if (s.eq.'J') then
+           nbr=3. ! try small neighborhood for ceil/vis
          else if (s.eq.'L') then
            nbr=2. ! try very small neighborhood for lightning
          else if (s.eq.'M') then
@@ -1251,6 +1255,8 @@ c
 
          if(s.eq.'A') then
            nbr=8.  ! to mimic the 40 km radius
+         else if (s.eq.'J') then
+           nbr=3. ! try small neighborhood for ceil/vis
          else if (s.eq.'K') then
            nbr=4. ! try small neighborhood for mountain snow
          else if (s.eq.'L') then

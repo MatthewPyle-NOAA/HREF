@@ -892,9 +892,9 @@ c Loop 1-1: Read direct variable's GRIB2 data from all members
 
            !Get neighborhood max value, where A,B,C,D: for different !neighborhood radius
            if (trim(Psignal(nv)).eq.'A'.or.trim(Psignal(nv)).eq.'K' .or.
-     +        trim(Psignal(nv)).eq.'B'.or. trim(Psignal(nv)).eq.'L' .or.
-     +        trim(Psignal(nv)).eq.'M'.or. trim(Psignal(nv)).eq.'C' .or.
-     +        trim(Psignal(nv)).eq.'D' ) then
+     +      trim(Psignal(nv)).eq.'B'.or.trim(Psignal(nv)).eq.'L' .or.
+     +      trim(Psignal(nv)).eq.'M'.or.trim(Psignal(nv)).eq.'C' .or.
+     +      trim(Psignal(nv)).eq.'D'.or.trim(Psignal(nv)).eq.'J') then
              
             write(*,*) 'Call neighborhood_max or neighborhood_min'
 
@@ -1977,6 +1977,7 @@ c Loop 1-3:  Packing  mean/spread/prob for this direct variable
      +     trim(Psignal(nv)).eq.'E'.or.
      +     trim(Psignal(nv)).eq.'F'.or.
      +     trim(Psignal(nv)).eq.'H'.or. 
+     +     trim(Psignal(nv)).eq.'J'.or. 
      +     trim(Psignal(nv)).eq.'K'.or. 
      +     trim(Psignal(nv)).eq.'L'.or. 
      +     trim(Psignal(nv)).eq.'M'.or. 
