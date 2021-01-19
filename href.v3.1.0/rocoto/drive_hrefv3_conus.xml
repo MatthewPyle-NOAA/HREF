@@ -36,7 +36,7 @@
 <!ENTITY MYCOMROOT "/gpfs/hps2/ptmp/&USER;/com_test">
 <!ENTITY MYCOMROOTPERM "/gpfs/hps3/emc/meso/noscrub/&USER;/com_test">
 <!ENTITY DATAROOT "/gpfs/hps2/stmp/&USER;/tmpnwprd_test">
-<!ENTITY KEEPDATA "NO">
+<!ENTITY KEEPDATA "YES">
 <!ENTITY TIMEOFFSET_SIX "-00:06:00:00">
 <!ENTITY TIMEOFFSET_TWELVE "-00:12:00:00">
 

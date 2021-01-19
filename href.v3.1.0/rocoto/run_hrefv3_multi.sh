@@ -26,7 +26,8 @@ module load gcc/4.9.2
 export WGRIB2=$WGRIB2
 
 # doms="hi pr conus ak ak_alt conus_alt"
-doms="pr"
+doms="pr conus ak ak_alt conus_alt"
+doms="pr ak"
 
 echo WGRIB2 is $WGRIB2
 
