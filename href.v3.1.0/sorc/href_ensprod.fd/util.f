@@ -1030,9 +1030,11 @@ c
            s=5
          else if (gs.eq.'K') then
            s=3
-         else if (ns.eq.'L') then
+         else if (gs.eq.'J') then
+           s=3
+         else if (gs.eq.'L') then
            s=2
-         else if (ns.eq.'M') then
+         else if (gs.eq.'M') then
            s=1
          else if (gs.eq.'B'.or.gs.eq.'F'.or.gs.eq.'I') then
            s=10
@@ -1244,14 +1246,18 @@ c         2021-01-08: Matthew Pyle, NCEP/EMC
 c
 
        subroutine neighborhood_min (A,jf,im,jm,s)
-         real A(jf), Amin(jf)
-         real nbr,dist 
+         real::  A(jf)
+         real::  Amin(jf)
+         real::  nbr,dist 
          character s 
 
-	 write(0,*) 'in neighborhood_min with sign s: ', s
+C	 write(0,*) 'in neighborhood_min with sign s: ', s
 
-	write(0,*) 'shape(A): ', shape(A)
-        write(0,*) 'jf, im, jm: ', jf, im,jm
+C	write(0,*) 'shape(A): ', shape(A)
+C        write(0,*) 'jf, im, jm: ', jf, im,jm
+
+C         write(*,*) 'start neighborhood_min with minval(Amin): ', 
+C     +           minval(Amin)
 
          if(s.eq.'A') then
            nbr=8.  ! to mimic the 40 km radius
@@ -1273,7 +1279,7 @@ c
            nbr=1.
          end if
 
-        write(*,*) 'In neighborhood: nbr=', nbr
+C        write(*,*) 'In neighborhood_min: nbr=', nbr
 
          do jp = 1,jm
           do ip = 1,im
@@ -1296,6 +1302,7 @@ c
            do j = j1,j2
             do i = i1,i2
               ij = (j-1)*im + i
+              if (A(ij) .lt. 0.) A(ij)=20000.
               dist=sqrt((ip-i)*(ip-i)+1.*(jp-j)*(jp-j)) 
               if(A(ij).lt.Amin(ijp).and.dist.le.nbr) Amin(ijp)=A(ij)
             end do

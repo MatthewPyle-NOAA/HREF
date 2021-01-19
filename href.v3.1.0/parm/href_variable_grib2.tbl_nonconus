@@ -29,15 +29,15 @@ DPT   0  6  100  M4  500 700 850 925
 DPT   0  6  103  M1  2  P1  2   > T5 283.15 285.93 288.71 291.48 294.26
 RH    1  1  100  M1  700
 PWAT  1  3  200  M1  0  P1  0   > T3 25 37.5 50
+CEIL  3  5  215  M1  0  J1 0 < J6 305 610 915 1372 1830 3050
 VSBY  19 0    1  M1  0  J1 0 < J5 400 800 1600 3200 6400
 CLDB  3  5    2  M1  0
 LCLD  6  3  214  M1  0
 MCLD  6  4  224  M1  0
 HCLD  6  5  234  M1  0
 TCDC  6  1  200  M1  0
-CEIL  3  5  215  M0  J1 0 < J6 305 610 915 1372 1830 3050
 
-   15       special derived variables, each  of which, needs code to process specially
+   14       special derived variables, each  of which, needs code to process specially
 PTYP  1 19     1 M1  0  P1  0  = T1 1.0
 WIND  2 1    103 M1 10  L1  10  >  L5 10.3 15.4 18.01 20.6 25.72
 WIND  2 1    103 M0  P1 80  >  T3 10.3 15.4 20.6
@@ -52,7 +52,6 @@ LLWS  2 192  1   M1  0 P1 0 > T1 10.3
 WSRH  19 235  103  M0  P1 10  ^ T2 9 20
 FIRW  4 2     1  M1  0  P1 0 - T4 2.0 5.0 6.0 7.0
 BKSH  2 192 103 M1  0 P1 0 > T4 10.3 15.4 20.6 25.7
-CEIL  3  5  215  M1  0 
 
   0        No mxp computation for NSSE
 

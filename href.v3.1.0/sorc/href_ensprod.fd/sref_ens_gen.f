@@ -846,6 +846,24 @@ c Loop 1-1: Read direct variable's GRIB2 data from all members
          !  end if
          !end do
 
+             if (vname(nv).eq.'CEIL' .and. irun .eq. 1) then
+
+            write(*,*) 'call getceiling in direct ', irun
+
+	do irunb=1,iens
+
+            call  getceiling_alt(nv,ifunit(1:iens),
+     +             jpdtn,jf,iens,irunb,
+     +             rawdata_pr(:,irunb,lv),bmap_f)
+
+            write(*,*) 'after _alt min,max of rawdata_pr: ', irunb,
+     +                  minval(rawdata_pr(:,irunb,lv)),
+     +                  maxval(rawdata_pr(:,irunb,lv))
+
+          enddo
+
+             endif
+
         end do loop502   ! End of reading rawdata for prob  
         
          if(jret.ne.0.or.kret.ne.0) then
@@ -904,14 +922,30 @@ c Loop 1-1: Read direct variable's GRIB2 data from all members
 
 !! this modifies rawdata_pr
 
-             if (vname(nv).eq.'VSBY') then
+
+
+             if (vname(nv).eq.'CEIL') then
+
+C             write(*,*) 'calling neighborhood_min(a) for: ', vname(nv)
+C             write(*,*) 'nv, Psignal(nv): ', nv, Psignal(nv)
+
+            write(*,*) 'into _min min,max of rawdata_pr: ', irun,
+     +                  minval(rawdata_pr(:,irun,lv)),
+     +                  maxval(rawdata_pr(:,irun,lv))
+
+             call neighborhood_min(rawdata_pr(:,irun,lv),
+     +                          jf,im,jm,Psignal(nv))
+
+
+
+             elseif (vname(nv).eq.'VSBY') then
              call neighborhood_min(rawdata_pr(:,irun,lv),
      +                          jf,im,jm,Psignal(nv))     
              else
              call neighborhood_max(rawdata_pr(:,irun,lv),
      +                          jf,im,jm,Psignal(nv))     
              endif
-           end if
+           end if ! Psignal check
 
            !Get neighborhood avrage value, where H,I for different
            !neighbohood radius
@@ -1135,6 +1169,7 @@ C	        write(0,*) 'set miss for hrrr: ', k4(nv),k5(nv)
      +      trim(Psignal(nv)).eq.'C'.or. 
      +      trim(Psignal(nv)).eq.'D'.or.
      +      trim(Psignal(nv)).eq.'H'.or.
+     +      trim(Psignal(nv)).eq.'J'.or.
      +      trim(Psignal(nv)).eq.'K'.or.
      +      trim(Psignal(nv)).eq.'L'.or.
      +      trim(Psignal(nv)).eq.'M'.or.
@@ -1681,6 +1716,9 @@ C	        write(0,*) 'set miss for hrrr: ', k4(nv),k5(nv)
      &      vname(nv) .eq. 'SN6h') then
             apoint = rawdata_pr(igrid,:,lv)*1. ! SLR val
        else
+	if (igrid .eq. jf/2) then
+	  write(*,*) 'setting apoint for vname: ', vname(nv)
+        endif
             apoint = rawdata_pr(igrid,:,lv) 
        endif
             miss = missing(nv,:)
@@ -1726,6 +1764,10 @@ C	        write(0,*) 'set miss for hrrr: ', k4(nv),k5(nv)
      &           vname(nv) .ne. 'FFG3' .and.
      &           vname(nv) .ne. 'FFG6' .and. vname(nv) .ne. 'FF24'.and.
      &           vname(nv) .ne. 'FF12' .and. vname(nv) .ne. 'A12R')then
+
+	if (igrid .eq. jf/2) then
+             write(*,*) 'calling getprob for vname: ', vname(nv)
+        endif
              call getprob(apoint,iens,thr1,thr2,op(nv),aprob,
      +                         miss,weight)
              vrbl_pr(igrid,lv,lt)=aprob
@@ -2276,7 +2318,7 @@ cc%%%%%%% 8. To see if there is ceiling computation, if yes, do it
           if (dk4(nv).eq.3.and.dk5(nv).eq.5.and.dk6(nv).eq.215) then
             write(0,*) 'call getceiling'
             call  getceiling (nv,ifunit,jpdtn,jf,iens,Lm,Lp,Lth,
-     +             derv_mn,derv_sp,derv_pr,weight)
+     +             derv_mn,derv_sp,derv_pr,weight,bmap_f)
 
             write(0,*) 'getceiling done'
           end if
