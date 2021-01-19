@@ -218,7 +218,8 @@ c    for derived variables
 !          write(*,*) 'missing=',missing(lv,:) 
 
 
-	if ( trim(dpsignal(nv)) .eq. 'K' .or. trim(dpsignal(nv)) .eq. 'L') then
+	if ( trim(dpsignal(nv)) .eq. 'K' .or. 
+     +       trim(dpsignal(nv)) .eq. 'L') then
 
 !       neighborhood max
 
@@ -249,7 +250,8 @@ c    for derived variables
           do lh = 1, dTlvl(nv)
            do igrid = 1,jf
              miss=missing(lv,:)
-	if ( trim(dpsignal(nv)) .eq. 'K' .or. trim(dpsignal(nv)) .eq. 'L') then
+	if ( trim(dpsignal(nv)) .eq. 'K' .or. 
+     +       trim(dpsignal(nv)) .eq. 'L') then
              apoint=windspd(igrid,:)
 !	if (igrid .eq. jf/2) then
 !           write(0,*) 'defined apoint(nbrmax) as: ', apoint

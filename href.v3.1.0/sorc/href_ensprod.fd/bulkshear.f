@@ -60,11 +60,12 @@ c    for derived variables
         jp27=-9999
 
         write(*,*) 'In bulkshear .....'
-        write(*,*) 'nv,ifunit,jf,iens,Lm,Lp,Lt,jpd10',
-     +              nv,ifunit,jf,iens,Lm,Lp,Lt,jpd10
+C        write(*,*) 'nv,ifunit,jf,iens,Lm,Lp,Lt,jpd10',
+C     +              nv,ifunit,jf,iens,Lm,Lp,Lt,jpd10
 
         miss=0
         missing=0
+ 
         DO 500 lv=1,dMlvl(nv)
 
           jpd12=dMeanLevel(nv,lv)
@@ -82,6 +83,8 @@ c    for derived variables
             if (iret.eq.0) then
              u(:,irun)=gfld%fld
             else
+             u(:,irun)=0.
+             v(:,irun)=0.
              missing(lv,irun)=1
              cycle loop400
             end if
@@ -125,7 +128,6 @@ c    for derived variables
            else
              jpd1=2
            end if
-
 
            call readGB2(ifunit(irun),jpdtn,jpd1,15,jpd10,jpd12,jp27,
      +       gfld,eps,iret)   !U Prob -component

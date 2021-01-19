@@ -1,6 +1,6 @@
       subroutine packGB2_mean_derv(imean,isprd,derv_mn,
      +     derv_sp,nv,jpd1,jpd2,jpd10,jpd27,jf,Lm,
-     +     iens,iyr,imon,idy,ihr,ifhr,gribid,gfld)
+     +     iens,iyr,imon,idy,ihr,ifhr,gribid,bmap,gfld)
 
         use grib_mod
         include 'parm.inc'
@@ -34,6 +34,7 @@ c    for derived variables
         REAL,dimension(jf,Lm),intent(IN) :: derv_sp
 
         INTEGER,allocatable,dimension(:) ::   ipdtmpl
+        LOGICAL*1 :: bmap(jf)
 
         integer ml,n_dMlvl
 
@@ -196,7 +197,7 @@ c    for derived variables
           iret=0
 	write(0,*) 'min/max mean: ', minval(derv_mn(:,ml)),
      &                                 maxval(derv_mn(:,ml))
-          call Zputgb2(imean,gfld,ipdtmpl,ipdtnum,ipdtlen,iret)
+          call Zputgb2(imean,gfld,ipdtmpl,ipdtnum,ipdtlen,bmap,iret)
   
           if(iret.ne.0) then
            write(*,*) 'Zputgb2 derv mean error:',iret
@@ -210,7 +211,7 @@ c    for derived variables
      &                                 maxval(derv_sp(:,ml))
 
           write(*,*) 'Call Zputgb2 for spread...'
-          call Zputgb2(isprd,gfld,ipdtmpl,ipdtnum,ipdtlen,iret)
+          call Zputgb2(isprd,gfld,ipdtmpl,ipdtnum,ipdtlen,bmap,iret)
           
           if(iret.ne.0) then
            write(*,*) 'Zputgb2 derv spread error:',iret

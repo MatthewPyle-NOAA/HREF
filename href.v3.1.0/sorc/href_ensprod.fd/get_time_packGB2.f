@@ -15,7 +15,10 @@ c         end
 
         subroutine get_time_GB2(yr,mm,dy,cyc,fhr,
      +            yr1,mm1,dy1,hr)
-         integer yr,mm,dy,fhr,cyc,yr1,mm1,dy1,hr,t,n,h
+
+         integer:: yr,mm,dy,fhr,cyc,yr1,mm1,dy1,hr,t,n,h
+         integer:: ndy, days_in_month
+
            t=cyc+fhr
            n=int(t/24) 
            h=mod (t,24)  

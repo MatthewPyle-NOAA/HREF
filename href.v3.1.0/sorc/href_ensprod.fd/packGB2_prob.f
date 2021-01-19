@@ -2,7 +2,7 @@ c  SUBROUTINE packGB2_prob: Write probability data into GRIB2 file
 c
       subroutine packGB2_prob(iprob,vrbl_pr,
      +     nv,jpd1,jpd2,jpd10,jpd27,jf,Lp,Lt,
-     +     iens,iyr,imon,idy,ihr,ifhr,gribid,gfld)
+     +     iens,iyr,imon,idy,ihr,ifhr,gribid,bmap,gfld)
 
 
         use grib_mod
@@ -35,6 +35,7 @@ C for variable table:
         REAL,dimension(jf,Lp,Lt),intent(IN) :: vrbl_pr
 
         INTEGER,allocatable,dimension(:) ::   ipdtmpl
+        LOGICAL*1 :: bmap(jf)
 
         integer pl
 
@@ -221,7 +222,7 @@ c        write(*,*) 'Plvl Tlvl=',Plvl(nv),Tlvl(nv)
 !	ipdtmpl(2)=11
 !	endif
 
-              call Zputgb2(iprob,gfld,ipdtmpl,ipdtnum,ipdtlen,iret)
+              call Zputgb2(iprob,gfld,ipdtmpl,ipdtnum,ipdtlen,bmap,iret)
 
              if(iret.ne.0) then
               write(*,*) 'Zputgb2 prob  error:',iret

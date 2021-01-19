@@ -1,6 +1,6 @@
       subroutine packGB2_max(imean,isprd,vrbl_mn,
      +     nv,jpd1,jpd2,jpd10,jpd27,jf,Lm,
-     +     iens,iyr,imon,idy,ihr,ifhr,gribid,gfld)
+     +     iens,iyr,imon,idy,ihr,ifhr,gribid,bmap,gfld)
 
         use grib_mod
         include 'parm.inc'
@@ -32,6 +32,7 @@ C for variable table:
         REAL,dimension(jf,Lm),intent(IN) :: vrbl_mn
 
         INTEGER,allocatable,dimension(:) ::   ipdtmpl
+        LOGICAL*1:: bmap(jf)
 
         integer ml
 
@@ -130,7 +131,7 @@ C for variable table:
           !  write(*,*) k, ipdtmpl(k)
           !end do
 
-          call Zputgb2(imean,gfld,ipdtmpl,ipdtnum,ipdtlen,iret)
+          call Zputgb2(imean,gfld,ipdtmpl,ipdtnum,ipdtlen,bmap,iret)
           if(iret.ne.0) then
            write(*,*) 'Zputgb2 mean error:',iret
           end if

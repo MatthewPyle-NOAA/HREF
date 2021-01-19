@@ -1,6 +1,6 @@
       subroutine packGB2_mean(imean,isprd,vrbl_mn,
      +     vrbl_sp,nv,jpd1,jpd2,jpd10,jpd27,jf,Lm,
-     +     iens,iyr,imon,idy,ihr,ifhr,gribid,gfld)
+     +     iens,iyr,imon,idy,ihr,ifhr,gribid,bmap,gfld)
 
         use grib_mod
         include 'parm.inc'
@@ -33,6 +33,7 @@ C for variable table:
         REAL,dimension(jf,Lm),intent(IN) :: vrbl_sp
 
         INTEGER,allocatable,dimension(:) ::   ipdtmpl
+        LOGICAL*1, intent(IN) :: bmap(jf)
 
         integer ml
 
@@ -113,6 +114,8 @@ C for variable table:
               !ipdtmpl(9) =ihr+ifhr-jpd27    !overwrite for APCP: Beginning time of accumulation
               !ipdtmpl(21)=ihr+ifhr         !end time of accumulation
               !ipdtmpl(21)=khr         !end time of accumulation
+
+
               call get_time_GB2(iyr,imon,idy,ihr,ifhr,
      +            iyr1,imon1,idy1,ihr1)
 
@@ -160,7 +163,7 @@ C for variable table:
 	write(0,*) 'call Zputgb2 for imean, lev, tmpl(16): ' , imean, 
      &         ipdtmpl(12),
      &         ipdtmpl(16)
-          call Zputgb2(imean,gfld,ipdtmpl,ipdtnum,ipdtlen,iret)
+          call Zputgb2(imean,gfld,ipdtmpl,ipdtnum,ipdtlen,bmap,iret)
           if(iret.ne.0) then
            write(*,*) 'Zputgb2 mean error:',iret
           end if
@@ -186,7 +189,7 @@ C for variable table:
 	write(0,*) 'call Zputgb2 for isprd, lev, tmpl(16): ' , isprd,
      &         ipdtmpl(12),
      &         ipdtmpl(16)
-          call Zputgb2(isprd,gfld,ipdtmpl,ipdtnum,ipdtlen,iret)
+          call Zputgb2(isprd,gfld,ipdtmpl,ipdtnum,ipdtlen,bmap,iret)
           
           if(iret.ne.0) then
            write(*,*) 'Zputgb2 spread error:',iret

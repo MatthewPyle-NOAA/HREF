@@ -196,9 +196,34 @@
 
         !Take the result and store the patch into the array for var2d_lpm:
 
+!	write(*,*) 'shape(lpm_calc): ', shape(lpm_calc)
+!        write(*,*) 'offset_i+1, offset_i + patch_nx+1: ', 
+!     &              offset_i+1, offset_i + patch_nx+1
+!        write(*,*) 'offset_j+1, offset_j+1 + patch_ny: ', 
+!     &              offset_j+1, offset_j+1 + patch_ny
+
+        if ( (offset_i + patch_nx+1) .le. calc_nx .and. 
+     &       (offset_j+1 + patch_ny ) .le. calc_ny) then
         var2d_lpm(pe_west:pe_east, pe_south:pe_north) =  
      &    lpm_calc(offset_i+1:offset_i + patch_nx+1, 
      &    offset_j+1:offset_j+1 + patch_ny)  
+
+        elseif (offset_i .lt. 1 .and. offset_j .ge. 1) then
+        var2d_lpm(pe_west:pe_east, pe_south:pe_north) =  
+     &    lpm_calc(offset_i+1:offset_i + patch_nx+1, 
+     &    offset_j:offset_j + patch_ny)  
+
+        elseif ( offset_j .lt. 1 .and. offset_i .ge. 1) then
+        var2d_lpm(pe_west:pe_east, pe_south:pe_north) =  
+     &    lpm_calc(offset_i:offset_i + patch_nx, 
+     &    offset_j+1:offset_j+1 + patch_ny)  
+
+         else
+        var2d_lpm(pe_west:pe_east, pe_south:pe_north) =  
+     &    lpm_calc(offset_i:offset_i + patch_nx, 
+     &    offset_j:offset_j + patch_ny)  
+
+         endif
         END IF
         
         !Deallocate values for this patch; will re-allocate again for the next one.

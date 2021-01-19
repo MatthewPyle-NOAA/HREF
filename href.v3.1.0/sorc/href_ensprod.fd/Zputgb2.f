@@ -1,5 +1,6 @@
 C-----------------------------------------------------------------------
-      SUBROUTINE ZPUTGB2(LUGB,GFLD,ipdtmpl,ipdtnum,ipdtlen,IRET)
+      SUBROUTINE ZPUTGB2(LUGB,GFLD,ipdtmpl,ipdtnum,ipdtlen,
+     +                                           bmap,IRET)
 C$$$  SUBPROGRAM DOCUMENTATION BLOCK
 C
 C SUBPROGRAM: PUTGB2         PACKS AND WRITES A GRIB2 MESSAGE
@@ -206,6 +207,8 @@ C$$$
       real    :: coordlist=0.0
       integer :: ilistopt=0
 
+      logical*1 :: bmap(gfld%ngrdpts)
+
       integer ipdtmpl(ipdtlen)
 
 C - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -280,11 +283,13 @@ C  ADD DATA FIELD TO GRIB2 MESSAGE
          !write(*,*) gfld%ngrdpts
          !Ceiling mean (derived) still stuck here
 
+	write(0,*) 'calling addfield with gfld%ibmap: ', gfld%ibmap
          call addfield(cgrib,lcgrib,ipdtnum,ipdtmpl,           !Modified by Binbin Zhou
      &                 ipdtlen,coordlist,gfld%num_coord,
      &                 gfld%idrtnum,gfld%idrtmpl,gfld%idrtlen,
-     &                 gfld%fld,gfld%ngrdpts,gfld%ibmap,gfld%bmap,
+     &                 gfld%fld,gfld%ngrdpts,gfld%ibmap,bmap,
      &                 ierr)
+
          if (ierr.ne.0) then
             write(6,*) 'putgb2: ERROR adding data field = ',ierr
          endif

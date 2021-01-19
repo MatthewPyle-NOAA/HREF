@@ -1,6 +1,6 @@
       subroutine packGB2_prob_derv(iprob,derv_pr,
      +     nv,jpd1,jpd2,jpd10,jpd27,jf,Lp,Lt,
-     +     iens,iyr,imon,idy,ihr,ifhr,gribid,gfld)
+     +     iens,iyr,imon,idy,ihr,ifhr,gribid,bmap,gfld)
 
         use grib_mod
         include 'parm.inc'
@@ -34,6 +34,7 @@ C for variable table:
         REAL,dimension(jf,Lp,Lt),intent(IN) :: derv_pr
 
         INTEGER,allocatable,dimension(:) ::   ipdtmpl
+        LOGICAL :: bmap(jf)
 
         integer pl
 
@@ -176,15 +177,15 @@ c        write(*,*) 'dPlvl dTlvl=',dPlvl(nv),dTlvl(nv)
           else if (jpd1.eq.3.and.jpd2.eq.5.and.jpd10.eq.101) then !thickness case
              ipdtmpl(10)=100
              ipdtmpl(11)=0
-             ipdtmpl(12)=PPairLevel(nv,ml,1)*100
+             ipdtmpl(12)=PPairLevel(nv,pl,1)*100
              ipdtmpl(13)=100
              ipdtmpl(14)=0
-             ipdtmpl(15)=PPairLevel(nv,ml,2)*100
+             ipdtmpl(15)=PPairLevel(nv,pl,2)*100
 
           else if (jpd2 .eq. 192 .and. jpd10 .eq. 103) then ! bulk shear
              ipdtmpl(10)=103
              ipdtmpl(11)=0
-             ipdtmpl(12)=PPairLevel(nv,ml,1)*100
+             ipdtmpl(12)=PPairLevel(nv,pl,1)*100
              ipdtmpl(13)=103
              ipdtmpl(14)=0
              ipdtmpl(15)=6000
@@ -232,7 +233,7 @@ c        write(*,*) 'dPlvl dTlvl=',dPlvl(nv),dTlvl(nv)
               if (gfld%idrtmpl(7).eq.255) gfld%idrtmpl(7)=0
 
               iret=0
-              call Zputgb2(iprob,gfld,ipdtmpl,ipdtnum,ipdtlen,iret)
+              call Zputgb2(iprob,gfld,ipdtmpl,ipdtnum,ipdtlen,bmap,iret)
 
              if(iret.ne.0) then
               write(*,*) 'Zputgb2 derv prob  error:',iret

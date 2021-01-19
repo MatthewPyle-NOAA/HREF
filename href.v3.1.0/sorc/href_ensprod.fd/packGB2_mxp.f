@@ -1,6 +1,6 @@
       subroutine packGB2_mxp(imean,imxp,mxp8,
      +     nv,jpd1,jpd2,jpd10,jpd27,jf,Lq,
-     +     iens,iyr,imon,idy,ihr,ifhr,gribid,gfld)
+     +     iens,iyr,imon,idy,ihr,ifhr,gribid,bmap,gfld)
 
         use grib_mod
         include 'parm.inc'
@@ -15,6 +15,7 @@
         REAL,dimension(jf,Lq,8),intent(IN) :: mxp8
 
         INTEGER,allocatable,dimension(:) ::   ipdtmpl
+        LOGICAL*1 :: bmap(jf)
 
         integer ml
 
@@ -129,7 +130,7 @@ c     +     iens,iyr,imon,idy,ihr,ifhr,gribid
 
           if (gfld%idrtmpl(7).eq.255) gfld%idrtmpl(7)=0
 
-          call Zputgb2(imean,gfld,ipdtmpl,ipdtnum,ipdtlen,iret)
+          call Zputgb2(imean,gfld,ipdtmpl,ipdtnum,ipdtlen,bmap,iret)
 
           if(iret.ne.0) then
            write(*,*) 'Zputgb2 mean error:',iret
