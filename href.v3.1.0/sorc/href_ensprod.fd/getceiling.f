@@ -229,10 +229,10 @@ c    for derived variables
      +              dMsignal,dPsignal,MPairLevel,PPairLevel,dop
 
         INTEGER, intent(IN) :: nv, jf, iens,irun, jpdtn
-        real, intent(INOUT):: rawdata_pr(jf,iens,1)
+        real, intent(INOUT):: rawdata_pr(jf)
         integer,dimension(iens),intent(IN) :: ifunit
 
-	LOGICAL*1, dimension(jf):: bmap_f
+	LOGICAL*1, intent(IN), dimension(jf):: bmap_f
         REAL, dimension(jf,iens) :: tcld,cldb,hsfc
 
         real CEILapoint(iens),TCLDapoint(iens),CLDBapoint(iens),
@@ -247,7 +247,6 @@ c    for derived variables
 
         jp27=-9999
 
-	write(*,*) 'in _alt with nv, jf, iens: ', nv, jf, iens
         write(*,*) 'in _alt jpdtn, shape(rawdata_pr): ', jpdtn,
      +                                  shape(rawdata_pr)
 
@@ -341,11 +340,12 @@ c     +              nv,ifunit,jf,iens,Lp,Lt
           CLDBapoint=cldb(igrid,irun)
           HSFCapoint=hsfc(igrid,irun)
 
-	if (igrid .eq. 842084) then
+	if (igrid .eq. jf/2) then
 	write(0,*) 'miss: ', miss
 	write(0,*) 'TCLDapoint: ', TCLDapoint
 	write(0,*) 'CLDBapoint: ', CLDBapoint
 	write(0,*) 'HSFCapoint: ', HSFCapoint
+        write(0,*) 'will define rawdata_pr for irun: ', irun
         endif
 
           do i = irun,irun
@@ -362,7 +362,7 @@ c     +              nv,ifunit,jf,iens,Lp,Lt
               end if
             end if
 
-           rawdata_pr(igrid,i,1)=CEILapoint(i)
+           rawdata_pr(igrid)=CEILapoint(i)
           end do         ! i loop       
 
 

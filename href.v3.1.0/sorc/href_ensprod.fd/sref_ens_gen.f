@@ -135,6 +135,7 @@ C mean
       real,allocatable,dimension(:,:) :: derv_mn                    !jf, maxmlvl
       real,allocatable,dimension(:,:) :: vrbl_mn_2d, vrbl_lpm_2d
       real,allocatable,dimension(:,:) :: vrbl_pmmn_2d
+      real,allocatable,dimension(:,:) :: rawdata_ceil
 
 C spread
       real,allocatable,dimension(:,:) :: vrbl_sp                    !jf, maxmlvl
@@ -848,17 +849,22 @@ c Loop 1-1: Read direct variable's GRIB2 data from all members
 
              if (vname(nv).eq.'CEIL' .and. irun .eq. 1) then
 
+	if (.not. allocated(rawdata_ceil)) then
+           allocate (rawdata_ceil(jf,iens))
+        endif
+
             write(*,*) 'call getceiling in direct ', irun
 
 	do irunb=1,iens
 
             call  getceiling_alt(nv,ifunit(1:iens),
      +             jpdtn,jf,iens,irunb,
-     +             rawdata_pr(:,irunb,lv),bmap_f)
+     +             rawdata_ceil(:,irunb),bmap_f)
 
-            write(*,*) 'after _alt min,max of rawdata_pr: ', irunb,
-     +                  minval(rawdata_pr(:,irunb,lv)),
-     +                  maxval(rawdata_pr(:,irunb,lv))
+C            write(*,*) '== after _alt rawdata_ceil: ', irunb,
+C     +                  rawdata_ceil(jf/4,irunb),
+C     +                  rawdata_ceil(jf/2,irunb),
+C     +                  rawdata_ceil(3*jf/4,irunb)
 
           enddo
 
@@ -926,15 +932,28 @@ c Loop 1-1: Read direct variable's GRIB2 data from all members
 
              if (vname(nv).eq.'CEIL') then
 
-C             write(*,*) 'calling neighborhood_min(a) for: ', vname(nv)
-C             write(*,*) 'nv, Psignal(nv): ', nv, Psignal(nv)
+             write(*,*) 'calling neighborhood_min(a) for: ', vname(nv)
+             write(*,*) 'nv, Psignal(nv),lv: ', nv, Psignal(nv),lv
 
-            write(*,*) 'into _min min,max of rawdata_pr: ', irun,
-     +                  minval(rawdata_pr(:,irun,lv)),
-     +                  maxval(rawdata_pr(:,irun,lv))
+! put it into rawdata_pr??
+            rawdata_pr(:,irun,lv)=rawdata_ceil(:,irun)
+
+C            write(*,*) 'into _min min,max of rawdata_pr: ', irun,
+C     +                  minval(rawdata_pr(:,irun,lv)),
+C     +                  maxval(rawdata_pr(:,irun,lv))
+
+C            write(*,*) '== into _min rawdata_pr: ', irun,
+C     +                  rawdata_pr(jf/4,irun,lv),
+C    +                  rawdata_pr(jf/2,irun,lv),
+C    +                  rawdata_pr(3*jf/4,irun,lv)
 
              call neighborhood_min(rawdata_pr(:,irun,lv),
      +                          jf,im,jm,Psignal(nv))
+
+C           write(*,*) '== out of _min rawdata_pr: ', irun,
+C    +                  rawdata_pr(jf/4,irun,lv),
+C    +                  rawdata_pr(jf/2,irun,lv),
+C    +                  rawdata_pr(3*jf/4,irun,lv)
 
 
 
@@ -2100,9 +2119,13 @@ c Loop 1-3:  Packing  mean/spread/prob for this direct variable
       end do loop222
 
 c Loop 1-4: Deallocation
+	write(*,*) 'to deallocation'
 
         deallocate (rawdata_mn)
         deallocate (rawdata_pr)
+ 	if (allocated(rawdata_ceil)) then
+            deallocate(rawdata_ceil)
+        endif
         deallocate (vrbl_mn)
         deallocate (vrbl_mn_pm)
         deallocate (vrbl_mn_locpm)
