@@ -82,17 +82,18 @@ if [ $cyc -ge 0 ] && [ $cyc -le 5 ] ; then
   if [ $dom = 'conus' ]
     then
         echo "in conus block"
-     files="9 namnest namnest hrrr hrrr fv3s fv3s conusarw conusmem2arw conusarw conusmem2arw"
+     files="9 fv3s fv3s fv3s fv3s fv3s fv3s fv3s fv3s fv3s"
+
      set -A file  $files
      if [ $cyc = '00' ] ; then
-      days="9 $PDY $PDYm1 $PDY $PDYm1 $PDY  $PDYm1 $PDY  $PDY $PDYm1  $PDYm1"
-      cycs="9 00    18     00    18     00    12    00     00     12     12"
-      ages="9  0     6      0     6      0    12    0       0     12     12"
+      days="9 $PDY  $PDY  $PDY  $PDY  $PDY $PDY  $PDY $PDY  $PDY"
+      cycs="9 00     00    00    00    00    00    00  00     00"
+      ages="9  0     0      0     0     0    0     0    0      0"
      fi
      set -A  day  $days
      set -A  cycloc $cycs
      set -A  age  $ages
-     mbrs="1  2  3  4  5  6  7  8  9  10"
+     mbrs="1  2  3  4  5  6  7  8  9"
 
 
   elif [ $dom = 'hi' ]
@@ -126,27 +127,14 @@ elif [ $cyc -ge 6 ] ; then
 
   files="9 namnest namnest hrrr hrrr  fv3s fv3s conusarw conusmem2arw conusarw conusmem2arw"
   set -A file  $files
-  mbrs="1  2  3  4  5  6  7  8  9  10"
+  mbrs="1  2  3  4  5  6  7  8  9"
 
-  if [ $cyc = '06' ] ; then
-    days="9 $PDY $PDY $PDY $PDY $PDY $PDYm1 $PDY $PDY  $PDYm1 $PDYm1"
-    cycs="9  06   00   06   00   00    12    00   00    12     12"
-    ages="9  0     6    0    6    6    18     6    6    18     18"
+  if [ $cyc = '06' -o $cyc = '12' -o $cyc = '18' ] ; then
+      days="9 $PDY   $PDY   $PDY  $PDY   $PDY  $PDY   $PDY  $PDY  $PDY"
+      cycs="9 $cyc  $cyc    $cyc  $cyc   $cyc  $cyc   $cyc  $cyc   $cyc"
+      ages="9  0     0      0     0       0    0       0    0      0"
   fi
 
-  if [ $cyc = '12' ] ; then
-    days="9 $PDY $PDY $PDY $PDY $PDY $PDY $PDY $PDY  $PDY $PDY"
-    cycs="9  12   06    12   06   12   00  12   12   00  00"
-    ages="9   0    6     0    6    0   12   0    0   12  12"
-        echo cycs $cycs
-        echo ages $ages
-  fi
-
-  if [ $cyc = '18' ] ; then
-    days="9 $PDY $PDY $PDY $PDY $PDY  $PDY $PDY $PDY $PDY $PDY"
-    cycs="9   18   12   18   12   12   00  12   12   00   00"
-    ages="9    0    6    0    6    6   18   6    6   18   18"
-  fi
 
   set -A  day $days
   set -A  cycloc $cycs
