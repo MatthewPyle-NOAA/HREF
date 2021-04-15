@@ -18,19 +18,14 @@ fi
 
 cyc=${1}
 hr=${2}
-dom=${3}
-
-if [ ! -e ${GESIN}.${PDY} ]
-then
-mkdir -p ${GESIN}.${PDY}
-fi
+mem=${3}
 
 cd ${DATA}
 
-mkdir fv3_${dom}_${hr}
-cd fv3_${dom}_${hr}
+mkdir fv3_${mem}_${hr}
+cd fv3_${mem}_${hr}
 
-filecheck=$COMINfv3.${PDY}/hiresw.t${cyc}z.fv3_5km.f${hr}.${dom}.grib2
+filecheck=$COMINfv3.${PDY}/rrfs.t${cyc}z.m${mem}.f${hr}.${dom}.grib2
 
 
         if [ -e $filecheck ]

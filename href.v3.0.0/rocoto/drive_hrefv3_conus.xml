@@ -7,7 +7,7 @@
 <!ENTITY STARTDAY "19">
 <!ENTITY STARTHOUR "00">
 
-<!ENTITY ENDYEAR "2020">
+<!ENTITY ENDYEAR "2021">
 <!ENTITY ENDMONTH "12">
 <!ENTITY ENDDAY "31">
 <!ENTITY ENDHOUR "12">
@@ -15,7 +15,7 @@
 <!ENTITY USER "Matthew.Pyle">
 <!ENTITY ACCOUNT "HREF-T2O">
 
-<!ENTITY HOMEhref "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_fork/href.v3.0.0">
+<!ENTITY HOMEhref "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_cloud/href.v3.0.0">
 <!ENTITY domain "conus">
 <!ENTITY machine "WCOSS_C">
 <!ENTITY envir "test">
@@ -23,13 +23,15 @@
 <!ENTITY PRE "&HOMEhref;/rocoto/launch.ksh">
 
 <!ENTITY SCRIPTS "&HOMEhref;/scripts">
-<!ENTITY COMINfv3sar "/gpfs/hps2/ptmp/Matthew.Pyle/com/hiresw/para/hiresw">
+<!-- <!ENTITY COMINfv3sar "/gpfs/hps2/ptmp/Matthew.Pyle/com/hiresw/para/hiresw"> -->
 <!-- <!ENTITY COMINhrrr "/gpfs/hps/nco/ops/com/hrrr/prod/hrrr"> -->
 <!ENTITY COMINhrrr "/gpfs/hps/nco/ops/com/hrrr/prod/hrrr">
 <!-- <!ENTITY COMINhrrr "/gpfs/hps3/ptmp/Ming.Hu/com/hrrr/para/hrrr"> -->
 <!-- <!ENTITY COMINhrrr "/gpfs/hps/ptmp/Benjamin.Blake/com/hrrr/prod/hrrr"> -->
 <!ENTITY COMINhiresw "/gpfs/hps/nco/ops/com/hiresw/prod/hiresw">
 <!ENTITY COMINnam "/gpfs/dell1/nco/ops/com/nam/prod/nam">
+<!ENTITY COMINfv3sar "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/com/rrfs/para/rrfs">
+<!ENTITY COMINrrfs "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/com/rrfs/para/rrfs">
 <!ENTITY COMINall "/gpfs/hps2/ptmp/Matthew.Pyle/nwges/&envir;/hiresw/href">
 <!ENTITY GESROOT "/gpfs/hps2/ptmp/&USER;/nwges">
 <!ENTITY OUTDIR "/gpfs/hps2/ptmp/&USER;">
@@ -70,8 +72,7 @@
 <!--  ************************************************************* -->
 <!--  ******************* STARTING THE WORKFLOW ******************* -->
 
-<!-- <workflow realtime="F" scheduler="lsfcray" taskthrottle="11"> -->
-<workflow realtime="T" scheduler="lsfcray" taskthrottle="60" cyclethrottle="12" cyclelifespan="01:23:30:00">
+<workflow realtime="T" scheduler="lsfcray" taskthrottle="60" cyclethrottle="12" cyclelifespan="21:23:30:00">
 
   <cycledef group="regional">&STARTYEAR;&STARTMONTH;&STARTDAY;&STARTHOUR;00 &ENDYEAR;&ENDMONTH;&ENDDAY;&ENDHOUR;00 12:00:00</cycledef>
   <cycledef group="regional_justontime">&STARTYEAR;&STARTMONTH;&STARTDAY;&STARTHOUR;00 &ENDYEAR;&ENDMONTH;&ENDDAY;&ENDHOUR;00 12:00:00</cycledef>
@@ -81,238 +82,8 @@
   </log>
 
 
-<!--  **********************************************************************  -->
-<!--  **************************** Run preproc ******************************  -->
 
-<!-- Strips needed products from NAM, HRRR, and FV3CAM and interpolates to grid 227 -->
-
-  <task name="preproc_hrrr" cycledefs="regional" maxtries="3">
-  &RESERVATION;
-  &PREPROC_RESOURCES;
-  <nodes>7:ppn=7</nodes>
-    <command>&PRE; &JOBS;/JHREF_PREPROC_HRRR</command>
-    <jobname><cyclestr>preprochrrr_&domain;_@H</cyclestr></jobname>
-    <join><cyclestr>&OUTDIR;/logfiles_href/preprochrrr_&domain;_@H.log</cyclestr></join>
-
-    <envar>
-     <name>NEST</name>
-     <value>&domain;</value>
-    </envar>
-
-    <envar>
-      <name>HOMEhref</name>
-      <value>&HOMEhref;</value>
-    </envar>
-    <envar>
-      <name>job</name>
-      <value>preprochrrr_&domain;</value>
-    </envar>
-
-    <envar>
-     <name>MYCOMROOT</name>
-     <value>&MYCOMROOT;</value>
-    </envar>
-
-    <envar>
-      <name>machine</name>
-      <value>&machine;</value>
-    </envar>
-
-    <envar>
-      <name>envir</name>
-      <value>&envir;</value>
-    </envar>
-
-    <envar>
-      <name>KEEPDATA</name>
-      <value>&KEEPDATA;</value>
-    </envar>
-    <envar>
-      <name>DATAROOT</name>
-      <value>&DATAROOT;</value>
-    </envar>
-
-    <envar>
-      <name>GESROOT</name>
-      <value>&GESROOT;</value>
-    </envar>
-
-    <envar>
-      <name>USER</name>
-      <value>&USER;</value>
-    </envar>
-    <envar>
-      <name>CDATE</name>
-      <value><cyclestr>@Y@m@d@H</cyclestr></value>
-    </envar>
-    <envar>
-      <name>PDY</name>
-      <value><cyclestr>@Y@m@d</cyclestr></value>
-    </envar>
-    <envar>
-      <name>cyc</name>
-      <value><cyclestr>@H</cyclestr></value>
-    </envar>
-
-    <envar>
-      <name>COMINnam</name>
-      <value>&COMINnam;</value>
-    </envar>
-
-    <envar>
-      <name>COMINhrrr</name>
-      <value>&COMINhrrr;</value>
-    </envar>
-
-    <envar>
-      <name>COMINfv3</name>
-      <value>&COMINfv3sar;</value>
-    </envar>
-
-    <dependency>
-       <and>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf00.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf01.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf02.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf03.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf04.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf05.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf06.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf07.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf08.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf09.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf10.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf11.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf12.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf13.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf14.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf15.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf16.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf17.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf18.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf19.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf20.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf21.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf22.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf23.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf24.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf25.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf26.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf27.grib2</cyclestr></datadep>
-       <datadep age="10:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf28.grib2</cyclestr></datadep>
-       <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf29.grib2</cyclestr></datadep>
-       <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf30.grib2</cyclestr></datadep>
-       <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf31.grib2</cyclestr></datadep>
-       <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf32.grib2</cyclestr></datadep>
-       <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf33.grib2</cyclestr></datadep>
-       <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf34.grib2</cyclestr></datadep>
-       <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf35.grib2</cyclestr></datadep>
-       <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf36.grib2</cyclestr></datadep>
-       <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf37.grib2</cyclestr></datadep>
-       <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf38.grib2</cyclestr></datadep>
-       <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf39.grib2</cyclestr></datadep>
-       <datadep age="03:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf40.grib2</cyclestr></datadep>
-       <datadep age="03:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf41.grib2</cyclestr></datadep>
-       <datadep age="03:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf42.grib2</cyclestr></datadep>
-       <datadep age="03:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf43.grib2</cyclestr></datadep>
-       <datadep age="03:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf44.grib2</cyclestr></datadep>
-       <datadep age="03:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf45.grib2</cyclestr></datadep>
-       <datadep age="03:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf46.grib2</cyclestr></datadep>
-       <datadep age="03:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf47.grib2</cyclestr></datadep>
-       <datadep age="03:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf48.grib2</cyclestr></datadep>
-       </and>
-    </dependency>
-
-  </task>
-
-  <task name="preproc_nam" cycledefs="regional" maxtries="3">
-  &RESERVATION;
-  &PREPROC_RESOURCES;
-  <nodes>6:ppn=10</nodes>
-    <command>&PRE; &JOBS;/JHREF_PREPROC_NAM</command>
-    <jobname><cyclestr>preprocnam_&domain;_@H</cyclestr></jobname>
-    <join><cyclestr>&OUTDIR;/logfiles_href/preprocnam_&domain;_@H.log</cyclestr></join>
-
-    <envar>
-     <name>NEST</name>
-     <value>&domain;</value>
-    </envar>
-
-    <envar>
-      <name>HOMEhref</name>
-      <value>&HOMEhref;</value>
-    </envar>
-    <envar>
-      <name>job</name>
-      <value>preprocnam_&domain;</value>
-    </envar>
-
-    <envar>
-     <name>MYCOMROOT</name>
-     <value>&MYCOMROOT;</value>
-    </envar>
-
-    <envar>
-      <name>machine</name>
-      <value>&machine;</value>
-    </envar>
-
-    <envar>
-      <name>envir</name>
-      <value>&envir;</value>
-    </envar>
-
-    <envar>
-      <name>KEEPDATA</name>
-      <value>&KEEPDATA;</value>
-    </envar>
-    <envar>
-      <name>DATAROOT</name>
-      <value>&DATAROOT;</value>
-    </envar>
-    <envar>
-      <name>GESROOT</name>
-      <value>&GESROOT;</value>
-    </envar>
-    <envar>
-      <name>USER</name>
-      <value>&USER;</value>
-    </envar>
-    <envar>
-      <name>CDATE</name>
-      <value><cyclestr>@Y@m@d@H</cyclestr></value>
-    </envar>
-    <envar>
-      <name>PDY</name>
-      <value><cyclestr>@Y@m@d</cyclestr></value>
-    </envar>
-    <envar>
-      <name>cyc</name>
-      <value><cyclestr>@H</cyclestr></value>
-    </envar>
-
-    <envar>
-      <name>COMINnam</name>
-      <value>&COMINnam;</value>
-    </envar>
-
-    <envar>
-      <name>COMINhrrr</name>
-      <value>&COMINhrrr;</value>
-    </envar>
-
-    <envar>
-      <name>COMINfv3</name>
-      <value>&COMINfv3sar;</value>
-    </envar>
-
-    <dependency>
-          <datadep age="10:00" minsize="300000000"><cyclestr>&COMINnam;.@Y@m@d/nam.t@Hz.conusnest.hiresf54.tm00.grib2</cyclestr></datadep>
-    </dependency>
-
-  </task>
-
-  <task name="preproc_fv3" cycledefs="regional" maxtries="3">
+ <task name="preproc_fv3" cycledefs="regional" maxtries="3">
   &RESERVATION;
   &PREPROC_RESOURCES;
   <nodes>6:ppn=10</nodes>
@@ -390,17 +161,20 @@
 
     <envar>
       <name>COMINfv3</name>
-      <value>&COMINfv3sar;</value>
+      <value>&COMINfv3sarnc;</value>
     </envar>
 
     <dependency>
         <and>
-          <datadep age="06:00" minsize="300000"><cyclestr>&COMINfv3sar;.@Y@m@d/hiresw.t@Hz.fv3_5km.f59.&domain;.grib2</cyclestr></datadep>
-          <datadep age="06:00" minsize="300000"><cyclestr>&COMINfv3sar;.@Y@m@d/hiresw.t@Hz.fv3_5km.f60.&domain;.grib2</cyclestr></datadep>
+<!-- Make sure even and odd forecast hours are done -->
+       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;.@Y@m@d/rrfs.t@Hz.m01.f48.grib2</cyclestr></datadep>
+       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;.@Y@m@d/rrfs.t@Hz.m02.f48.grib2</cyclestr></datadep>
         </and>
     </dependency>
 
   </task>
+
+
 
 <!--  ***********************************************************************  -->
 <!-- dont forget to do FFG piece                                               -->
@@ -470,11 +244,8 @@
 
       <dependency>
      <and>
-       <taskdep task="preproc_hrrr"/>
-       <taskdep task="preproc_nam"/>
-       <taskdep task="preproc_fv3"/>
-       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conus.grib2</cyclestr></datadep>
-       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conusmem2.grib2</cyclestr></datadep>
+       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;.@Y@m@d/rrfs.t@Hz.m01.f48.grib2</cyclestr></datadep>
+       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;.@Y@m@d/rrfs.t@Hz.m02.f48.grib2</cyclestr></datadep>
      </and>
       </dependency>
   </task>
@@ -552,34 +323,18 @@
       <value>&envir;</value>
     </envar>
     <envar>
-      <name>COMINnam</name>
-      <value>&COMINall;</value>
-    </envar>
-    <envar>
-      <name>COMINhrrr</name>
-      <value>&COMINall;</value>
-    </envar>
-    <envar>
-      <name>COMINhiresw</name>
-      <value>&COMINhiresw;</value>
-    </envar>
-    <envar>
       <name>COMINfv3</name>
-      <value>&COMINall;</value>
+      <value>&COMINfv3sar;</value>
+    </envar>
+    <envar>
+      <name>COMINrrfs</name>
+      <value>&COMINfv3sar;</value>
     </envar>
 
       <dependency>
         <and>
-           <taskdep task="preproc_fv3"/>
-           <taskdep task="preproc_hrrr"/>
-           <taskdep task="preproc_nam"/>
-           <datadep age="03:00" minsize="100000000"><cyclestr>&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conus.grib2</cyclestr></datadep>
-           <datadep age="03:00" minsize="100000000"><cyclestr>&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conusmem2.grib2</cyclestr></datadep>
-           <datadep age="03:00" minsize="100000000"><cyclestr offset="&TIMEOFFSET_TWELVE;">&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conus.grib2</cyclestr></datadep>
-           <datadep age="03:00" minsize="100000000"><cyclestr offset="&TIMEOFFSET_TWELVE;">&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conusmem2.grib2</cyclestr></datadep>
-           <datadep age="03:00" minsize="50000000"><cyclestr offset="&TIMEOFFSET_SIX;">&COMINall;.@Y@m@d/hrrr.t@Hz.conus.f48.grib2</cyclestr></datadep>
-         <datadep age="03:00" minsize="50000000"><cyclestr offset="&TIMEOFFSET_TWELVE;">&COMINall;.@Y@m@d/fv3s.t@Hz.conus.f60.grib2</cyclestr></datadep>
-         <datadep age="03:00" minsize="50000000"><cyclestr offset="&TIMEOFFSET_SIX;">&COMINall;.@Y@m@d/nam.t@Hz.f54.grib2</cyclestr></datadep>
+        <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;.@Y@m@d/rrfs.t@Hz.m01.f48.grib2</cyclestr></datadep>
+        <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;.@Y@m@d/rrfs.t@Hz.m02.f48.grib2</cyclestr></datadep>
 
         </and>
       </dependency>
@@ -649,200 +404,25 @@
       <name>envir</name>
       <value>&envir;</value>
     </envar>
-    <envar>
-      <name>COMINnam</name>
-      <value>&COMINall;</value>
-    </envar>
-
-    <envar>
-      <name>COMINhrrr</name>
-      <value>&COMINall;</value>
-    </envar>
-
-    <envar>
-      <name>COMINhiresw</name>
-      <value>&COMINhiresw;</value>
-    </envar>
 
     <envar>
       <name>COMINfv3</name>
-      <value>&COMINall;</value>
+      <value>&COMINfv3sar;</value>
+    </envar>
+    <envar>
+      <name>COMINrrfs</name>
+      <value>&COMINfv3sar;</value>
     </envar>
 
     <dependency>
      <and>
-     <taskdep task="preproc_hrrr"/>
-     <taskdep task="preproc_fv3"/>
-     <taskdep task="preproc_nam"/>
-     <taskdep task="ffg_gen"/>
-     <datadep age="03:00" minsize="100000000"><cyclestr>&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conus.grib2</cyclestr></datadep>
-     <datadep age="03:00" minsize="100000000"><cyclestr>&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conusmem2.grib2</cyclestr></datadep>
-           <datadep age="03:00" minsize="100000000"><cyclestr offset="&TIMEOFFSET_TWELVE;">&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conus.grib2</cyclestr></datadep>
-           <datadep age="03:00" minsize="100000000"><cyclestr offset="&TIMEOFFSET_TWELVE;">&COMINhiresw;.@Y@m@d/hiresw.t@Hz.arw_5km.f48.conusmem2.grib2</cyclestr></datadep>
-           <datadep age="03:00" minsize="50000000"><cyclestr offset="&TIMEOFFSET_SIX;">&COMINall;.@Y@m@d/hrrr.t@Hz.conus.f48.grib2</cyclestr></datadep>
-         <datadep age="03:00" minsize="50000000"><cyclestr offset="&TIMEOFFSET_TWELVE;">&COMINall;.@Y@m@d/fv3s.t@Hz.conus.f60.grib2</cyclestr></datadep>
-         <datadep age="03:00" minsize="50000000"><cyclestr offset="&TIMEOFFSET_SIX;">&COMINall;.@Y@m@d/nam.t@Hz.f54.grib2</cyclestr></datadep>
+        <taskdep task="ffg_gen"/>
+        <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;.@Y@m@d/rrfs.t@Hz.m01.f48.grib2</cyclestr></datadep>
+        <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;.@Y@m@d/rrfs.t@Hz.m02.f48.grib2</cyclestr></datadep>
      </and>
     </dependency>
 
   </task>
-
-
-<!--  ***********************************************************************  -->
-<!--  ************************* WMO/AWIP piece *****************************  -->
-
-  <task name="href_awips" cycledefs="regional" maxtries="2">
-  &RESERVATION;
-  &GEMPAK_RESOURCES;
-  <nodes>1:ppn=1</nodes>
-    <command>&PRE; &JOBS;/JHREF_AWIPS</command>
-    <jobname><cyclestr>awips_&domain;_@H</cyclestr></jobname>
-    <join><cyclestr>&OUTDIR;/logfiles_href/awips_&domain;_@H.log</cyclestr></join>
-
-
-    <envar>
-      <name>HOMEhref</name>
-      <value>&HOMEhref;</value>
-    </envar>
-    <envar>
-      <name>job</name>
-      <value><cyclestr>awips_&domain;_@Y@m@d</cyclestr></value>
-    </envar>
-    <envar>
-      <name>machine</name>
-      <value>&machine;</value>
-    </envar>
-    <envar>
-      <name>USER</name>
-      <value>&USER;</value>
-    </envar>
-    <envar>
-      <name>CDATE</name>
-      <value><cyclestr>@Y@m@d@H</cyclestr></value>
-    </envar>
-    <envar>
-      <name>PDY</name>
-      <value><cyclestr>@Y@m@d</cyclestr></value>
-    </envar>
-    <envar>
-      <name>cyc</name>
-      <value><cyclestr>@H</cyclestr></value>
-    </envar>
-    <envar>
-     <name>NEST</name>
-     <value>&domain;</value>
-    </envar>
-    <envar>
-      <name>DATAROOT</name>
-      <value>&DATAROOT;</value>
-    </envar>
-    <envar>
-     <name>MYCOMROOT</name>
-     <value>&MYCOMROOT; </value>
-    </envar>
-    <envar>
-      <name>MYCOMROOTPERM</name>
-      <value>&MYCOMROOTPERM;</value>
-    </envar>
-    <envar>
-      <name>KEEPDATA</name>
-      <value>&KEEPDATA;</value>
-    </envar>
-    <envar>
-      <name>envir</name>
-      <value>&envir;</value>
-    </envar>
-
-    <dependency>
-     <and>
-     <taskdep task="ensprod"/>
-     <taskdep task="eas_gen"/>
-     </and>
-    </dependency>
-
-  </task>
-
-
-<!--  ***********************************************************************  -->
-<!--  ************************* GEMPAK piece *****************************  -->
-
-  <task name="href_gempak" cycledefs="regional" maxtries="1">
-  &RESERVATION;
-  &GEMPAK_RESOURCES;
-  <nodes>1:ppn=8</nodes>
-    <command>&PRE; &JOBS;/JHREF_GEMPAK</command>
-    <jobname><cyclestr>gempak_&domain;_@H</cyclestr></jobname>
-    <join><cyclestr>&OUTDIR;/logfiles_href/gempak_&domain;_@H.log</cyclestr></join>
-
-
-    <envar>
-      <name> PTILE </name>
-      <value>8</value>
-    </envar>
-    <envar>
-      <name>HOMEhref</name>
-      <value>&HOMEhref;</value>
-    </envar>
-    <envar>
-      <name>job</name>
-      <value><cyclestr>gempak_&domain;_@Y@m@d</cyclestr></value>
-    </envar>
-    <envar>
-      <name>machine</name>
-      <value>&machine;</value>
-    </envar>
-    <envar>
-      <name>USER</name>
-      <value>&USER;</value>
-    </envar>
-    <envar>
-      <name>CDATE</name>
-      <value><cyclestr>@Y@m@d@H</cyclestr></value>
-    </envar>
-    <envar>
-      <name>PDY</name>
-      <value><cyclestr>@Y@m@d</cyclestr></value>
-    </envar>
-    <envar>
-      <name>cyc</name>
-      <value><cyclestr>@H</cyclestr></value>
-    </envar>
-    <envar>
-     <name>NEST</name>
-     <value>&domain;</value>
-    </envar>
-    <envar>
-      <name>DATAROOT</name>
-      <value>&DATAROOT;</value>
-    </envar>
-    <envar>
-     <name>MYCOMROOT</name>
-     <value>&MYCOMROOT; </value>
-    </envar>
-    <envar>
-      <name>MYCOMROOTPERM</name>
-      <value>&MYCOMROOTPERM;</value>
-    </envar>
-    <envar>
-      <name>KEEPDATA</name>
-      <value>&KEEPDATA;</value>
-    </envar>
-    <envar>
-      <name>envir</name>
-      <value>&envir;</value>
-    </envar>
-
-    <dependency>
-     <and>
-     <taskdep task="ensprod"/>
-     <taskdep task="eas_gen"/>
-     </and>
-    </dependency>
-
-  </task>
-
-
-
 
 
 </workflow>

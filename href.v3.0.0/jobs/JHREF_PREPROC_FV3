@@ -112,16 +112,23 @@ fi
 ###################################################
 # Execute the Script exhref_ensprod.sh
 
-rm -rf poe.*
-
 
 hrlist="00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 \
 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 \
 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60"
 
+mems="01 02 03 04 05 06 07 08 09"
+
+for mem in $mems
+do
+
+rm poe.fv3
+
 for hr in $hrlist
 do
-echo "$USHhref/preprocess_fv3_1h.sh ${cyc} $hr ${NEST}" >> poe.fv3
+echo "$USHhref/preprocess_fv3_1h.sh ${cyc} ${mem} $hr" >> poe.fv3
+done
+
 done
 
 chmod 775 poe.fv3  
@@ -129,16 +136,13 @@ chmod 775 poe.fv3
 export NODES=6
 aprun -j 1 -n60 -N 10 -d 1 cfp poe.fv3
 
-# #deleting preprocessing outputs from 6 cycles prior to ${PDY}${cyc}
+done
 
-pdycycdel=`$NDATE -144 ${PDY}${cyc}`
+# need to generate 3 h QPF
 
-PDYdel=`echo $pdycycdel | cut -c1-8`
-cycdel=`echo $pdycycdel | cut -c9-10`
+$USHhref/preprocess_fv3_3hapcp.sh ${cyc} $hr ${NEST}
 
-echo will delete from $GESIN.${PDYdel}/fv3s.t${cycdel}z
-
-rm $GESIN.${PDYdel}/fv3s.t${cycdel}z.*grib2
+# end QPF
 
 cd $DATAROOT
 if [ $KEEPDATA = NO ]; then rm -rf $DATA; fi

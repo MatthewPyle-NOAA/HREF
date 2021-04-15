@@ -106,7 +106,8 @@ echo $PDY >> itag
 
 $EXEChref/href_ffg_gen < itag
 
-wgrib2def="lambert:265:25:25 226.541:1473:5079 12.190:1025:5079"
+# wgrib2def="lambert:265:25:25 226.541:1473:5079 12.190:1025:5079"
+wgrib2def="lambert:262.5:38.5:38.5 237.826355:1746:3000 21.885885:1014:3000"
 
 for RFC in $RFC_LIST
 do

@@ -14,6 +14,7 @@ mkdir -p ./log/
 GET_PRCIP=1
 FFG_GEN=1
 ENSPROD=1
+QPF3H=1
 
 #########################
 
@@ -31,8 +32,15 @@ fi
 
 ############################
 
-
 if [ $ENSPROD = "1" ]
 then
 ./build_href_ensprod.sh > ./log/build_href_ensprod.log 2>&1
 fi
+
+############################
+
+if [ $QPF3H = "1" ]
+then
+./build_href_fv3_3hqpf.sh > ./log/build_href_fv3_3hqpf.log 2>&1
+fi
+
