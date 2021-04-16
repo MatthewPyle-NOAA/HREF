@@ -31,3 +31,5 @@ clean:
 	@rm  *.o
 delete:
 	@rm  *.o
+copy:
+	/bin/cp ${CMD}  ../../exec/

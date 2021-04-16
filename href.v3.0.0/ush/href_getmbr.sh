@@ -281,7 +281,8 @@ typeset -Z2 fcheckloc
 
       if [  ${file[$m]} = 'fv3s'  -a $fcst -le 60  ] ; then
 
-        filecheck=${COMINrrfs}.${day[$m]}/rrfs.t${cycloc[$m]}z.m${m}.f${fcst}.grib2
+#        filecheck=${COMINrrfs}.${day[$m]}/rrfs.t${cycloc[$m]}z.m${m}.f${fcst}.grib2
+        filecheck=${COMINfv3}.${day[$m]}/fv3s.t${cycloc[$m]}z.m${m}.f${fcst}.grib2
 
 	if [ -e $filecheck ]
         then
