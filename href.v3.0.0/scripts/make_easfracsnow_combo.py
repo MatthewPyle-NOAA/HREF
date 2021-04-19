@@ -47,28 +47,12 @@ HOMEhref=os.environ.get('HOMEhref','trash')
 print 'found HOMEhref as ', HOMEhref
 
 try:
-  os.environ["COMINnam"]
-except KeyError:
-  print "NEED TO DEFINE COMINnam"
-  exit(1)
-COMINnam=os.environ.get('COMINnam','trash')
-print 'found COMINnam as ', COMINnam
-
-try:
   os.environ["COMINhiresw"]
 except KeyError:
   print "NEED TO DEFINE COMINhiresw"
   exit(1)
 COMINhiresw=os.environ.get('COMINhiresw','trash')
 print 'found COMINhiresw as ', COMINhiresw
-
-try:
-  os.environ["COMINhrrr"]
-except KeyError:
-  print "NEED TO DEFINE COMINhrrr"
-  exit(1)
-COMINhrrr=os.environ.get('COMINhrrr','trash')
-print 'found COMINhrrr as ', COMINhrrr
 
 try:
   os.environ["COMINfv3"]

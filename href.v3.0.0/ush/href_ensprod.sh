@@ -238,7 +238,7 @@ echo dom is $dom
 
   if [ $dom = 'conus' ]
   then
- echo $yy $mm $dd $cyc $ff "227 39" "36" "3" "12"  > filename    #first 36 is leadtime, second 12 is fcst times = leadtime/interval
+ echo $yy $mm $dd $cyc $ff "1099 39" "36" "3" "12"  > filename    #first 36 is leadtime, second 12 is fcst times = leadtime/interval
   elif [ $dom = 'ak' ]
   then
  echo $yy $mm $dd $cyc $ff "999 39" "36" "3" "12"  > filename    #first 36 is leadtime, second 12 is fcst times = leadtime/interval

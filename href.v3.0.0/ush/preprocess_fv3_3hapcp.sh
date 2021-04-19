@@ -35,7 +35,7 @@ for hr in $hrsln
 do
 filecheck=fv3s.t${cyc}z.m${mem}.f${hr}.grib2
 
-if [ -e $filecheck ]
+if [ -s $filecheck ]
 then
 ln -sf $filecheck rrfs.t${cyc}z.f${hr}.grib2
 fi
@@ -100,7 +100,7 @@ fi
 
 done
 
-for hr in $hrsln
+for hr in $hrs
 do
  cp fv3s.t${cyc}z.m${mem}.f${hr}.grib2 ${GESIN}.${PDY}
  err=$?

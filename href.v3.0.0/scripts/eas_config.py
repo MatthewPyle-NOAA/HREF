@@ -5,7 +5,7 @@
 ###########################
 
 # number of ens members
-nm = 10
+nm = 9
 
 nm_v3 = 10
 nm_ak = 8

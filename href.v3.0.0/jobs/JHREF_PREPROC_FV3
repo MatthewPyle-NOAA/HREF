@@ -137,7 +137,7 @@ done
 
 chmod 775 poe.fv3  
 export NODES=6
-aprun -j 1 -n60 -N 10 -d 1 cfp poe.fv3
+aprun -j 1 -n 61 -N 11 -d 1 cfp poe.fv3
 
 
 done

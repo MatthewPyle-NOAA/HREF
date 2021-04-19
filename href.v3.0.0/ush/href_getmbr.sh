@@ -45,7 +45,7 @@ if [ $cyc -ge 0 ] && [ $cyc -le 5 ] ; then
      set -A  day  $days
      set -A  cycloc $cycs
      set -A  age  $ages
-     mbrs="1  2  3  4  5  6  7  8  9" 
+    mbrs="1  2  3  4  5  6  7  8  9" 
 
   elif [ $dom = 'hi' ]
     then
@@ -213,69 +213,9 @@ echo working things with ff as $ff and  fcheck as $fcheck
    for m in $mbrs ; do
       fcst=` expr ${age[$m]} + $ff`   #$ff is forecast hours of ensemble member to be built, $fcst is forecast hours of base model requested
 
-      echo ff $ff m $m
-      echo fcst $fcst
-
-      echo href.m${m}.t${cyc}z.f${ff} 
-
-###### namnest
-      if [  ${file[$m]} = 'namnest'  -a $fcst -le 60  ] ; then
-
-        filecheck=${COMINnam}.${day[$m]}/nam.t${cycloc[$m]}z.f${fcst}.grib2
-
-	if [ -e $filecheck ]
-        then
-
-        ln -sf $filecheck  $DATA/href.m${m}.t${cyc}z.f${ff}
-
-        ln -sf $DATA/href.m${m}.t${cyc}z.f${ff}  $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
-
-        else
-
-        msg="FATAL ERROR: $filecheck missing but required"
-         err_exit $msg
-
-	fi
-
-	fcheckloc=$fcheck
-	while [ $fcheckloc -le $ff -a $fcheckloc -ne 0 ]
-        do
-	echo check on $DATA/href.m${m}.t${cyc}z.f${fcheckloc} working $ff
-        loop=0
-        while [ ! -e $DATA/href.m${m}.t${cyc}z.f${fcheckloc} -a $loop -lt $looplim ]
-	do
-	echo waiting on $DATA/href.m${m}.t${cyc}z.f${fcheckloc}
-          sleep ${sleeptime}
-          let loop=loop+1
-        done	
-        let fcheckloc=fcheckloc+1
-typeset -Z2 fcheckloc
-        echo new fcheckloc is $fcheckloc
-        done
-	
-        if [ $ff -gt 0 ]
-        then
-	echo here a $ff
-
-# 3 hour times have 3 hours already
-        if [ ${ff}%3 -eq 0 ]
-        then
-        echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .true. 3 conus |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip3h.m${m}.f${ff} 2>&1
-        export err=$? ; err_chk
-        fi
-        fi
-
-        echo href.m${m}.t${cyc}z. $ff .true. .false. .false. .false. .false. 1 conus |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip1h.m${m}.f${ff} 2>&1
-        export err=$? ; err_chk
-
-        if [ ${ff}%3 -eq 0 ] 
-        then
-        cat $DATA/prcip3h.m${m}.t${cyc}z.f${ff} >> $DATA/prcip.m${m}.t${cyc}z.f${ff}
-	fi
-
-        ln -sf $DATA/prcip.m${m}.t${cyc}z.f${ff} $DATA/${ff}/prcip.m${m}.t${cyc}z.f${ff}
-
-      fi
+#      echo ff $ff m $m
+#      echo fcst $fcst
+#      echo href.m${m}.t${cyc}z.f${ff} 
 
 ###### FV3
 
@@ -284,10 +224,13 @@ typeset -Z2 fcheckloc
 #        filecheck=${COMINrrfs}.${day[$m]}/rrfs.t${cycloc[$m]}z.m${m}.f${fcst}.grib2
         filecheck=${COMINfv3}.${day[$m]}/fv3s.t${cycloc[$m]}z.m${m}.f${fcst}.grib2
 
+	echo LINK WORK fv3s.t${cycloc[$m]}z.m${m}.f${fcst}.grib2
+
 	if [ -e $filecheck ]
         then
          ln -sf $filecheck  $DATA/href.m${m}.t${cyc}z.f${ff}
          ln -sf $DATA/href.m${m}.t${cyc}z.f${ff}  $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
+         sleep 1
         else
          msg="FATAL ERROR: $filecheck missing but required"
          err_exit $msg
@@ -296,17 +239,21 @@ typeset -Z2 fcheckloc
 	fcheckloc=$fcheck
 	while [ $fcheckloc -le $ff -a $fcheckloc -ne 0 ]
         do
-	echo check on $DATA/href.m${m}.t${cyc}z.f${fcheckloc} working $ff
+#	echo check on $DATA/href.m${m}.t${cyc}z.f${fcheckloc} working $ff
         loop=0
         while [ ! -e $DATA/href.m${m}.t${cyc}z.f${fcheckloc} -a $loop -lt $looplim ]
 	do
-	echo waiting on $DATA/href.m${m}.t${cyc}z.f${fcheckloc}
+
+	if [ $loop -ge 5 ]
+        then
+	echo waiting on $DATA/href.m${m}.t${cyc}z.f${fcheckloc} working $ff
+        fi
           sleep ${sleeptime}
           let loop=loop+1
         done	
         let fcheckloc=fcheckloc+1
 typeset -Z2 fcheckloc
-        echo new fcheckloc is $fcheckloc
+#        echo new fcheckloc is $fcheckloc
         done
 	
         if [ $ff -gt 0 ]
@@ -330,305 +277,6 @@ typeset -Z2 fcheckloc
 
       fi
  
-###### HIRESWarw
-
-      if [ ${file[$m]} = ${dom}'arw' -a $fcst -le 48  ] ; then
-
-	echo "in HIRESWarw block"
-
-        filecheck=${COMINhiresw}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}.grib2
-	if [ -e $filecheck ]
-        then
-
-        ln -sf $filecheck  $DATA/href.m${m}.t${cyc}z.f${ff}
-        ln -sf $DATA/href.m${m}.t${cyc}z.f${ff}  $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
-
-        else
-
-         msg="FATAL ERROR: $filecheck missing but required"
-         err_exit $msg
-
-	fi
-
-	echo ${dom}arw $m $ff
-
-	fcheckloc=$fcheck
-	while [ $fcheckloc -le $ff -a $fcheckloc -ne 0 ]
-        do
-	echo check on $DATA/href.m${m}.t${cyc}z.f${fcheckloc} working $ff
-        loop=0
-        while [ ! -e $DATA/href.m${m}.t${cyc}z.f${fcheckloc} -a $loop -lt $looplim ]
-	do
-	echo waiting on $DATA/href.m${m}.t${cyc}z.f${fcheckloc}
-          sleep ${sleeptime}
-          let loop=loop+1
-        done	
-        let fcheckloc=fcheckloc+1
-typeset -Z2 fcheckloc
-        done
-	
-        if [ $ff -gt 0 ]
-        then
-	echo here a $ff
-        if [ ${ff}%3 -eq 0 ]
-        then
-        echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 ${dom} |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip3h.m${m}.f${ff} 2>&1
-        export err=$? ; err_chk
-        fi
-        echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 ${dom} |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip1h.m${m}.f${ff} 2>&1
-        export err=$? ; err_chk
-
-        if [ ${ff}%3 -eq 0 ] 
-        then
-        cat $DATA/prcip3h.m${m}.t${cyc}z.f${ff} >> $DATA/prcip.m${m}.t${cyc}z.f${ff}
-	fi
-
-        ln -sf $DATA/prcip.m${m}.t${cyc}z.f${ff} $DATA/${ff}/prcip.m${m}.t${cyc}z.f${ff}
-        fi
-
-      fi
-
-#### HIRESWmem2arw
-
-	echo HERE with file ${file[$m]}
-        echo HERE with fcst $fcst
-
-      if [ ${file[$m]} = ${dom}'mem2arw' -a $fcst -le 48  ] ; then
-	echo ${dom}mem2arw check
-
-        filecheck=${COMINhiresw}.${day[$m]}/hiresw.t${cycloc[$m]}z.arw_5km.f${fcst}.${dom}mem2.grib2
-
-	if [ -e $filecheck ]
-        then
-
-        ln -sf $filecheck  $DATA/href.m${m}.t${cyc}z.f${ff}
-        ln -sf $DATA/href.m${m}.t${cyc}z.f${ff}  $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
-
-        else
-
-         msg="FATAL ERROR: $filecheck missing but required"
-         err_exit $msg
-
-	fi
-
-        echo ${dom}mem2arw $m $ff
-
-        fcheckloc=$fcheck
-	while [ $fcheckloc -le $ff -a $fcheckloc -ne 0 ]
-        do
-        echo check on $DATA/href.m${m}.t${cyc}z.f${fcheckloc} working $ff
-        loop=0
-        while [ ! -e $DATA/href.m${m}.t${cyc}z.f${fcheckloc} -a $loop -lt $looplim ]
-        do
-        echo waiting on $DATA/href.m${m}.t${cyc}z.f${fcheckloc}
-          sleep ${sleeptime}
-          let loop=loop+1
-        done
-        let fcheckloc=fcheckloc+1
-typeset -Z2 fcheckloc
-        done
-
-        if [ $ff -gt 0 ]
-        then
-	echo here a $ff
-        if [ ${ff}%3 -eq 0 ]
-        then
-         echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 ${dom} |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip3h.m${m}.f${ff} 2>&1
-        export err=$? ; err_chk
-        fi
-         echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 ${dom}  |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip1h.m${m}.f${ff} 2>&1
-        export err=$? ; err_chk
-        if [ ${ff}%3 -eq 0 ] 
-        then
-        cat $DATA/prcip3h.m${m}.t${cyc}z.f${ff} >> $DATA/prcip.m${m}.t${cyc}z.f${ff}
-	fi
-       fi
-
-        ln -sf $DATA/prcip.m${m}.t${cyc}z.f${ff} $DATA/${ff}/prcip.m${m}.t${cyc}z.f${ff}
-
-
-      fi
-
-###### HRRR
-
-      if [ ${file[$m]} = 'hrrr' -a $fcst -le 48  ] ; then
-
-	echo "in HRRR block"
-
-        filecheck=${COMINhrrr}.${day[$m]}/hrrr.t${cycloc[$m]}z.conus.f${fcst}.grib2
-
-	if [ -e $filecheck ]
-        then
-
-        ln -sf $filecheck  $DATA/href.m${m}.t${cyc}z.f${ff}
-        ln -sf $DATA/href.m${m}.t${cyc}z.f${ff}  $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
-
-        else
-
-         msg="FATAL ERROR: $filecheck missing but required"
-         err_exit $msg
-
-	fi
-
-
-	fcheckloc=$fcheck
-	while [ $fcheckloc -le $ff -a $fcheckloc -ne 0 ]
-        do
-	echo check on $DATA/href.m${m}.t${cyc}z.f${fcheckloc} working $ff
-        loop=0
-        while [ ! -e $DATA/href.m${m}.t${cyc}z.f${fcheckloc} -a $loop -lt $looplim ]
-	do
-	echo waiting on $DATA/href.m${m}.t${cyc}z.f${fcheckloc}
-          sleep ${sleeptime}
-          let loop=loop+1
-        done	
-        let fcheckloc=fcheckloc+1
-typeset -Z2 fcheckloc
-        done
-	
-        if [ $ff -gt 0 ]
-        then
-	echo here a $ff
-
-        echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 ${dom} |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip1h.m${m}.f${ff} 2>&1
-        export err=$? ; err_chk
-
-        if [ ${ff}%3 -eq 0 ]
-        then
-         echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 ${dom} |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip3h.m${m}.f${ff}
-         export err=$? ; err_chk
-        fi
-
-        if [ ${ff}%3 -eq 0 ] 
-        then
-        cat $DATA/prcip3h.m${m}.t${cyc}z.f${ff} >> $DATA/prcip.m${m}.t${cyc}z.f${ff}
-	fi
-
-        ln -sf $DATA/prcip.m${m}.t${cyc}z.f${ff} $DATA/${ff}/prcip.m${m}.t${cyc}z.f${ff}
-        fi
-
-      fi
-
-###### HRRRAK
-
-      if [ ${file[$m]} = 'hrrrak' -a $fcst -le 48  ] ; then
-
-	echo "in HRRRAK block"
-
-        filecheck=${COMINhrrr}.${day[$m]}/hrrr.t${cycloc[$m]}z.ak.f${fcst}.grib2
-
-	if [ -e $filecheck ]
-        then
-
-        ln -sf $filecheck  $DATA/href.m${m}.t${cyc}z.f${ff}
-        ln -sf $DATA/href.m${m}.t${cyc}z.f${ff}  $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
-
-        else
-
-         msg="FATAL ERROR: $filecheck missing but required"
-         err_exit $msg
-
-	fi
-
-
-	fcheckloc=$fcheck
-	while [ $fcheckloc -le $ff -a $fcheckloc -ne 0 ]
-        do
-	echo check on $DATA/href.m${m}.t${cyc}z.f${fcheckloc} working $ff
-        loop=0
-        while [ ! -e $DATA/href.m${m}.t${cyc}z.f${fcheckloc} -a $loop -lt $looplim ]
-	do
-	echo waiting on $DATA/href.m${m}.t${cyc}z.f${fcheckloc}
-          sleep ${sleeptime}
-          let loop=loop+1
-        done	
-        let fcheckloc=fcheckloc+1
-typeset -Z2 fcheckloc
-        done
-	
-        if [ $ff -gt 0 ]
-        then
-## actually now have the summing of 3 h totals done in the HRRR preproc job
-         echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 ${dom} |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip1h.m${m}.f${ff} 2>&1
-
-        if [ ${ff}%3 -eq 0 ] 
-        then
-         echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 ${dom} |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip3h.m${m}.f${ff}
-         export err=$? ; err_chk
-        fi
-       
-        if [ ${ff}%3 -eq 0 ] 
-        then
-         cat $DATA/prcip3h.m${m}.t${cyc}z.f${ff} >> $DATA/prcip.m${m}.t${cyc}z.f${ff}
-	fi
-
-        ln -sf $DATA/prcip.m${m}.t${cyc}z.f${ff} $DATA/${ff}/prcip.m${m}.t${cyc}z.f${ff}
-        fi
-
-      fi
-
-
-
-###### FV3S - NON CONUS
-       echo down here trying to define with ${file[$m]}
-
-      if [ ${file[$m]} = ${dom}'fv3s' -a $fcst -le 60 ] ; then
-	echo "in non-CONUS FV3S block"
-
-        filecheck=${COMINfv3}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.f${fcst}.grib2
-
-	if [ -e $filecheck ]
-        then
-         ln -sf    ${COMINfv3}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.f${fcst}.grib2 $DATA/href.m${m}.t${cyc}z.f${ff}
-         ln -sf    ${COMINfv3}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.f${fcst}.grib2 $DATA/${ff}/href.m${m}.t${cyc}z.f${ff}
-        else
-         
-         msg="FATAL ERROR: $filecheck missing but required"
-         err_exit $msg
-	fi
-
-	echo ${dom}fv3s $m $ff
-
-	fcheckloc=$fcheck
-
-	while [ $fcheckloc -le $ff -a $fcheckloc -ne 0 ]
-        do
-         echo check on $DATA/href.m${m}.t${cyc}z.f${fcheckloc} working $ff
-         loop=0
-        while [ ! -e $DATA/href.m${m}.t${cyc}z.f${fcheckloc} -a $loop -lt $looplim ]
-	do
-         echo waiting on $DATA/href.m${m}.t${cyc}z.f${fcheckloc}
-         sleep ${sleeptime}
-         let loop=loop+1
-        done	
-        let fcheckloc=fcheckloc+1
-typeset -Z2 fcheckloc
-        done
-
-
-        if [ $ff -gt 0 ]
-        then
-	echo here a $ff
-
-        if [ ${ff}%3 -eq 0 ]
-        then
-        echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 $dom |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip3h.m${m}.f${ff} 2>&1
-        export err=$? ; err_chk
-        fi
-
-        echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 $dom |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip1h.m${m}.f${ff} 2>&1
-        export err=$? ; err_chk
-
-        if [ ${ff}%3 -eq 0 ] 
-        then
-        cat $DATA/prcip3h.m${m}.t${cyc}z.f${ff} >> $DATA/prcip.m${m}.t${cyc}z.f${ff}
-	fi
-
-        ln -sf $DATA/prcip.m${m}.t${cyc}z.f${ff} $DATA/${ff}/prcip.m${m}.t${cyc}z.f${ff}
-        
-        fi
-
-      fi
 
    done #members
 
