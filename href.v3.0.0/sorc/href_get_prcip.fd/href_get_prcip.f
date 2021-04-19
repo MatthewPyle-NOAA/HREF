@@ -24,7 +24,7 @@ C  raw data
      +            do_fv3_pre,skip_1h,acclength, domain
 
 	if (domain(1:5) .eq. 'conus') then
-         GRIBID=227            !namnest grid
+         GRIBID=1099            !namnest grid
         else if (domain(1:2) .eq. 'ak') then
          GRIBID=999            !AK hiresw grid
         else if (domain(1:2) .eq. 'hi') then
@@ -62,6 +62,10 @@ cc     NAM has no one-hour accumu precip, so two files are needed
        elseif (GRIBID.eq.997) then ! PR 5 km grid
          im=340
          jm=208
+         jf=im*jm
+       elseif (GRIBID.eq.1099) then ! RRFS grid
+         im=1746
+         jm=1014
          jf=im*jm
        else
          call makgds(GRIBID, kgdss, gdss, lengds, ier)

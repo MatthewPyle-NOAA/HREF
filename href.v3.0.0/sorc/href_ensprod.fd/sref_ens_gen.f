@@ -380,6 +380,12 @@ CCCC Binbin Zhou Note:
          jf=im*jm
          dx=3000.0
          dy=3000.0
+       elseif (gribid .eq. 1099) then ! RRFS CONUS grid
+         im=1746
+         jm=1014
+         jf=im*jm
+         dx=3000.0
+         dy=3000.0
        elseif (gribid .eq. 999) then ! AK grid
          im=825
          jm=603
@@ -754,7 +760,7 @@ c Loop 1-1: Read direct variable's GRIB2 data from all members
 
            if ( .not. allocated(bmap_f)) then
              allocate(bmap_f(jf))
-	if (jf .ne. 37910 .and. jf .ne. 70720) then
+	if (jf .ne. 37910 .and. jf .ne. 70720 .and. jf .ne. 1770444) then
              bmap_f=gfld%bmap
         else
              bmap_f=.true.
@@ -765,7 +771,7 @@ c Loop 1-1: Read direct variable's GRIB2 data from all members
 ! and FV3 soil
 ! and FV3 WEASD
 
-	if (jf .ne. 37910 .and. jf .ne. 70720) then
+	if (jf .ne. 37910 .and. jf .ne. 70720 .and. jf .ne. 1770444) then
 
            if ( jpd2.ne.197 .and. jpd2.ne.5 .and. 
      &          jpd2.ne. 192 .and. jpd2 .ne. 2 .and. 
@@ -814,14 +820,14 @@ c Loop 1-1: Read direct variable's GRIB2 data from all members
 
          if ( .not. allocated(bmap_f)) then
                 allocate(bmap_f(jf))
-	if (jf .ne. 37910 .and. jf .ne. 70720) then
+	if (jf .ne. 37910 .and. jf .ne. 70720 .and. jf .ne. 1770444) then
                 bmap_f=gfld%bmap
         else
                 bmap_f=.true.
         endif
          endif
 
-	if (jf .ne. 37910 .and. jf .ne. 70720) then
+	if (jf .ne. 37910 .and. jf .ne. 70720 .and. jf .ne. 1770444) then
 ! avoid accounting for echo top bitmap
 ! and FV3 soil
 ! and FV3 WEASD
