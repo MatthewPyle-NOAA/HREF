@@ -1150,37 +1150,37 @@ C	        write(0,*) 'set miss for hrrr: ', k4(nv),k5(nv)
 	write(0,*) 'defining fname for A6RI ' , thr1
         if (thr1 .eq. 1) then
           igrb2=71
-          fname="new_1y_6h.grib2.g227"
+          fname="new_1y_6h.grib2.rrfs"
         endif
 
         if (thr1 .eq. 2) then
           igrb2=72
-          fname="new_2y_6h.grib2.g227"
+          fname="new_2y_6h.grib2.rrfs"
         endif
 
         if (thr1 .eq. 5) then
           igrb2=73
-          fname="new_5y_6h.grib2.g227"
+          fname="new_5y_6h.grib2.rrfs"
         endif
 
         if (thr1 .eq. 10) then
           igrb2=74
-           fname='new_10y_6h.grib2.g227'
+           fname='new_10y_6h.grib2.rrfs'
         endif
 
         if (thr1 .eq. 25) then
           igrb2=75
-           fname='new_25y_6h.grib2.g227'
+           fname='new_25y_6h.grib2.rrfs'
         endif
 
         if (thr1 .eq. 50) then
           igrb2=76
-           fname='new_50y_6h.grib2.g227'
+           fname='new_50y_6h.grib2.rrfs'
         endif
 
         if (thr1 .eq. 100) then
           igrb2=77
-            fname='new_100y_6h.grib2.g227'
+            fname='new_100y_6h.grib2.rrfs'
         endif
 
 
@@ -1339,37 +1339,37 @@ C	        write(0,*) 'set miss for hrrr: ', k4(nv),k5(nv)
 
         if (thr1 .eq. 1) then 
          igrb2=84
-         fname="new_1y_24h.grib2.g227"
+         fname="new_1y_24h.grib2.rrfs"
         endif
 
         if (thr1 .eq. 2) then
          igrb2=85
-         fname="new_2y_24h.grib2.g227"
+         fname="new_2y_24h.grib2.rrfs"
         endif
 
         if (thr1 .eq. 5) then
          igrb2=86
-         fname="new_5y_24h.grib2.g227"
+         fname="new_5y_24h.grib2.rrfs"
         endif
 
         if (thr1 .eq. 10) then
          igrb2=87
-         fname="new_10y_24h.grib2.g227"
+         fname="new_10y_24h.grib2.rrfs"
         endif
 
         if (thr1 .eq. 25) then
          igrb2=88
-         fname="new_25y_24h.grib2.g227"
+         fname="new_25y_24h.grib2.rrfs"
         endif
 
         if (thr1 .eq. 50) then
          igrb2=89
-         fname="new_50y_24h.grib2.g227"
+         fname="new_50y_24h.grib2.rrfs"
         endif
 
         if (thr1 .eq. 100) then
          igrb2=90
-         fname="new_100y_24h.grib2.g227"
+         fname="new_100y_24h.grib2.rrfs"
         endif
 
 	write(0,*) 'trim(fname): ', trim(fname)

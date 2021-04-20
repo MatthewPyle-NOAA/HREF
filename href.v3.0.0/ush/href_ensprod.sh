@@ -27,7 +27,7 @@ dom=${NEST}
 
 cd $DATA/${ff}/
 
-ln -sf $FIXhref/new*g227* .
+ln -sf $FIXhref/new*.rrfs .
 
 if [ $NEST = 'conus' ]
 then
