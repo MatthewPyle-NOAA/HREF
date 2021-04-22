@@ -20,16 +20,19 @@ module use -a /gpfs/hps/nco/ops/nwprod/modulefiles
 # surge version
 module switch grib_util/1.1.1
 
+
+module switch python/3.6.3
 module use -a /opt/modulefiles
 module load gcc/4.9.2
 
 export WGRIB2=$WGRIB2
 
 doms="hi pr conus ak ak_alt conus_alt"
+doms="conus"
 
 echo WGRIB2 is $WGRIB2
 
-dir="/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_fork/href.v3.0.0/rocoto"
+dir="/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/HREF_cloud/href.v3.0.0/rocoto"
 
 for dom in $doms
 do

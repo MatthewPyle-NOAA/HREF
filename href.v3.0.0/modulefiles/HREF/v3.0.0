@@ -44,4 +44,5 @@ module load g2tmpl-intel/1.5.0
 module load jasper-gnu-sandybridge
 module load png-intel-sandybridge
 module load zlib-intel-sandybridge
-module load python/2.7.13
+# module load python/2.7.13
+module load python/3.6.3
