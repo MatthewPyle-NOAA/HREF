@@ -232,13 +232,14 @@ RFC_LOOP:    DO II=1,12  ! loop over RFC regions
          endif
          enddo
 
-        do J=3+1473,nxny-2-1473
+! this value (1746) is grid specific
+        do J=3+1746,nxny-2-1746
 
-        if ((gfld_full%bmap(J-1473).and.gfld_full%bmap(J+1473)).and. &
+        if ((gfld_full%bmap(J-1746).and.gfld_full%bmap(J+1746)).and. &
             .not. gfld_full%bmap(J)) then
          write(0,*) '2 - reset J to true: ',KK, J
          gfld_full%bmap(J)=.true.
-         gfld_full%fld(J)=0.5*(gfld_full%fld(J-1473)+gfld_full%fld(J+1473))
+         gfld_full%fld(J)=0.5*(gfld_full%fld(J-1746)+gfld_full%fld(J+1746))
          write(0,*) '2 - defined gfld_full%fld: ', KK,J, gfld_full%fld(J)
         endif
 
