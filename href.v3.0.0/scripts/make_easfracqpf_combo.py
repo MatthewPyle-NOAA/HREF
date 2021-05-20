@@ -57,13 +57,6 @@ except KeyError:
 HOMEhref=os.environ.get('HOMEhref','trash')
 print('found HOMEhref as ', HOMEhref)
 
-try:
-  os.environ["COMINhiresw"]
-except KeyError:
-  print("NEED TO DEFINE COMINhiresw")
-  exit(1)
-COMINhiresw=os.environ.get('COMINhiresw','trash')
-print('found COMINhiresw as ', COMINhiresw)
 
 try:
   os.environ["COMINfv3"]
@@ -137,7 +130,6 @@ os.system("cd "+DATArun)
 
 fhr=fcst_hour
 fhr_range=str(start_hour)+'-'+str(fcst_hour)
-
 
 # maximum radius (km)
 slim = max(rlist)
@@ -260,6 +252,7 @@ def process_nam_qpf(file3,file4,fhr):
 # calculate footprint routine
 def get_footprint(r):
 #    footprint = np.ones(((r/dx)*2+1,(r/dx)*2+1),dtype=int)
+    print('dx in get_footprint: ', dx)
     footprint = np.ones((int((r/dx)*2+1),int((r/dx)*2+1)),dtype=int)
     footprint[int(m.ceil(r/dx)),int(m.ceil(r/dx))] = 0
     dist = ndimage.distance_transform_edt(footprint,sampling=[dx,dx])
@@ -857,43 +850,43 @@ for t in thresh_use:
       if (2.5 <= rad < 17.5):
         probfinal[row,column] = prob[t,10][row,column]
         probfinal[row,column] = 100.0*probfinal[row,column] / float(footprint_use*nm_use)
-        if (probfinal[row,column] > 100.1): 
+        if (probfinal[row,column] > 111.1): 
            print('row, column, probfinal[row,column]: ', row, column, probfinal[row,column])
            print('prob[t,10][row,column], footprint_use: ', prob[t,10][row,column], footprint_use)
       elif (17.5 <= rad < 32.5):
         probfinal[row,column] = prob[t,25][row,column]
         probfinal[row,column] = 100.0*probfinal[row,column] / float(footprint_use*nm_use)
-        if (probfinal[row,column] > 100.1): 
+        if (probfinal[row,column] > 111.1): 
            print('row, column, probfinal[row,column]: ', row, column, probfinal[row,column])
            print('prob[t,25][row,column], footprint_use: ', prob[t,25][row,column], footprint_use,np.sum(filter_footprint_25))
       elif (32.5 <= rad < 47.5):
         probfinal[row,column] = prob[t,40][row,column]
         probfinal[row,column] = 100.0*probfinal[row,column] / float(footprint_use*nm_use)
-        if (probfinal[row,column] > 100.1): 
+        if (probfinal[row,column] > 111.1): 
            print('row, column, probfinal[row,column]: ', row, column, probfinal[row,column])
            print('prob[t,40][row,column], footprint_use: ', prob[t,40][row,column], footprint_use)
       elif (47.5 <= rad < 62.5):
         probfinal[row,column] = prob[t,55][row,column]
         probfinal[row,column] = 100.0*probfinal[row,column] / float(footprint_use*nm_use)
-        if (probfinal[row,column] > 100.1): 
+        if (probfinal[row,column] > 111.1): 
            print('row, column, probfinal[row,column]: ', row, column, probfinal[row,column])
            print('prob[t,55][row,column], footprint_use: ', prob[t,55][row,column], footprint_use)
       elif (62.5 <= rad < 77.5):
         probfinal[row,column] = prob[t,70][row,column]
         probfinal[row,column] = 100.0*probfinal[row,column] / float(footprint_use*nm_use)
-        if (probfinal[row,column] > 100.1): 
+        if (probfinal[row,column] > 111.1): 
            print('row, column, probfinal[row,column]: ', row, column, probfinal[row,column])
            print('prob[t,70][row,column], footprint_use: ', prob[t,70][row,column], footprint_use)
       elif (77.5 <= rad < 92.5):
         probfinal[row,column] = prob[t,85][row,column]
         probfinal[row,column] = 100.0*probfinal[row,column] / float(footprint_use*nm_use)
-        if (probfinal[row,column] > 100.1): 
+        if (probfinal[row,column] > 111.1): 
            print('row, column, probfinal[row,column]: ', row, column, probfinal[row,column])
            print('prob[t,85][row,column], footprint_use: ', prob[t,85][row,column], footprint_use)
       elif (92.5 <= rad <= 100):
         probfinal[row,column] = prob[t,100][row,column]
         probfinal[row,column] = 100.0*probfinal[row,column] / float(footprint_use*nm_use)
-        if (probfinal[row,column] > 100.1): 
+        if (probfinal[row,column] > 111.1): 
            print('row, column, probfinal[row,column]: ', row, column, probfinal[row,column])
            print('prob[t,100][row,column], footprint_use: ', prob[t,100][row,column], footprint_use)
       elif (rad > 100):
@@ -909,8 +902,11 @@ for t in thresh_use:
 
   t5 = time.time()
 
+# cap at 100
+  print('max of probfinal pre cap: ', np.max(probfinal))
+  probfinal = np.where(probfinal > 100.0,100.0,probfinal)
   print('Time for get final probability routine for ',t, 'inch threshold: ',t5-t4)
-  print('max of probfinal: ', np.max(probfinal))
+  print('max of probfinal post cap: ', np.max(probfinal))
   print('mean of probfinal: ', np.mean(probfinal))
   print('probfinal dims: ', np.shape(probfinal))
 

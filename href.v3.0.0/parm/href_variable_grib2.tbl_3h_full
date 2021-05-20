@@ -1,7 +1,8 @@
-  33      row variables and mean/spread/prob info
+  48      row variables and mean/spread/prob info
 REFD  16 195 103 P1 1000    A1 1000 > A3 30 40 50
 MXRF  16 198 103 P1 1000    A1 1000 > A2 40 50
 REFL  16 196 200 P1 0    A1  0   > A5 10 20 30 40 50
+ETOP  16 197 200 P1  0 A1  0   > A5 6096 9144 10668 12192 15240
 MXUPHL 7  199 103 P1  5000 A1 5000 > A3 25 75 150
 MXUV   2 220 100 M0    P1 400  > A3 1 10 20
 MUCP  7  6  108  M2  9000 18000 P1 9000 > T5 500 1000 1500 2000 3000
@@ -10,15 +11,29 @@ MUCN  7  7  108  M2  9000 18000 P1 9000 < T4  0   -50 -100 -400
 SBCN  7  7    1  M1  0
 HLCY  7  8  103  M1  3000 P1 3000 > T3 100 200 400
 SLPE  3 192 101  M1  0
-HGT   3  5  100  M1  500
+HGT   3  5  100  M5  250 500 700 850 925
 HGT   3  5    1  P1  0
-U     2  2  100  M1  500
-V     2  3  100  M1  500
+SOIM  0 192 106  M1  0 
+SOIT  0  2  106  M1  0 
+U     2  2  100  M5  250 500 700 850 925
+V     2  3  100  M5  250 500 700 850 925
 VVEL  2  8  100  M1  700
+T     0  0  100  M5  250 500 700 850 925
 T     0  0  103  M1  2  P1  2   < T1 273.15
+T     0  0    1  M1  0
+DPT   0  6  100  M4  500 700 850 925
 DPT   0  6  103  M1  2  P1  2   > T5 283.15 285.93 288.71 291.48 294.26
-AP1h   1 8     1 L1  0
-AP3h   1 8     1 L1  0
+RH    1  1  100  M1  700
+PWAT  1  3  200  M1  0  P1  0   > T3 25 37.5 50
+VSBY  19 0    1  M1  0  P1 0 < T5 400 800 1600 3200 6400
+CLDB  3  5    2  M1  0
+LCLD  6  3  214  M1  0
+MCLD  6  4  224  M1  0
+HCLD  6  5  234  M1  0
+TCDC  6  1  200  M1  0
+LTNG  17 192  1  M0  M1 0 > M1 0.2
+AP1h   1 8     1 L1  0  
+AP3h   1 8     1 L1  0 
 AP1h   1 8     1 P1  0  A1  0   > A4 12.7 25.4 50.8 76.2
 AP3h   1 8     1 P1  0  A1  0   > A5 12.7 25.4 50.8 76.2 127.0
 AP6h   1 8     1 P0     A1  0   > A5 12.7 25.4 50.8 76.2 127.0
@@ -33,8 +48,22 @@ FFG1   1 8     1 M0     A1  0   > A1 1
 FFG3   1 8     1 M0     A1  0   > A1 3
 FFG6   1 8     1 M0     A1  0   > A1 6
 
-   1       special derived variables, each  of which, needs code to process specially
+   15       special derived variables, each  of which, needs code to process specially
+PTYP  1 19     1 M1  0  P1  0  = T1 1.0
 WIND  2 1    103 M1 10  L1  10  >  L5 10.3 15.4 18.01 20.6 25.72
+WIND  2 1    103 M0   P1 80  >  T3 10.3 15.4 20.6
+WIND  2 1    100 M1 850 P1 850  > T5 10.3 20.6 30.9 41.2 51.5
+WIND  2 1    103 M1 80
+WIND  2 1    100 M1 925
+WIND  2 1    100 M1 250
+AVRW  2 1    108 M0    P2 850 300 < T1 5
+AVOMG 2 8    108 M2 700 500
+FLTR  19 205  1 M0  P1  0  = T4 1.0 2.0 3.0 4.0
+LLWS  2 192  1   M1  0 P1 0 > T1 10.3
+WSRH  19 235 103  M0  P1 10  ^ T2 9 20
+FIRW  4 2     1  M1  0  P1 0 - T4 2.0 5.0 6.0 7.0
+BKSH  2 192 103 M1  0 P1 0 > T4 10.3 15.4 20.6 25.7
+CEIL  3  5  215  M1  0  P1 0 < T6 305 610 915 1372 1830 3050
 
   0        No mxp computation for NSSE
 

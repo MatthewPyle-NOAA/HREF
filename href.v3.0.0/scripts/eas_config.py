@@ -11,7 +11,7 @@ nm_v3 = 10
 nm_ak = 8
 nm_nonconus = 6
 # model resolution (km)
-dx = 5
+dx = 3.0
 # min latency (hours)
 min_latency = 0
 # max latency (hours)

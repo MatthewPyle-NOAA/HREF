@@ -83,7 +83,6 @@ setpdy.sh
 
 if [ "$RUN_ENVIR" != nco ] ; then
   export COMOUT=${COMOUT:-${MYCOMROOT}/${NET}/${envir}/${RUN}.${PDY}_expv3}
-  export COMOUTPERM=${MYCOMROOTPERM}/${NET}/${envir}/${RUN}.${PDY}_expv3
 else
   export COMOUT=${COMOUT:-${COMROOT}/${NET}/${envir}/${RUN}.${PDY}}
 fi
@@ -92,11 +91,6 @@ if [ ! -d $COMOUT ] ; then
  mkdir -p $COMOUT/ensprod
  mkdir -p $COMOUT/verf_g2g
 fi
-
-if [ ! -d $COMOUTPERM ] ; then
- mkdir -p $COMOUTPERM/ensprod
-fi
-
 
  
 ########################################################

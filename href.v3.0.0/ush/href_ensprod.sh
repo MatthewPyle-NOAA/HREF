@@ -238,7 +238,7 @@ echo dom is $dom
 
   if [ $dom = 'conus' ]
   then
- echo $yy $mm $dd $cyc $ff "1099 39" "36" "3" "12"  > filename    #first 36 is leadtime, second 12 is fcst times = leadtime/interval
+ echo $yy $mm $dd $cyc $ff "255 39" "36" "3" "12"  > filename    #first 36 is leadtime, second 12 is fcst times = leadtime/interval
   elif [ $dom = 'ak' ]
   then
  echo $yy $mm $dd $cyc $ff "999 39" "36" "3" "12"  > filename    #first 36 is leadtime, second 12 is fcst times = leadtime/interval
@@ -310,7 +310,6 @@ if [ $SENDCOM = YES ]; then
  do
   cp $DATA/$ff/href.${typ}.t${cyc}z.f$ff $COMOUT/ensprod/href.t${cyc}z.${dom}.${typ}.f$ff.grib2
   $WGRIB2 $COMOUT/ensprod/href.t${cyc}z.${dom}.${typ}.f$ff.grib2  -s >  $COMOUT/ensprod/href.t${cyc}z.${dom}.${typ}.f$ff.grib2.idx
-  cp $DATA/$ff/href.${typ}.t${cyc}z.f$ff $COMOUTPERM/ensprod/href.t${cyc}z.${dom}.${typ}.f$ff.grib2
  done
 
  if [ ${ff}%3 -eq 0 ]

@@ -24,7 +24,7 @@ C  raw data
      +            do_fv3_pre,skip_1h,acclength, domain
 
 	if (domain(1:5) .eq. 'conus') then
-         GRIBID=1099            !namnest grid
+         GRIBID=255            !namnest grid
         else if (domain(1:2) .eq. 'ak') then
          GRIBID=999            !AK hiresw grid
         else if (domain(1:2) .eq. 'hi') then
@@ -678,8 +678,8 @@ C  raw data
 	if ( maxval(snhold(:,2)) .gt. 0) then 
 !	write(0,*) 'inside maxval(snhold(:,2) '
             sn1(:)=snhold(:,2)-snhold(:,1)
-!	write(0,*) 'maxval snholds, sn1: ', maxval(snhold(:,1)), 
-!     +                       maxval(snhold(:,2)), maxval(sn1)
+	write(0,*) 'maxval snholds, sn1: ', maxval(snhold(:,1)), 
+     +                       maxval(snhold(:,2)), maxval(sn1)
         endif
 
          if (nf.eq.1) then 
@@ -696,9 +696,9 @@ C  raw data
           jpd27=2 !2 hr accumulation
           call readGB2(iunit,jpdtn,jpd1,jpd2,jpd27,gfld,ie)  !Large scale APCP
           if (ie.eq.0) then
-!	    write(0,*) 'populate SN mod=2, 2 h accum nf of nfile: ',nf,nfile
+	    write(0,*) 'populate SN mod=2, 2 h accum nf of nfile: ',nf,nfile
             snhold(:,2)=gfld%fld(:)
-!            write(0,*) 'maxval(snhold(:,2)) ', maxval(snhold(:,2))
+            write(0,*) 'maxval(snhold(:,2)) ', maxval(snhold(:,2))
 	
 	if (nf .eq. 2) then
 	 sn1(:)=snhold(:,3)-snhold(:,2)

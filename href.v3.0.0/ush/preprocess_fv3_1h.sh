@@ -20,16 +20,16 @@ cyc=${1}
 mem=${2}
 hr=${3}
 
-dim1=1746
-dim2=1014
+dim1=1799
+dim2=1059
 
 cd ${DATA}
 
 mkdir fv3_${mem}_${hr}
 cd fv3_${mem}_${hr}
 
-# filecheck=$COMINfv3.${PDY}/rrfs.t${cyc}z.m${mem}.f${hr}.grib2
-filecheck=$COMINfv3/${mem}/PRSLEV.GrbF${hr}
+filecheck=$COMINfv3.${PDY}/${cyc}/rrfs.t${cyc}z.mem${mem}.testbed.conusf0${hr}.grib2
+# filecheck=$COMINfv3/${mem}/PRSLEV.GrbF${hr}
 
 echo filecheck is $filecheck
 

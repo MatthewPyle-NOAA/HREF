@@ -8,8 +8,8 @@
 <!ENTITY STARTHOUR "00">
 
 <!ENTITY ENDYEAR "2021">
-<!ENTITY ENDMONTH "04">
-<!ENTITY ENDDAY "09">
+<!ENTITY ENDMONTH "05">
+<!ENTITY ENDDAY "20">
 <!ENTITY ENDHOUR "00">
 
 <!ENTITY USER "Matthew.Pyle">
@@ -30,15 +30,15 @@
 <!-- <!ENTITY COMINhrrr "/gpfs/hps/ptmp/Benjamin.Blake/com/hrrr/prod/hrrr"> -->
 <!ENTITY COMINhiresw "/gpfs/hps/nco/ops/com/hiresw/prod/hiresw">
 <!ENTITY COMINnam "/gpfs/dell1/nco/ops/com/nam/prod/nam">
-<!ENTITY COMINfv3sar "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/com/rrfs/para/rrfs">
-<!ENTITY COMINrrfs "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/com/rrfs/">
+<!ENTITY COMINfv3sar "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/com/rrfs/rrfs">
+<!ENTITY COMINrrfs "/gpfs/hps3/emc/meso/noscrub/Matthew.Pyle/com/rrfs/rrfs">
 <!ENTITY COMINall "/gpfs/hps3/ptmp/Matthew.Pyle/nwges/&envir;/hiresw/href">
 <!ENTITY GESROOT "/gpfs/hps3/ptmp/&USER;/nwges">
 <!ENTITY OUTDIR "/gpfs/hps3/ptmp/&USER;">
 <!ENTITY MYCOMROOT "/gpfs/hps3/ptmp/&USER;/com">
 <!ENTITY MYCOMROOTPERM "/gpfs/hps3/emc/meso/noscrub/&USER;/com">
 <!ENTITY DATAROOT "/gpfs/hps3/stmp/&USER;/tmpnwprd">
-<!ENTITY KEEPDATA "NO">
+<!ENTITY KEEPDATA "YES">
 <!ENTITY TIMEOFFSET_SIX "-00:06:00:00">
 <!ENTITY TIMEOFFSET_TWELVE "-00:12:00:00">
 
@@ -62,7 +62,7 @@
 <!ENTITY PREPROC_RESOURCES '<walltime>00:25:00</walltime><native></native>'>
 
 <!ENTITY FFG_RESOURCES '<walltime>00:10:00</walltime><native></native>'>
-<!ENTITY EAS_RESOURCES '<walltime>00:25:00</walltime><native></native>'>
+<!ENTITY EAS_RESOURCES '<walltime>00:29:00</walltime><native></native>'>
 <!ENTITY ENSPROD_RESOURCES '<walltime>00:25:00</walltime><native></native>'>
 <!ENTITY GEMPAK_RESOURCES '<walltime>00:59:00</walltime><native></native>'>
 
@@ -167,15 +167,15 @@
     <dependency>
         <and>
 <!-- Make sure even and odd forecast hours are done -->
-       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;/01/PRSLEV.GrbF60</cyclestr></datadep>
-       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;/02/PRSLEV.GrbF60</cyclestr></datadep>
-       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;/03/PRSLEV.GrbF60</cyclestr></datadep>
-       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;/04/PRSLEV.GrbF60</cyclestr></datadep>
-       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;/05/PRSLEV.GrbF60</cyclestr></datadep>
-       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;/06/PRSLEV.GrbF60</cyclestr></datadep>
-       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;/07/PRSLEV.GrbF60</cyclestr></datadep>
-       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;/08/PRSLEV.GrbF60</cyclestr></datadep>
-       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINrrfs;/09/PRSLEV.GrbF60</cyclestr></datadep>
+       <datadep age="03:00" minsize="40000000"><cyclestr>&COMINrrfs;.@Y@m@d/@H/rrfs.t@Hz.mem01.testbed.conusf060.grib2</cyclestr></datadep>
+       <datadep age="03:00" minsize="40000000"><cyclestr>&COMINrrfs;.@Y@m@d/@H/rrfs.t@Hz.mem02.testbed.conusf060.grib2</cyclestr></datadep>
+       <datadep age="03:00" minsize="40000000"><cyclestr>&COMINrrfs;.@Y@m@d/@H/rrfs.t@Hz.mem03.testbed.conusf060.grib2</cyclestr></datadep>
+       <datadep age="03:00" minsize="40000000"><cyclestr>&COMINrrfs;.@Y@m@d/@H/rrfs.t@Hz.mem04.testbed.conusf060.grib2</cyclestr></datadep>
+       <datadep age="03:00" minsize="40000000"><cyclestr>&COMINrrfs;.@Y@m@d/@H/rrfs.t@Hz.mem05.testbed.conusf060.grib2</cyclestr></datadep>
+       <datadep age="03:00" minsize="40000000"><cyclestr>&COMINrrfs;.@Y@m@d/@H/rrfs.t@Hz.mem06.testbed.conusf060.grib2</cyclestr></datadep>
+       <datadep age="03:00" minsize="40000000"><cyclestr>&COMINrrfs;.@Y@m@d/@H/rrfs.t@Hz.mem07.testbed.conusf060.grib2</cyclestr></datadep>
+       <datadep age="03:00" minsize="40000000"><cyclestr>&COMINrrfs;.@Y@m@d/@H/rrfs.t@Hz.mem08.testbed.conusf060.grib2</cyclestr></datadep>
+       <datadep age="03:00" minsize="40000000"><cyclestr>&COMINrrfs;.@Y@m@d/@H/rrfs.t@Hz.mem09.testbed.conusf060.grib2</cyclestr></datadep>
         </and>
     </dependency>
 
@@ -252,8 +252,8 @@
       <dependency>
      <and>
        <taskdep task="preproc_fv3"/>
-       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.m01.f48.grib2</cyclestr></datadep>
-       <datadep age="03:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.m02.f48.grib2</cyclestr></datadep>
+       <datadep age="03:00" minsize="40000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.m01.f48.grib2</cyclestr></datadep>
+       <datadep age="03:00" minsize="40000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.m02.f48.grib2</cyclestr></datadep>
      </and>
       </dependency>
   </task>
@@ -341,8 +341,8 @@
 
       <dependency>
         <and>
-        <datadep age="03:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.m01.f48.grib2</cyclestr></datadep>
-        <datadep age="03:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.m02.f48.grib2</cyclestr></datadep>
+        <datadep age="03:00" minsize="40000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.m01.f48.grib2</cyclestr></datadep>
+        <datadep age="03:00" minsize="40000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.m02.f48.grib2</cyclestr></datadep>
         <taskdep task="preproc_fv3"/>
 
         </and>
@@ -427,8 +427,8 @@
      <and>
         <taskdep task="ffg_gen"/>
         <taskdep task="preproc_fv3"/>
-        <datadep age="03:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.m01.f48.grib2</cyclestr></datadep>
-        <datadep age="03:00" minsize="100000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.m02.f48.grib2</cyclestr></datadep>
+        <datadep age="03:00" minsize="40000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.m01.f48.grib2</cyclestr></datadep>
+        <datadep age="03:00" minsize="40000000"><cyclestr>&COMINall;.@Y@m@d/fv3s.t@Hz.m02.f48.grib2</cyclestr></datadep>
      </and>
     </dependency>
 

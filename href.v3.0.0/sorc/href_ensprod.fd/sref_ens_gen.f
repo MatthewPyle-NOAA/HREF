@@ -630,6 +630,7 @@ c Loop 1-1: Read direct variable's GRIB2 data from all members
              else if (vname(nv).eq.'AP3h'.or.vname(nv).eq.'SN3h' .or. 
      &                vname(nv).eq.'A3RI' .or. vname(nv).eq.'FFG3') then
                 if(ifhr.lt.3 .or. mod(ifhr,3) .ne. 0) exit loop222
+	     write(0,*) 'jpd27=3 for AP3h or SN3h'
                 jpd27=3
              else if (vname(nv).eq.'AP6h'.or.vname(nv).eq.'SN6h' .or.
      &                vname(nv).eq.'A6RI'.or.vname(nv).eq.'FFG6') then
@@ -760,7 +761,7 @@ c Loop 1-1: Read direct variable's GRIB2 data from all members
 
            if ( .not. allocated(bmap_f)) then
              allocate(bmap_f(jf))
-	if (jf .ne. 37910 .and. jf .ne. 70720 .and. jf .ne. 1770444) then
+	if (jf .ne. 37910 .and. jf .ne. 70720 .and. jf .ne. 1905141) then
              bmap_f=gfld%bmap
         else
              bmap_f=.true.
@@ -771,7 +772,7 @@ c Loop 1-1: Read direct variable's GRIB2 data from all members
 ! and FV3 soil
 ! and FV3 WEASD
 
-	if (jf .ne. 37910 .and. jf .ne. 70720 .and. jf .ne. 1770444) then
+	if (jf .ne. 37910 .and. jf .ne. 70720 .and. jf .ne. 1905141) then
 
            if ( jpd2.ne.197 .and. jpd2.ne.5 .and. 
      &          jpd2.ne. 192 .and. jpd2 .ne. 2 .and. 
@@ -820,14 +821,14 @@ c Loop 1-1: Read direct variable's GRIB2 data from all members
 
          if ( .not. allocated(bmap_f)) then
                 allocate(bmap_f(jf))
-	if (jf .ne. 37910 .and. jf .ne. 70720 .and. jf .ne. 1770444) then
+	if (jf .ne. 37910 .and. jf .ne. 70720 .and. jf .ne. 1905141) then
                 bmap_f=gfld%bmap
         else
                 bmap_f=.true.
         endif
          endif
 
-	if (jf .ne. 37910 .and. jf .ne. 70720 .and. jf .ne. 1770444) then
+	if (jf .ne. 37910 .and. jf .ne. 70720 .and. jf .ne. 1905141) then
 ! avoid accounting for echo top bitmap
 ! and FV3 soil
 ! and FV3 WEASD
