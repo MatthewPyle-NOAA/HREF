@@ -1,0 +1,40 @@
+#! /bin/sh
+
+# assume that PDY is passed in
+#
+
+cyc=00
+
+echo PDY is $PDY
+
+hrs="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 \
+31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60"
+
+types="mean pmmn prob eas ffri avrg lpmm"
+
+cd /lustre/com/hiresw/test/href.${PDY}_expv3/ensprod/
+
+echo "where am I"
+
+pwd
+
+source /lustre/href.v3.0.0/rocoto/key.bdp
+
+for typ in $types
+do
+for hr in $hrs
+do
+
+	echo typ $typ hr $hr
+
+	if [ -e rrfsce.t${cyc}z.conus.${typ}.f${hr}.grib2 ]
+	then
+aws s3 cp rrfsce.t${cyc}z.conus.${typ}.f${hr}.grib2  s3://noaa-rrfs-pds/rrfs.${PDY}/${cyc}/ensprod/rrfsce.t${cyc}z.conus.${typ}.f${hr}.grib2
+aws s3 cp rrfsce.t${cyc}z.conus.${typ}.f${hr}.grib2.idx s3://noaa-rrfs-pds/rrfs.${PDY}/${cyc}/ensprod/rrfsce.t${cyc}z.conus.${typ}.f${hr}.grib2.idx
+        fi
+done
+done
+
+rm -rf /lustre/com/hiresw/test/href.${PDY}_expv3
+rm -rf /lustre/com/rrfs/rrfs.${PDY}
+rm -rf /lustre/nwges/test/hiresw/href.${PDY}

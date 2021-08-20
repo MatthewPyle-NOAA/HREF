@@ -85,8 +85,11 @@ postmsg "$jlogfile" "$msg"
 # Run setpdy and initialize PDY variables
 #
 
-setpdy.sh
-. PDY
+# why is this here?
+# setpdy.sh
+# . PDY
+
+echo have PDY as $PDY
 
 ##############################################
 # Define running directory and COM directories
@@ -136,9 +139,10 @@ echo "$USHhref/preprocess_fv3_1h.sh ${cyc} ${mem} $hr" >> poe.fv3
 done
 
 chmod 775 poe.fv3  
-export NODES=6
-aprun -j 1 -n 61 -N 11 -d 1 cfp poe.fv3
+# export NODES=6
 
+# try serial
+./poe.fv3
 
 done
 
@@ -146,6 +150,7 @@ done
 
 for mem in $mems
 do
+echo " calling preprocess_fv3_3hapcp.sh for mem " $mem
 $USHhref/preprocess_fv3_3hapcp.sh ${cyc}  ${mem}
 done
 

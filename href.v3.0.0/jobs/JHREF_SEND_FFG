@@ -1,0 +1,29 @@
+#! /bin/sh -l
+
+#SBATCH --time=10      # time limit in minutes
+#SBATCH -o %x.o%j      # Output file name to match the current scheme
+
+
+cyc=00
+
+
+PDY=`date -u +%Y%m%d`
+
+echo PDY is $PDY
+
+
+echo "where am I"
+
+pwd
+
+# source /lustre/href.v3.0.0/rocoto/key.bdp
+
+module load aws-utils/latest
+
+
+
+cd /scratch2/NCEPDEV/fv3-cam/Matthew.Pyle/com/hiresw/prod/href.${PDY}
+
+aws s3 cp href.t00z.ffg1h.3km.grib2  s3://noaa-ncepdev-ncep-cam/Matthew.Pyle/com/hiresw/prod/href.${PDY}/href.t00z.ffg1h.3km.grib2
+aws s3 cp href.t00z.ffg3h.3km.grib2  s3://noaa-ncepdev-ncep-cam/Matthew.Pyle/com/hiresw/prod/href.${PDY}/href.t00z.ffg3h.3km.grib2
+aws s3 cp href.t00z.ffg6h.3km.grib2  s3://noaa-ncepdev-ncep-cam/Matthew.Pyle/com/hiresw/prod/href.${PDY}/href.t00z.ffg6h.3km.grib2

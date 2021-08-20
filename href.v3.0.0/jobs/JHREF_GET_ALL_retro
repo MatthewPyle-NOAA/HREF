@@ -1,0 +1,33 @@
+#! /bin/sh
+
+# assume that PDY is passed in
+#
+
+cyc=00
+
+echo PDY is $PDY
+
+hrs="00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 \
+31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60"
+
+mems="01 02 03 04 05 06 07 08 09"
+
+cd /lustre/
+
+mkdir -p com/rrfs/rrfs.${PDY}/${cyc}
+
+cd com/rrfs/rrfs.${PDY}/${cyc}
+
+for mem in $mems
+do
+for hr in $hrs
+do
+wget https://noaa-rrfs-pds.s3.amazonaws.com/rrfs.${PDY}/${cyc}/mem${mem}/rrfs.t${cyc}z.mem${mem}.testbed.conusf0${hr}.grib2
+done
+done
+
+cd /lustre/
+
+mkdir -p com/hiresw/test/href.${PDY}_expv3
+
+cd com/hiresw/test/href.${PDY}_expv3

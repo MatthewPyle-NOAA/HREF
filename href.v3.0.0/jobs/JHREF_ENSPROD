@@ -86,8 +86,10 @@ postmsg "$jlogfile" "$msg"
 # Run setpdy and initialize PDY variables
 #
 
-setpdy.sh
-. PDY
+# setpdy.sh
+# . PDY
+
+echo have PDY as $PDY
 
 ##############################################
 # Define running directory and COM directories
@@ -122,26 +124,134 @@ fi
 rm -rf poe.*
 
 
-hrlist="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 \
-34 35 36 37 38 39 40 41 42 43 44 45 46 47 48"
+# hrlist="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 \
+# 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48"
 
-for hr in $hrlist
+hrlista="01 02 03 04 05 06 07 08 09 10 11 12"
+hrlistb="13 14 15 16 17 18 19 20 21 22 23 24" 
+hrlistc="25 26 27 28 29 30 31 32 33 34 35 36"
+hrlistd="37 38 39 40 41 42 43 44 45 46 47 48"
+hrliste="49 50 51 52 53 54 55 56 57 58 59 60"
+
+echo "#! /bin/sh" > poe.link.a
+for hr in $hrlista
 do
-echo "$SCRIPTShref/exhref_ensprod_link.sh.ecf $hr" >> poe.link.all
-echo "$SCRIPTShref/exhref_ensprod.sh.ecf $hr" >> poe.ensprod.all
+echo "$SCRIPTShref/exhref_ensprod_link.sh.ecf $hr &" >> poe.link.a
 done
+echo "wait" >> poe.link.a
+chmod u+x poe.link.a
+
+echo "#! /bin/sh" > poe.link.b
+for hr in $hrlistb
+do
+echo "$SCRIPTShref/exhref_ensprod_link.sh.ecf $hr &" >> poe.link.b
+done
+echo "wait" >> poe.link.b
+chmod u+x poe.link.b
+
+echo "#! /bin/sh" > poe.link.c
+for hr in $hrlistc
+do
+echo "$SCRIPTShref/exhref_ensprod_link.sh.ecf $hr &" >> poe.link.c
+done
+echo "wait" >> poe.link.c
+chmod u+x poe.link.c
+
+echo "#! /bin/sh" > poe.link.d
+for hr in $hrlistd
+do
+echo "$SCRIPTShref/exhref_ensprod_link.sh.ecf $hr &" >> poe.link.d
+done
+echo "wait" >> poe.link.d
+chmod u+x poe.link.d
+
+echo "#! /bin/sh" > poe.link.e
+for hr in $hrliste
+do
+echo "$SCRIPTShref/exhref_ensprod_link.sh.ecf $hr &" >> poe.link.e
+done
+echo "wait" >> poe.link.e
+chmod u+x poe.link.e
 
 
-chmod 775  poe.link.all
-chmod 775 poe.ensprod.all
+./poe.link.a
+./poe.link.b
+./poe.link.c
+./poe.link.d
+./poe.link.e
+
+
+
+echo "#! /bin/sh" > poe.a
+for hr in $hrlista
+do
+echo "$SCRIPTShref/exhref_ensprod.sh.ecf $hr &" >> poe.a
+done
+echo "wait" >> poe.a
+chmod u+x poe.a
+
+echo "#! /bin/sh" > poe.b
+for hr in $hrlistb
+do
+echo "$SCRIPTShref/exhref_ensprod.sh.ecf $hr &" >> poe.b
+done
+echo "wait" >> poe.b
+chmod u+x poe.b
+
+echo "#! /bin/sh" > poe.c
+for hr in $hrlistc
+do
+echo "$SCRIPTShref/exhref_ensprod.sh.ecf $hr &" >> poe.c
+done
+echo "wait" >> poe.c
+chmod u+x poe.c
+
+echo "#! /bin/sh" > poe.d
+for hr in $hrlistd
+do
+echo "$SCRIPTShref/exhref_ensprod.sh.ecf $hr &" >> poe.d
+done
+echo "wait" >> poe.d
+chmod u+x poe.d
+
+echo "#! /bin/sh" > poe.e
+for hr in $hrliste
+do
+echo "$SCRIPTShref/exhref_ensprod.sh.ecf $hr &" >> poe.e
+done
+echo "wait" >> poe.e
+chmod u+x poe.e
+
+./poe.a
+echo DONE poe.a
+./poe.b
+echo DONE poe.b
+./poe.c
+echo DONE poe.c
+./poe.d
+echo DONE poe.d
+./poe.e
+echo DONE poe.e
+
+# for hr in $hrlist
+# do
+# echo "$SCRIPTShref/exhref_ensprod_link.sh.ecf $hr" >> poe.link.all
+# echo "$SCRIPTShref/exhref_ensprod.sh.ecf $hr" >> poe.ensprod.all
+# done
+
+
+# chmod 775  poe.link.all
+# chmod 775 poe.ensprod.all
 
 if [ ${NEST}  =  "conus" ]
 then
 export NODES=16
-aprun -j 1 -n 48 -N 3 -d 1 cfp poe.link.all
-export err=$?; err_chk
-aprun -j 1 -n 48 -N 3 -d 1 cfp poe.ensprod.all
-export err=$?; err_chk
+# aprun -j 1 -n 48 -N 3 -d 1 cfp poe.link.all
+# ./poe.link.all
+# export err=$?; err_chk
+# aprun -j 1 -n 48 -N 3 -d 1 cfp poe.ensprod.all
+# ./poe.ensprod.all
+# export err=$?; err_chk
 
 elif [ $NEST = "ak" ]
 then
@@ -164,7 +274,7 @@ fi
 
 
 
-export err=$?; err_chk
+export err=$?; # err_chk
 
 msg"JOB $job HAS COMPLETED NORMALLY."
 postmsg "$jlogfile" "$msg"
