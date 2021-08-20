@@ -943,7 +943,7 @@ c
          integer s,nbr
 
          if(ns.eq.'A'.or.ns.eq.'E'.or.ns.eq.'H') then
-           nbr=5
+           nbr=8
          else if (ns.eq.'K') then
            nbr=3
          else if (ns.eq.'L') then
@@ -961,7 +961,7 @@ c
          end if
 
          if(gs.eq.'A'.or.gs.eq.'E'.or.gs.eq.'H') then
-           s=5
+           s=8
          else if (gs.eq.'K') then
            s=3
          else if (ns.eq.'L') then
@@ -1103,13 +1103,14 @@ c
         write(0,*) 'jf, im, jm: ', jf, im,jm
 
          if(s.eq.'A') then
-           nbr=8.  ! to mimic the 40 km radius
+           nbr=13.  ! to mimic the 40 km radius with 3 km grid
+!           nbr=8.  ! to mimic the 40 km radius
          else if (s.eq.'K') then
-           nbr=4. ! try small neighborhood for mountain snow
+           nbr=6. ! try small neighborhood for mountain snow
          else if (s.eq.'L') then
-           nbr=2. ! try very small neighborhood for lightning
+           nbr=3. ! try very small neighborhood for lightning
          else if (s.eq.'M') then
-           nbr=1. ! try very small neighborhood for lightning
+           nbr=2. ! try very small neighborhood for lightning
          else if (s.eq.'B') then
            nbr=10.
          else if (s.eq.'C') then

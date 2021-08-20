@@ -197,7 +197,8 @@ C for variable table:
         Integer Tlvl(maxvar),Lth
         Character*1 op(maxvar)
         Real    Thrs(maxvar,maxtlvl)
-        Character*5 eps       
+        Character*5 eps
+        Character*6 epsa
   
 c    for derived variables
         Character*4 dvname(maxvar)
@@ -436,6 +437,8 @@ CCCC Binbin Zhou Note:
 
 
        eps=files(1)(1:4)
+       epsa="rrfsce"
+       
        missing=0 
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c (III): Open all ensemble data files 
@@ -470,16 +473,15 @@ c (cntl, n1, p1, etc.).  That loop should be inside the date/time loop.
         ilocpmmn=207
 !        ilocavg=208
 
-      mnout=trim(eps)//'.mean.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
-      pmmnout=trim(eps)//'.pmmn.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
+      mnout=trim(epsa)//'.mean.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
+      pmmnout=
+     &     trim(epsa)//'.pmmn.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
       locpmmnout= 
-     &     trim(eps)//'.lpmm.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
-      spout=trim(eps)//'.sprd.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
-      prout=trim(eps)//'.prob.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
-      avgout=trim(eps)//'.avrg.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
-!      locavgout= 
-!     &     trim(eps)//'.lavg.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
-      ffriout=trim(eps)//'.ffri.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
+     &     trim(epsa)//'.lpmm.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
+      spout=trim(epsa)//'.sprd.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
+      prout=trim(epsa)//'.prob.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
+      avgout=trim(epsa)//'.avrg.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
+      ffriout=trim(epsa)//'.ffri.t'//cycle(ihr+1)//'z'//'.f'//trim(cfhr)
 
       call baopen (imean, mnout, iret)
       if (iret.ne.0) write(*,*) 'open ', mnout, 'err=', iret
@@ -1420,7 +1422,7 @@ C	        write(0,*) 'set miss for hrrr: ', k4(nv),k5(nv)
 	write(0,*) 'defining fname for FFG1 ' , thr1
 	if (thr1 .eq. 1) then
 !          fname="ffg1h.grib2.href5km"
-          fname="href.ffg1h.5km.grib2"
+          fname="href.ffg1h.3km.grib2"
         else
           write(0,*) 'ffg1h with wrong thr1 ', thr1
         endif
@@ -1481,7 +1483,7 @@ C	        write(0,*) 'set miss for hrrr: ', k4(nv),k5(nv)
 	elseif (vname(nv) .eq. 'FFG3') then
 	write(0,*) 'defining fname for FFG3 ' , thr1
 !	if (thr1 .eq. 3) fname="ffg3h.grib2.href5km"
-	if (thr1 .eq. 3) fname="href.ffg3h.5km.grib2"
+	if (thr1 .eq. 3) fname="href.ffg3h.3km.grib2"
 
 	write(0,*) 'trim(fname): ', trim(fname)
                igrb2=92
@@ -1535,7 +1537,7 @@ C	        write(0,*) 'set miss for hrrr: ', k4(nv),k5(nv)
 	elseif (vname(nv) .eq. 'FFG6') then
 	write(0,*) 'defining fname for FFG6 ' , thr1
 !	if (thr1 .eq. 6) fname="ffg6h.grib2.href5km"
-	if (thr1 .eq. 6) fname="href.ffg6h.5km.grib2"
+	if (thr1 .eq. 6) fname="href.ffg6h.3km.grib2"
 
 	write(0,*) 'trim(fname): ', trim(fname)
                igrb2=93
