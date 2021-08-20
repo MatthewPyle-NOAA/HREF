@@ -113,7 +113,7 @@ echo 0 >> input.${hr}
 echo "$dim1 $dim2" >> input.${hr}
 
 $EXEChref/href_fv3snowbucket < input.${hr}
-export err=$?; err_chk
+export err=$? # ; err_chk
 
 # 1 h added to f01
 
@@ -121,7 +121,7 @@ export err=$?; err_chk
 if [ -s ../fv3s.t${cyc}z.m${mem}.f${hr}.grib2 -a -s temp.t${cyc}z.f${hrold}.grib2 ]
 then
 $EXEChref/href_fv3snowbucket < input.${hr}
-export err=$?; err_chk
+export err=$? # ; err_chk
 cat ./PCP1HR${hr}.tm00 >> ../fv3s.t${cyc}z.m${mem}.f${hr}.grib2
 fi
 
@@ -164,12 +164,12 @@ echo 0 >> input.${hr}
 echo "$dim1 $dim2" >> input.${hr}
 
 $EXEChref/href_fv3snowbucket < input.${hr}
-export err=$?; err_chk
+export err=$? # ; err_chk
 
 if [ -s ../fv3s.t${cyc}z.m${mem}.f${hr}.grib2 -a -s temp.t${cyc}z.f${hrold}.grib2 ]
 then
 $EXEChref/href_fv3snowbucket < input.${hr}
-export err=$?; err_chk
+export err=$? # ; err_chk
 cat ./PCP3HR${hr}.tm00 >> ../fv3s.t${cyc}z.m${mem}.f${hr}.grib2
 fi
 

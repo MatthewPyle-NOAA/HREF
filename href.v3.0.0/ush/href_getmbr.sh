@@ -197,7 +197,8 @@ ff=$fhr
         elif [  $ff = '12' -o  $ff = '15' -o $ff = '18' -o $ff = '21' ]
         then
         fcheck=` expr $ff - 09`
-        elif [  $ff = '24' -o  $ff = '27' -o $ff = '30' -o $ff = '33' -o $ff = '36' -o  $ff = '39' -o $ff = '42' -o $ff = '45' -o $ff = '48' ]
+        elif [  $ff = '24' -o  $ff = '27' -o $ff = '30' -o $ff = '33' -o $ff = '36' -o  $ff = '39' -o $ff = '42' -o $ff = '45' -o $ff = '48' \
+	        $ff = '51' -o  $ff = '54' -o $ff = '57' -o $ff = '60' ]
         then
         fcheck=` expr $ff - 21`
         elif [ $ff -gt 0 ]
@@ -233,7 +234,8 @@ echo working things with ff as $ff and  fcheck as $fcheck
          sleep 1
         else
          msg="FATAL ERROR: $filecheck missing but required"
-         err_exit $msg
+#         err_exit $msg
+         echo $msg
 	fi
 
 	fcheckloc=$fcheck
@@ -262,11 +264,11 @@ typeset -Z2 fcheckloc
         if [ ${ff}%3 -eq 0 ]
         then
         echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 conus |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip3h.m${m}.f${ff} 2>&1
-        export err=$? ; err_chk
+        export err=$? # ; err_chk
         fi
         fi
         echo href.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 conus |$EXEChref/href_get_prcip > $DATA/output.href_get_prcip1h.m${m}.f${ff} 2>&1
-        export err=$? ; err_chk
+        export err=$? # ; err_chk
 
         if [ ${ff}%3 -eq 0 ] 
         then

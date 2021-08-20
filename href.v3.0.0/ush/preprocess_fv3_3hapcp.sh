@@ -83,7 +83,7 @@ fi
   echo "$dim1 $dim2" >> input.card.${hr}
 
  $EXEChref/href_fv3_3hqpf < input.card.${hr}
- export err=$?; err_chk
+ export err=$? # ; err_chk
  cat ./PCP3HR${hr}.tm00 >> $filecheck
  cp PCP3HR${hr}.tm00 PCP3HR${hr}.tm00_qpf
 
@@ -102,7 +102,8 @@ done
 
 for hr in $hrs
 do
+	echo copying fv3s.t${cyc}z.m${mem}.f${hr}.grib2 to GESIN
  cp fv3s.t${cyc}z.m${mem}.f${hr}.grib2 ${GESIN}.${PDY}
  err=$?
- export err ; err_chk
+ export err # ; err_chk
 done

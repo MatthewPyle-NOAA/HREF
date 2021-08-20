@@ -32,11 +32,11 @@ ln -sf $FIXhref/new*.rrfs .
 if [ $NEST = 'conus' ]
 then
 
-cp $COMINffg/href.t${cyc}z.ffg1h.5km.grib2 ./href.ffg1h.5km.grib2
+cp $COMINffg/href.t${cyc}z.ffg1h.3km.grib2 ./href.ffg1h.3km.grib2
 err1=$?
-cp $COMINffg/href.t${cyc}z.ffg3h.5km.grib2 ./href.ffg3h.5km.grib2
+cp $COMINffg/href.t${cyc}z.ffg3h.3km.grib2 ./href.ffg3h.3km.grib2
 err2=$?
-cp $COMINffg/href.t${cyc}z.ffg6h.5km.grib2 ./href.ffg6h.5km.grib2
+cp $COMINffg/href.t${cyc}z.ffg6h.3km.grib2 ./href.ffg6h.3km.grib2
 err3=$?
 
 if [ $cyc = '00' ]; then
@@ -53,19 +53,19 @@ fi
 if [ $err1 -ne 0 ]
 then
 echo "WARNING: using previous cycle FFG1H file"
-cp $COMINffg/href.${cycold}z.ffg1h.5km.grib2 ./href.ffg1h.5km.grib2
+cp $COMINffg/href.${cycold}z.ffg1h.3km.grib2 ./href.ffg1h.3km.grib2
 fi
 
 if [ $err2 -ne 0 ]
 then
 echo "WARNING: using previous cycle FFG3H file"
-cp $COMINffg/href.${cycold}z.ffg3h.5km.grib2 ./href.ffg3h.5km.grib2
+cp $COMINffg/href.${cycold}z.ffg3h.3km.grib2 ./href.ffg3h.3km.grib2
 fi
 
 if [ $err3 -ne 0 ]
 then
 echo "WARNING: using previous cycle FFG6H file"
-cp $COMINffg/href.${cycold}z.ffg6h.5km.grib2 ./href.ffg6h.5km.grib2
+cp $COMINffg/href.${cycold}z.ffg6h.3km.grib2 ./href.ffg6h.3km.grib2
 fi
 
 
@@ -221,16 +221,20 @@ fi
 	echo mbrs is $mbrs
  for m in $mbrs ; do              
    fcst=` expr ${age[$m]} + $ff`
-     weight=`echo "scale=2; 1-${age[$m]}/48" | bc`
+     weight=`echo "scale=2; 1-${age[$m]}/60" | bc`
 
       if [ $weight -lt 1.0 ] ; then
         weight='0'$weight
       fi
 
+      echo fcst $fcst weight $weight
+
    if [ -s $DATA/href.m${m}.t${cyc}z.f$ff ] ; then
        nmbr=` expr $nmbr + 1`
        echo "   "$weight href.m${m}.t${cyc}z.f$ff "->" ${file[$m]}.t${cycloc[$m]}z.f${fcst} >> temp.f${ff}
        ln -sf $DATA/href.m${m}.t${cyc}z.f$ff .
+       else
+	       echo MISSING $DATA/href.m${m}.t${cyc}z.f$ff
    fi
  done
 
@@ -308,8 +312,8 @@ if [ $SENDCOM = YES ]; then
 
  for typ in $types
  do
-  cp $DATA/$ff/href.${typ}.t${cyc}z.f$ff $COMOUT/ensprod/href.t${cyc}z.${dom}.${typ}.f$ff.grib2
-  $WGRIB2 $COMOUT/ensprod/href.t${cyc}z.${dom}.${typ}.f$ff.grib2  -s >  $COMOUT/ensprod/href.t${cyc}z.${dom}.${typ}.f$ff.grib2.idx
+  cp $DATA/$ff/rrfsce.${typ}.t${cyc}z.f$ff $COMOUT/ensprod/rrfsce.t${cyc}z.${dom}.${typ}.f$ff.grib2
+  $WGRIB2 $COMOUT/ensprod/rrfsce.t${cyc}z.${dom}.${typ}.f$ff.grib2  -s >  $COMOUT/ensprod/rrfsce.t${cyc}z.${dom}.${typ}.f$ff.grib2.idx
  done
 
  if [ ${ff}%3 -eq 0 ]
@@ -332,8 +336,8 @@ fi
 if [ $SENDDBN = YES ]; then
  for typ in $types
  do
-  $DBNROOT/bin/dbn_alert MODEL HREF_GB2 $job $COMOUT/ensprod/href.t${cyc}z.${dom}.${typ}.f$ff.grib2
-  $DBNROOT/bin/dbn_alert MODEL HREF_GB2_IDX $job $COMOUT/ensprod/href.t${cyc}z.${dom}.${typ}.f$ff.grib2.idx
+  $DBNROOT/bin/dbn_alert MODEL HREF_GB2 $job $COMOUT/ensprod/rrfsce.t${cyc}z.${dom}.${typ}.f$ff.grib2
+  $DBNROOT/bin/dbn_alert MODEL HREF_GB2_IDX $job $COMOUT/ensprod/rrfsce.t${cyc}z.${dom}.${typ}.f$ff.grib2.idx
  done
 fi
 
