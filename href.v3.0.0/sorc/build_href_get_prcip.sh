@@ -1,12 +1,20 @@
-#! /bin/sh
+#! /bin/csh 
+
+module list
 
 module purge
-module load ../modulefiles/HREF/v3.0.0
+
+pwd
+
+ls -l ../modulefiles/HREF
+
+module use -a ../modulefiles/HREF
+module load v3.0.0
 module list
 
 sleep 1
 
-BASE=`pwd`
+set BASE = `pwd`
 
 
 #########################
