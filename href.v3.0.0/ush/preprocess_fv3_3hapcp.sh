@@ -72,7 +72,7 @@ then
   echo $hrold >> input.card.${hr}
   echo $hr >> input.card.${hr}
 
-if [ $hrold = '03' ]
+if [ $hr = '03' ]
 then
 # just take later period if f03
   echo 1 >> input.card.${hr}
