@@ -1,0 +1,2 @@
+# */3 * * * * /lustre/href.v3.0.0/rocoto/run_hrefv3_multi.sh >& /lustre/rocoto_cron.log
+# */2 * * * * /lustre/href.v3.0.0/rocoto/run_hrefv3_multi_retro.sh >& /lustre/rocoto_cron.log

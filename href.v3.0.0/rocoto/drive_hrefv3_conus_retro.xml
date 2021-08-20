@@ -3,13 +3,13 @@
 [
 
 <!ENTITY STARTYEAR "2021">
-<!ENTITY STARTMONTH "06">
-<!ENTITY STARTDAY "04">
+<!ENTITY STARTMONTH "05">
+<!ENTITY STARTDAY "03">
 <!ENTITY STARTHOUR "00">
 
 <!ENTITY ENDYEAR "2021">
-<!ENTITY ENDMONTH "08">
-<!ENTITY ENDDAY "15">
+<!ENTITY ENDMONTH "05">
+<!ENTITY ENDDAY "31">
 <!ENTITY ENDHOUR "00">
 
 <!ENTITY USER "Matthew.Pyle">
@@ -34,10 +34,7 @@
 <!ENTITY OUTDIR "/lustre">
 <!ENTITY MYCOMROOT "/lustre/com">
 <!ENTITY DATAROOT "/lustre/tmpnwprd">
-<!ENTITY KEEPDATA "YES">
-<!ENTITY TIMEOFFSET_SIX "-00:06:00:00">
-<!ENTITY TIMEOFFSET_TWELVE "-00:12:00:00">
-
+<!ENTITY KEEPDATA "NO">
 
 <!ENTITY RESERVATION '<queue>devhigh</queue><account>&ACCOUNT;</account>'>
 <!ENTITY RESERVATION_CALIB '<queue>devhigh</queue><account>&ACCOUNT;</account>'>
@@ -68,7 +65,7 @@
 <!--  ************************************************************* -->
 <!--  ******************* STARTING THE WORKFLOW ******************* -->
 
-<workflow realtime="T" scheduler="slurm" taskthrottle="60" cyclethrottle="12">
+<workflow realtime="F" scheduler="slurm" taskthrottle="5" cyclethrottle="1">
 
   <cycledef group="regional">&STARTYEAR;&STARTMONTH;&STARTDAY;&STARTHOUR;00 &ENDYEAR;&ENDMONTH;&ENDDAY;&ENDHOUR;00 24:00:00</cycledef>
   <cycledef group="regional_justontime">&STARTYEAR;&STARTMONTH;&STARTDAY;&STARTHOUR;00 &ENDYEAR;&ENDMONTH;&ENDDAY;&ENDHOUR;00 24:00:00</cycledef>
@@ -81,7 +78,7 @@
   &RESERVATION;
   &PREPROC_RESOURCES;
   <nodes>1:ppn=1</nodes>
-  <command>&PRE; &JOBS;/JHREF_GET_ALL</command>
+  <command>&PRE; &JOBS;/JHREF_GET_ALL_retro</command>
   <jobname><cyclestr>getrrfs_&domain;_@H</cyclestr></jobname>
   <join><cyclestr>&OUTDIR;/logfiles_href/getrrfs_&domain;_@H.log</cyclestr></join>
 
@@ -245,9 +242,6 @@
     <dependency>
         <and>
 <!-- Make sure even and odd forecast hours are done -->
-       <datadep age="01:00" minsize="400000"><cyclestr>&COMINffg;.@Y@m@d_expv3/href.t00z.ffg1h.3km.grib2</cyclestr></datadep>
-       <datadep age="01:00" minsize="400000"><cyclestr>&COMINffg;.@Y@m@d_expv3/href.t00z.ffg3h.3km.grib2</cyclestr></datadep>
-       <datadep age="01:00" minsize="400000"><cyclestr>&COMINffg;.@Y@m@d_expv3/href.t00z.ffg6h.3km.grib2</cyclestr></datadep>
        <datadep age="01:00" minsize="40000000"><cyclestr>&COMINrrfs;.@Y@m@d/@H/rrfs.t@Hz.mem01.testbed.conusf060.grib2</cyclestr></datadep>
        <datadep age="01:00" minsize="40000000"><cyclestr>&COMINrrfs;.@Y@m@d/@H/rrfs.t@Hz.mem02.testbed.conusf060.grib2</cyclestr></datadep>
        <datadep age="01:00" minsize="40000000"><cyclestr>&COMINrrfs;.@Y@m@d/@H/rrfs.t@Hz.mem03.testbed.conusf060.grib2</cyclestr></datadep>

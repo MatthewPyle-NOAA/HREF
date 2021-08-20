@@ -24,7 +24,7 @@ module load gnu/6.5.0
 
 export WGRIB2=/apps/wgrib2/2.0.8/intel/18.0.3.222/bin/wgrib2
 
-doms="conus"
+doms="conus_retro"
 
 echo WGRIB2 is $WGRIB2
 

@@ -47,6 +47,10 @@ fi
 
 echo now at end of launch.ksh have GESROOT as $GESROOT
 
+elif [ "$machine" = "AWS" ] ; then
+
+echo "what do we need for AWS?"
+
 else
   echo "launch.ksh: modulefile is not set up yet for this machine-->${machine}."
   echo "Job abort!"

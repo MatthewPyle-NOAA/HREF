@@ -1,0 +1,48 @@
+#%Module######################################################################
+##                                                       Matthew.Pyle@noaa.gov
+##                                                           NOAA/NWS/NCEP/EMC
+## HREF 3.0.0
+##_____________________________________________________
+proc ModulesHelp { } {
+puts stderr "Set environment veriables for HREF"
+puts stderr "This module initializes the enviro nment "
+puts stderr "for the Intel Compiler Suite $version\n"
+}
+module-whatis " HREF whatis description"
+
+set ver v3.0.0
+
+set sys [uname sysname]
+set HREF /gpfs/hps/nco/ops/nwpara/href.v3.0.0/modulefiles/HREF
+set lname HREF
+
+setenv COMP ftn
+setenv FC ftn
+
+setenv COMP_MP ftn
+setenv COMP_MPI ftn
+
+setenv C_COMP cc
+setenv C_COMP_MP cc
+
+
+module load craype-sandybridge
+
+module load ncep
+module load PrgEnv-intel
+module load iobuf
+
+# Loading nceplibs modules
+module load ip-intel/2.0.0
+module load bacio-intel/2.0.1
+module load w3nco-intel/2.0.6
+module load w3emc-intel/2.2.0
+
+module load g2-intel/3.1.0
+# module load g2tmpl-intel/1.3.0
+module load g2tmpl-intel/1.5.0
+module load jasper-gnu-sandybridge
+module load png-intel-sandybridge
+module load zlib-intel-sandybridge
+# module load python/2.7.13
+module load python/3.6.3
