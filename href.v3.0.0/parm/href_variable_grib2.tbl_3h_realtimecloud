@@ -1,4 +1,4 @@
-  30      row variables and mean/spread/prob info
+  33      row variables and mean/spread/prob info
 REFD  16 195 103 P1 1000    A1 1000 > A3 30 40 50
 MXRF  16 198 103 P1 1000    A1 1000 > A2 40 50
 REFL  16 196 200 P1 0    A1  0   > A5 10 20 30 40 50
@@ -29,6 +29,9 @@ SN3h   1 13    1 M1  0  K1  0   > K3 2.54 7.62 15.24
 SN6h   1 13    1 M0     K1  0   > K4 2.54 7.62 15.24 30.48
 A6RI   1 8     1 M0     A1  0   > A4 2 5 10 100
 A24R   1 8     1 M0     A1  0   > A4 2 5 10 100
+FFG1   1 8     1 M0     A1  0   > A1 1
+FFG3   1 8     1 M0     A1  0   > A1 3
+FFG6   1 8     1 M0     A1  0   > A1 6
 
    1       special derived variables, each  of which, needs code to process specially
 WIND  2 1    103 M1 10  L1  10  >  L5 10.3 15.4 18.01 20.6 25.72
