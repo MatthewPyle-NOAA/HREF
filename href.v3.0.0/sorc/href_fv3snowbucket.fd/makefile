@@ -4,7 +4,8 @@ SRCS=	fv3bucket.f GET_BITS.f
 
 OBJS=	fv3bucket.o  GET_BITS.o
 
-LIBS =   ${G2TMPL_LIB} ${G2_LIB4} ${JASPER_LIB} ${PNG_LIB} ${Z_LIB} ${W3NCO_LIB4} ${W3EMC_LIB4} ${BACIO_LIB4} 
+LIBS =   ${G2TMPL_LIB} ${G2_LIB4} ${JASPER_LIBRARIES}/libjasper.a  ${PNG_ROOT}/lib64/libpng.a ${ZLIB_LIBRARIES}/libz.a \
+ ${W3NCO_LIB4} ${W3EMC_LIB4} ${BACIO_LIB4} 
 INC =   ${G2_INC4} 
 DEBUG = -fpe0 -ftrapuv -g -traceback
 
