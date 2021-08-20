@@ -18,7 +18,8 @@ export fhr=$1
 echo "$0 STRDATE "`date`
 
 msg="$job HAS BEGUN"
-postmsg "$jlogfile" "$msg"
+echo $msg
+# postmsg "$jlogfile" "$msg"
 
 location=`hostname`
 
@@ -39,6 +40,6 @@ set -x
 
 msg="HAS COMPLETED NORMALLY!"
 echo $msg
-postmsg "$jlogfile" "$msg"
+# postmsg "$jlogfile" "$msg"
 echo $msg
 ############## END OF SCRIPT #######################

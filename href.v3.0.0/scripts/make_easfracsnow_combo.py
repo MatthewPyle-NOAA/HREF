@@ -369,15 +369,15 @@ wgribdate=PDY+cyc
 # grbtmp['scaleFactorOfUpperLimit']=3
 
 if qpf_interval == 1:
-  outbase = 'href.t'+cyc[0:2]+'z.'+dom+'.snow01_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
+  outbase = 'rrfsce.t'+cyc[0:2]+'z.'+dom+'.snow01_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
   incr = 1
   thresh_use=snow_1h_thresh
 if qpf_interval == 3:
-  outbase = 'href.t'+cyc[0:2]+'z.'+dom+'.snow03_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
+  outbase = 'rrfsce.t'+cyc[0:2]+'z.'+dom+'.snow03_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
   incr = 3
   thresh_use=snow_3h_thresh
 if qpf_interval == 6:
-  outbase = 'href.t'+cyc[0:2]+'z.'+dom+'.snow06_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
+  outbase = 'rrfsce.t'+cyc[0:2]+'z.'+dom+'.snow06_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
   incr = 3
   thresh_use=snow_6h_thresh
   print('thresh_use: ', thresh_use)

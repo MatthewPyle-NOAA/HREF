@@ -123,8 +123,9 @@ fcst_hour = int(sys.argv[1])
 qpf_interval = int(sys.argv[2])
 start_hour = int(fcst_hour - qpf_interval)
 
-DATArun=DATA+'/qpf_'+str(fcst_hour)
+DATArun=DATA+'/qpf_'+str(fcst_hour)+'_'+str(qpf_interval)
 if not os.path.exists(DATArun):
+  print('building run directory in python script')
   os.system("mkdir -p " + DATArun)
 os.system("cd "+DATArun)
 
@@ -370,23 +371,23 @@ wgribdate=PDY+cyc
 # grbtmp['scaleFactorOfUpperLimit']=3
 
 if qpf_interval == 1:
-  outbase = 'href.t'+cyc[0:2]+'z.'+dom+'.pqpf01_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
+  outbase = 'rrfsce.t'+cyc[0:2]+'z.'+dom+'.pqpf01_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
   incr = 1
   thresh_use=pqpf_1h_thresh
 if qpf_interval == 3:
-  outbase = 'href.t'+cyc[0:2]+'z.'+dom+'.pqpf03_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
+  outbase = 'rrfsce.t'+cyc[0:2]+'z.'+dom+'.pqpf03_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
   incr = 3
   thresh_use=pqpf_3h_thresh
 if qpf_interval == 6:
-  outbase = 'href.t'+cyc[0:2]+'z.'+dom+'.pqpf06_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
+  outbase = 'rrfsce.t'+cyc[0:2]+'z.'+dom+'.pqpf06_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
   incr = 3
   thresh_use=pqpf_6h_thresh
 if qpf_interval == 12:
-  outbase = 'href.t'+cyc[0:2]+'z.'+dom+'.pqpf12_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
+  outbase = 'rrfsce.t'+cyc[0:2]+'z.'+dom+'.pqpf12_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
   incr = 3
   thresh_use=pqpf_12h_thresh
 if qpf_interval == 24:
-  outbase = 'href.t'+cyc[0:2]+'z.'+dom+'.pqpf24_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
+  outbase = 'rrfsce.t'+cyc[0:2]+'z.'+dom+'.pqpf24_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
   incr = 3
   thresh_use=pqpf_24h_thresh
 
