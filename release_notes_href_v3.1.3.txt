@@ -20,7 +20,7 @@ Obtaining the package
 Clone it with this command (but change href.v3.1.3 to whatever you want to call it in the directory that it is cloned into):
 
 
-git clone -b v3.1.3  https://github.com/MatthewPyle-NOAA/HREF.git href.v3.1.3
+git clone -b href.v3.1.3  https://github.com/MatthewPyle-NOAA/HREF.git href.v3.1.3
 
 
 The changes delivered do not require building the code, but if a fresh build is desired, these are the basic steps:
