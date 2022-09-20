@@ -159,7 +159,7 @@ elif [ $cyc -ge 6 ] ; then
   mbrs="1  2  3  4  5  6"
 
   if [ $cyc = '06' ] ; then
-    days="9 $PDY $PDYm1 $PDY  $PDYm1 $PDYm1 $PDYm1"
+    days="9 $PDY $PDYm1 $PDY  $PDYm1 $PDY $PDYm1"
     cycs="9  06   18   06     18     06    18"
     ages="9  0    12    0     12     0     12"
   fi
