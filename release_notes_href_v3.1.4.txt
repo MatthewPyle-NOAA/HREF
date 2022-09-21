@@ -1,0 +1,45 @@
+HREF v3.1.4 - released 9/21/2022
+
+Google docs version of release notes at:
+ 
+https://docs.google.com/document/d/1nMdQB8EiqNnOn59t7tFFbRLVEc6WWdUaALeCbU3UlKw/edit?usp=sharing
+
+#####################
+Update overview 
+#####################
+
+* Corrects an issue in the 06Z Puerto Rico HREF, where an older input file 
+from the HIRESW was being processed as if it was from the current cycle, 
+leading to a member out of sync with the rest of the membership.  
+
+#####################
+Obtaining the package
+#####################
+
+Clone it with this command (but change href.v3.1.4 to whatever you want to 
+call it in the directory that it is cloned into):
+ 
+git clone -b href.v3.1.4  https://github.com/MatthewPyle-NOAA/HREF.git href.v3.1.4
+ 
+The changes delivered do not require building the code, but if a fresh build is
+desired, these are the basic steps:
+
+Go into the sorc directory within href.v3.1.4, then:
+./build_href.sh (to compile)
+./install_href.sh (to copy executables)
+./link_href_fix.sh (to populate the fix/ files)
+ 
+#############################
+Modified files:
+#############################
+
+ush/href_getmbr.sh - Fixes an issue for the 06Z PR HREF, where a 24 h old HiresW 
+PR ARW MEM2 cycle was being treated as if from the current cycle.  This incorrect input
+led to improper HREF output.
+
+#############################
+Resource changes:
+#############################
+
+No measurable difference.
+
