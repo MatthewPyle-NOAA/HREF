@@ -2,9 +2,10 @@
 
 Contains the workflow and codes and other files needed to run the Rapid Refresh Forecast System (RRFS) enspost.  
 
-Very simple setup instructions (just for WCOSS2):
+Very simple setup instructions (just for WCOSS2), where basedir is the directory
+on disk where the checked code resides.
 
-cd rrfs.v1.0.0/sorc/
+cd ${basedir}/sorc/
 
 ./build_enspost.sh 
 
