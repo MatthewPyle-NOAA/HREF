@@ -51,6 +51,10 @@ module load python/${python_ver}
 module load libjpeg/${libjpeg_ver}
 module load grib_util/${grib_util_ver}
 module load gempak/${gempak_ver}
+# for grib2io
+module use /lfs/h1/mdl/nbm/save/apps/modulefiles
+module load python-modules/3.8.6
+module load grib2io
 
 echo now have 
 module list

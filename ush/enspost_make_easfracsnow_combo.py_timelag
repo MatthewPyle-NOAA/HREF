@@ -21,6 +21,7 @@ import math as m
 from datetime import datetime, timedelta
 from scipy import ndimage, optimize, signal
 from scipy.io import FortranFile 
+import grib2io
 # import fortranfile as F
 
 starttime = time.time()
@@ -172,49 +173,6 @@ def simplewgrib2(txtfile):
     array2d.shape = (ny,nx)
     return array2d,nx,ny
   F1.close()
-
-
-def process_nam_qpf(file3,file4,fhr):
-
-
-    fhour=fhr
-    if fhr%3 == 1:
-      shour=fhour-1
-      print('process_nam_qpf remainder 1')
-      os.system(WGRIB2+' '+file3+' -match "WEASD:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf.txt ')
-      qpf1,nx,ny=simplewgrib2('qpf.txt')
-      os.system('rm -f qpf.txt')
-
-
-    if fhr%3 == 2:
-      shour1=fhour-2
-      shour2=fhour-1
-      print('process_nam_qpf remainder 2 - f02 minus f01')
-      os.system(WGRIB2+' '+file3+' -match "WEASD:surface:%i'%shour1+'-%i'%fhour+'" -end -text qpf.txt')
-      qpfa,nx,ny=simplewgrib2('qpf.txt')
-      os.system('rm -f qpf.txt')
-
-      os.system(WGRIB2+' '+file4+' -match "WEASD:surface:%i'%shour1+'-%i'%shour2+'" -end -text qpf.txt')
-      qpfb,nx,ny=simplewgrib2('qpf.txt')
-      os.system('rm -f qpf.txt')
-
-      qpf1=qpfa-qpfb
-
-    if fhr%3 == 0:
-      shour1=fhour-3
-      shour2=fhour-2
-      fhourm1=fhour-1
-      print('process_nam_qpf remainder 3 - f03 minus f02')
-      os.system(WGRIB2+' '+file3+' -match "WEASD:surface:%i'%shour1+'-%i'%fhour+'" -end -text qpf.txt')
-      qpfa,nx,ny=simplewgrib2('qpf.txt')
-      os.system('rm -f qpf.txt')
-
-      os.system(WGRIB2+' '+file4+' -match "WEASD:surface:%i'%shour1+'-%i'%fhourm1+'" -end -text qpf.txt')
-      qpfb,nx,ny=simplewgrib2('qpf.txt')
-      os.system('rm -f qpf.txt')
-      qpf1=qpfa-qpfb
-
-    return qpf1
 
 # calculate footprint routine
 def get_footprint(r):
@@ -445,10 +403,7 @@ for mem in members:
           print('defined fhours in alt 6h block: ', start_hour+qpf_interval+latency+6)
           memfiles[itime_alt] = [file3alt,file6alt]
 
-    if mem == 'nam' or mem == 'hrrr' or mem == 'hrrrak':
-      latency = latency + 6
-    else:
-      latency = latency + 6
+    latency = latency + 6
 
   if len(itimes) == (memcount+2):
     print('Found 2 '+mem+' members valid:',starttime,'-',endtime)
@@ -475,11 +430,12 @@ for mem in members:
         fhour=fhours[memcount]-3
         shour=fhour-3
       print('for file3 shour fhour: ', shour,fhour)
-      os.system(WGRIB2+' '+file3+' -match "WEASD:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf.txt')
-      qpf3,nx,ny=simplewgrib2('qpf.txt')
 
-      undefsnow,nx,ny=simplewgrib2('qpf.txt')
-      undefsnow=np.ma.masked_greater(undefsnow,9.0e+20)
+      print('about to open grbs with file3')
+      grbs3a = grib2io.open(file3)
+      qpf3=grbs3a.select(shortName='WEASD',duration=3)[0].data()
+
+      undefsnow=np.ma.masked_greater(qpf3,9.0e+20)
       snowmaskregion = np.ma.filled(undefsnow,-9999)
       qpf3 = np.where(np.equal(snowmaskregion,-9999),0,qpf3)
 
@@ -490,22 +446,20 @@ for mem in members:
       if mem == 'nam':
         fcst_hour=fhours[memcount]
         file4 = memfiles4[itime]
-
-        print('call process_nam_qpf with file3: ', file3)
-        print('call process_nam_qpf with file4: ', file4)
-        print('call process_nam_qpf with fcst_hour: ', fcst_hour)
-        qpf1=process_nam_qpf(file3,file4,fcst_hour)
-
       else:
         print('ready from file3 in 1h: ', file3)
         fhour=fhours[memcount]
         shour=fhour-1
         print('WEASD accum from : ', shour, ' to : ', fhour)
-        os.system(WGRIB2+' '+file3+' -match "WEASD:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf.txt')
-        qpf1,nx,ny=simplewgrib2('qpf.txt')
 
-        undefsnow,nx,ny=simplewgrib2('qpf.txt')
-        undefsnow=np.ma.masked_greater(undefsnow,9.0e+20)
+        grbs3b = grib2io.open(file3)
+        qpf1=grbs3b.select(shortName='WEASD',duration=1)[0].data()
+
+#        os.system(WGRIB2+' '+file3+' -match "WEASD:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf.txt')
+#        qpf1,nx,ny=simplewgrib2('qpf.txt')
+#        undefsnow,nx,ny=simplewgrib2('qpf.txt')
+#
+        undefsnow=np.ma.masked_greater(qpf1,9.0e+20)
         snowmaskregion = np.ma.filled(undefsnow,-9999)
         qpf1 = np.where(np.equal(snowmaskregion,-9999),0,qpf1)
 
@@ -516,10 +470,10 @@ for mem in members:
       fhour=fhours[memcount]
       shour=fhour-3
       print('6h shour fhour: ', shour,fhour)
-      os.system(WGRIB2+' '+file6+' -match "WEASD:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf.txt')
-      qpf6,nx,ny=simplewgrib2('qpf.txt')
-      undefsnow,nx,ny=simplewgrib2('qpf.txt')
-      undefsnow=np.ma.masked_greater(undefsnow,9.0e+20)
+
+      grbs6a = grib2io.open(file6)
+      qpf6=grbs6a.select(shortName='WEASD',duration=3)[0].data()
+      undefsnow=np.ma.masked_greater(qpf6,9.0e+20)
       snowmaskregion = np.ma.filled(undefsnow,-9999)
       qpf6 = np.where(np.equal(snowmaskregion,-9999),0,qpf6)
       qpf[itime] = (qpf3 + qpf6) * 0.39370079

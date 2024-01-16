@@ -20,6 +20,8 @@ import math as m
 from datetime import datetime, timedelta
 from scipy import ndimage, optimize, signal
 from scipy.io import FortranFile 
+import grib2io
+
 # import fortranfile as F
 
 def simplewgrib2(txtfile):
@@ -277,49 +279,6 @@ for mem in members:
 #--------------------------------------------------------------------------------
 #### FUNCTIONS AND ROUTINES ####
 
-
-
-def process_nam_qpf(file3,file4,fhr):
-
-
-    fhour=fhr
-    if fhr%3 == 1:
-      shour=fhour-1
-      print('process_nam_qpf remainder 1')
-      os.system(WGRIB2+' '+file3+' -match "APCP:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf.txt ')
-      qpf1,nx,ny=simplewgrib2('qpf.txt')
-      os.system('rm -f qpf.txt')
-
-
-    if fhr%3 == 2:
-      shour1=fhour-2
-      shour2=fhour-1
-      print('process_nam_qpf remainder 2 - f02 minus f01')
-      os.system(WGRIB2+' '+file3+' -match "APCP:surface:%i'%shour1+'-%i'%fhour+'" -end -text qpf.txt')
-      qpfa,nx,ny=simplewgrib2('qpf.txt')
-      os.system('rm -f qpf.txt')
-
-      os.system(WGRIB2+' '+file4+' -match "APCP:surface:%i'%shour1+'-%i'%shour2+'" -end -text qpf.txt')
-      qpfb,nx,ny=simplewgrib2('qpf.txt')
-      os.system('rm -f qpf.txt')
-
-      qpf1=qpfa-qpfb
-
-    if fhr%3 == 0:
-      shour1=fhour-3
-      shour2=fhour-2
-      fhourm1=fhour-1
-      print('process_nam_qpf remainder 3 - f03 minus f02')
-      os.system(WGRIB2+' '+file3+' -match "APCP:surface:%i'%shour1+'-%i'%fhour+'" -end -text qpf.txt')
-      qpfa,nx,ny=simplewgrib2('qpf.txt')
-      os.system('rm -f qpf.txt')
-
-      os.system(WGRIB2+' '+file4+' -match "APCP:surface:%i'%shour1+'-%i'%fhourm1+'" -end -text qpf.txt')
-      qpfb,nx,ny=simplewgrib2('qpf.txt')
-      os.system('rm -f qpf.txt')
-      qpf1=qpfa-qpfb
-
-    return qpf1
 
 # calculate footprint routine
 def get_footprint(r):
@@ -684,15 +643,15 @@ for mem in members:
       shour=fhour-3
  
       print('dealing with file1: ', file1)
-      os.system(WGRIB2+' '+file1+' -match "APCP:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf1.txt ')
-      qpf1,nx,ny=simplewgrib2('qpf1.txt')
+      grbs1a = grib2io.open(file1)
+      qpf1=grbs1a.select(shortName='APCP',duration=3)[0].data()
 
 ## how get the proper hours for each file??
       fhour=fhours[memcount]+incr
       shour=fhour-3
-      os.system(WGRIB2+' '+file2+' -match "APCP:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf2.txt ')
-      qpf2,nx,ny=simplewgrib2('qpf2.txt')
-
+      print('dealing with file2: ', file2)
+      grbs2 = grib2io.open(file2)
+      qpf2=grbs2.select(shortName='APCP',duration=3)[0].data()
       qpf12 = qpf1 + qpf2    
 
       print('max of qpf12: ', np.max(qpf12))
@@ -710,14 +669,14 @@ for mem in members:
       fhour=fhr+6
       fhour=fhours[memcount]+incr*2
       shour=fhour-3
-      os.system(WGRIB2+' '+file3+' -match "APCP:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf3.txt ')
-      qpf3,nx,ny=simplewgrib2('qpf3.txt')
+      grbs3 = grib2io.open(file3)
+      qpf3=grbs3.select(shortName='APCP',duration=3)[0].data()
 
       fhour=fhr+9
       fhour=fhours[memcount]+incr*3
       shour=fhour-3
-      os.system(WGRIB2+' '+file4+' -match "APCP:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf4.txt ')
-      qpf4,nx,ny=simplewgrib2('qpf4.txt')
+      grbs4 = grib2io.open(file4)
+      qpf4=grbs4.select(shortName='APCP',duration=3)[0].data()
 
 # Process second 6 hours
 
@@ -734,14 +693,14 @@ for mem in members:
       fhour=fhr+12
       fhour=fhours[memcount]+incr*4
       shour=fhour-3
-      os.system(WGRIB2+' '+file5+' -match "APCP:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf5.txt ')
-      qpf5,nx,ny=simplewgrib2('qpf5.txt')
+      grbs5 = grib2io.open(file5)
+      qpf5=grbs5.select(shortName='APCP',duration=3)[0].data()
 
       fhour=fhr+15
       fhour=fhours[memcount]+incr*5
       shour=fhour-3
-      os.system(WGRIB2+' '+file6+' -match "APCP:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf6.txt ')
-      qpf6,nx,ny=simplewgrib2('qpf6.txt')
+      grbs6 = grib2io.open(file6)
+      qpf6=grbs6.select(shortName='APCP',duration=3)[0].data()
 
       qpf56 = qpf5 + qpf6
 
@@ -752,14 +711,14 @@ for mem in members:
       fhour=fhr+18
       fhour=fhours[memcount]+incr*6
       shour=fhour-3
-      os.system(WGRIB2+' '+file7+' -match "APCP:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf7.txt ')
-      qpf7,nx,ny=simplewgrib2('qpf7.txt')
+      grbs7 = grib2io.open(file7)
+      qpf7=grbs7.select(shortName='APCP',duration=3)[0].data()
 
       fhour=fhr+21
       fhour=fhours[memcount]+incr*7
       shour=fhour-3
-      os.system(WGRIB2+' '+file8+' -match "APCP:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf8.txt ')
-      qpf8,nx,ny=simplewgrib2('qpf8.txt')
+      grbs8 = grib2io.open(file8)
+      qpf8=grbs8.select(shortName='APCP',duration=3)[0].data()
 
       qpf78 = qpf7 + qpf8
 
@@ -781,16 +740,13 @@ for mem in members:
       print('shour: ', shour)
       print('fhour: ', fhour)
 
-      print('nx, ny: ', nx, ny)
-      print('for file1: ', file1)
-      os.system(WGRIB2+' '+file1+' -match "APCP:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf.txt ')
-      qpfhere,nx,ny=simplewgrib2('qpf.txt')
-      os.system('rm -f qpf.txt')
+      grbs1c = grib2io.open(file1)
+      qpfhere=grbs1c.select(shortName='APCP',duration=3)[0].data()
       qpf[itime]=qpfhere
+
       print('from file1: ', file1)
       print('max 3 h qpf: ', np.max(qpf[itime]))
       print('mean 3 h qpf: ', np.mean(qpf[itime]))
-#      idx.close()
 
 ######### 1 h APCP
 
@@ -804,30 +760,23 @@ for mem in members:
       fhour=fhours[memcount]
 
       if mem == 'nam' :
-        print('call process_nam_qpf with: ')
+        print('badly in nam block with: ')
         print('file1: ', file1)
         print('file0: ', file0)
         print('fcst_hour: ', fcst_hour)
-        fcst_hour=fhours[memcount]
-        qpf[itime]=process_nam_qpf(file1,file0,fcst_hour)
-
       else:
 
         fhour=fhours[memcount]
         shour=fhour-1
         print('from memfiles file1 for 1 h qpf: ', file1)
         print('fhour is: ', fhour)
-#        idx = pygrib.index(file1,'name','lengthOfTimeRange')
-        os.system(WGRIB2+' '+file1+' -match "APCP:surface:%i'%shour+'-%i'%fhour+'" -end -text qpf.txt ')
-        qpf1,nx,ny=simplewgrib2('qpf.txt')
+        grbs1b = grib2io.open(file1)
+        qpf1=grbs1b.select(shortName='APCP',duration=1)[0].data()
         qpf[itime] = qpf1
 
       print('max of 1 h APCP: ', np.max(qpf[itime]))
       print('mean of 1 h APCP: ', np.mean(qpf[itime]))
       print('median of 1 h APCP: ', np.median(qpf[itime]))
-
-
-
 
 ###############
 
