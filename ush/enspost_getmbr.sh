@@ -25,8 +25,8 @@ fhr=$1
 dom=${2}
 type=${3}
 
-looplim=10
-sleeptime=6
+looplim=20
+sleeptime=9
 
 echo here in ush script with dom $dom
 
@@ -123,7 +123,7 @@ if [ $ff = '06' -o $ff = '09' ]
 elif [  $ff = '12' -o  $ff = '15' -o $ff = '18' -o $ff = '21' ]
  then
  fcheck=` expr $ff - 09`
-elif [  $ff = '24' -o  $ff = '27' -o $ff = '30' -o $ff = '33' -o $ff = '36' -o  $ff = '39' -o $ff = '42' -o $ff = '45' -o $ff = '48'  -o $ff = '51'  -o $ff = '54'  -o $ff = '60' ]
+elif [  $ff = '24' -o  $ff = '27' -o $ff = '30' -o $ff = '33' -o $ff = '36' -o  $ff = '39' -o $ff = '42' -o $ff = '45' -o $ff = '48'  -o $ff = '51'  -o $ff = '54' -o $ff = '57'  -o $ff = '60' ]
  then
  fcheck=` expr $ff - 21`
 elif [ $ff -gt 0 ]
@@ -155,7 +155,7 @@ echo working things with ff as $ff and  fcheck as $fcheck
 
 ###### FV3
 
-# fv3s (conus)
+# fv3s
 
 echo made it to conus fv3 check
 
@@ -166,24 +166,24 @@ echo made it to conus fv3 check
       if [  $ff -eq 01  ] ; then
        if [ $type = 'timelag' ];then
         if [ $m = 08 -o $m = 09 -o $m = 10 -o $m = 11 -o $m = 12 -o $m = 13 ];then
-         filecheck00=${COMINrrfs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f06.grib2
+         filecheck00=${COMINrefs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f06.grib2
 	 echo filecheck00 is $filecheck00
 
          ln -sf $filecheck00  $DATA/${RUN}.m${m}.t${cyc}z.f00
          ln -sf $DATA/${RUN}.m${m}.t${cyc}z.f00  $DATA/${ff}/${RUN}.m${m}.t${cyc}z.f00
         else
-         filecheck00=${COMINrrfs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f00.grib2
+         filecheck00=${COMINrefs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f00.grib2
          ln -sf $filecheck00  $DATA/${RUN}.m${m}.t${cyc}z.f00
          ln -sf $DATA/${RUN}.m${m}.t${cyc}z.f00  $DATA/${ff}/${RUN}.m${m}.t${cyc}z.f00
 	fi
        else
-        filecheck00=${COMINrrfs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f00.grib2
+        filecheck00=${COMINrefs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f00.grib2
         ln -sf $filecheck00  $DATA/${RUN}.m${m}.t${cyc}z.f00
         ln -sf $DATA/${RUN}.m${m}.t${cyc}z.f00  $DATA/${ff}/${RUN}.m${m}.t${cyc}z.f00
        fi
       fi
 
-        filecheck=${COMINrrfs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f${fcst}.grib2
+        filecheck=${COMINrefs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f${fcst}.grib2
 	if [ -e $filecheck ]
         then
          ln -sf $filecheck  $DATA/${RUN}.m${m}.t${cyc}z.f${ff}
@@ -218,7 +218,7 @@ typeset -Z2 fcheckloc
 	echo here a $ff
         if [ ${ff}%3 -eq 0 ]
         then
-        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 conus non |$EXECrrfs/enspost_get_prcip > $DATA/output.enspost_get_prcip3h.m${m}.f${ff} 2>&1
+        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 conus non |$EXECrefs/enspost_get_prcip > $DATA/output.enspost_get_prcip3h.m${m}.f${ff} 2>&1
         export err=$? ; err_chk
         fi
         fi
@@ -235,8 +235,8 @@ typeset -Z2 fcheckloc
         
 
 
-        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 conus yes |$EXECrrfs/enspost_get_prcip > $DATA/output.enspost_get_prcip1h.m${m}.f${ff} 2>&1
-#       echo ${RUN}.m${m}.t${cyc}z.f$ff1 ${RUN}.m${m}.t${cyc}z.f$ff $cyc $ff1 $ff conus yes $ff |$EXECrrfs/enspost_get_temp > $DATA/output.enspost_get_temp.m${m}.f${ff} 2>&1
+        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 conus yes |$EXECrefs/enspost_get_prcip > $DATA/output.enspost_get_prcip1h.m${m}.f${ff} 2>&1
+#       echo ${RUN}.m${m}.t${cyc}z.f$ff1 ${RUN}.m${m}.t${cyc}z.f$ff $cyc $ff1 $ff conus yes $ff |$EXECrefs/enspost_get_temp > $DATA/output.enspost_get_temp.m${m}.f${ff} 2>&1
 
         export err=$? ; err_chk
 
@@ -317,12 +317,12 @@ typeset -Z2 fcheckloc
         then
         echo here a $ff
 
-        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 ${dom} non |$EXECrrfs/enspost_get_prcip > $DATA/output.enspost_get_prcip1h.m${m}.f${ff} 2>&1
+        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 ${dom} non |$EXECrefs/enspost_get_prcip > $DATA/output.enspost_get_prcip1h.m${m}.f${ff} 2>&1
         export err=$? ; err_chk
 
         if [ ${ff}%3 -eq 0 ]
         then
-         echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 ${dom} non |$EXECrrfs/enspost_get_prcip > $DATA/output.enspost_get_prcip3h.m${m}.f${ff}
+         echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 ${dom} non |$EXECrefs/enspost_get_prcip > $DATA/output.enspost_get_prcip3h.m${m}.f${ff}
          export err=$? ; err_chk
         fi
 
@@ -397,11 +397,11 @@ typeset -Z2 fcheckloc
         if [ $ff -gt 0 ]
         then
 ## actually now have the summing of 3 h totals done in the HRRR preproc job
-         echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 ${dom} non |$EXECrrfs/enspost_get_prcip > $DATA/output.enspost_get_prcip1h.m${m}.f${ff} 2>&1
+         echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 ${dom} non |$EXECrefs/enspost_get_prcip > $DATA/output.enspost_get_prcip1h.m${m}.f${ff} 2>&1
 
         if [ ${ff}%3 -eq 0 ]
         then
-         echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 ${dom} non |$EXECrrfs/enspost_get_prcip > $DATA/output.enspost_get_prcip3h.m${m}.f${ff}
+         echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 ${dom} non |$EXECrefs/enspost_get_prcip > $DATA/output.enspost_get_prcip3h.m${m}.f${ff}
          export err=$? ; err_chk
         fi
 
@@ -428,24 +428,24 @@ typeset -Z2 fcheckloc
        if [ $type = 'timelag' ];then
 
         if [ $m = 07 -o $m = 08 -o $m = 09 -o $m = 10 -o $m = 11 -o $m = 12 ];then
-         filecheck00=${COMINrrfs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f06.grib2
+         filecheck00=${COMINrefs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f06.grib2
 	 echo here TL with filecheck00 $filecheck00
          ln -sf $filecheck00  $DATA/${RUN}.m${m}.t${cyc}z.f00
          ln -sf $DATA/${RUN}.m${m}.t${cyc}z.f00  $DATA/${ff}/${RUN}.m${m}.t${cyc}z.f00
         else
-         filecheck00=${COMINrrfs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f00.grib2
+         filecheck00=${COMINrefs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f00.grib2
 	 echo here ontime with filecheck00 $filecheck00
          ln -sf $filecheck00  $DATA/${RUN}.m${m}.t${cyc}z.f00
          ln -sf $DATA/${RUN}.m${m}.t${cyc}z.f00  $DATA/${ff}/${RUN}.m${m}.t${cyc}z.f00
 	fi
        else
-        filecheck00=${COMINrrfs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f00.grib2
+        filecheck00=${COMINrefs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f00.grib2
         ln -sf $filecheck00  $DATA/${RUN}.m${m}.t${cyc}z.f00
         ln -sf $DATA/${RUN}.m${m}.t${cyc}z.f00  $DATA/${ff}/${RUN}.m${m}.t${cyc}z.f00
        fi
       fi
  
-        filecheck=${COMINrrfs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f${fcst}.grib2
+        filecheck=${COMINrefs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f${fcst}.grib2
 
 	if [ -e $filecheck ]
         then
@@ -482,7 +482,7 @@ typeset -Z2 fcheckloc
 
         if [ ${ff}%3 -eq 0 ]
         then
-        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 $dom non |$EXECrrfs/enspost_get_prcip > $DATA/output.enspost_get_prcip3h.m${m}.f${ff} 2>&1
+        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 $dom non |$EXECrefs/enspost_get_prcip > $DATA/output.enspost_get_prcip3h.m${m}.f${ff} 2>&1
         export err=$? ; err_chk
         fi
 
@@ -494,7 +494,7 @@ typeset -Z2 fcheckloc
           let loop=loop+1
         done	
 
-        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 $dom yes |$EXECrrfs/enspost_get_prcip > $DATA/output.enspost_get_prcip1h.m${m}.f${ff} 2>&1
+        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 $dom yes |$EXECrefs/enspost_get_prcip > $DATA/output.enspost_get_prcip1h.m${m}.f${ff} 2>&1
         export err=$? ; err_chk
 
         if [ ${ff}%3 -eq 0 ] 
@@ -520,24 +520,24 @@ typeset -Z2 fcheckloc
        if [ $type = 'timelag' ];then
 
         if [ $m = 08 -o $m = 09 -o $m = 10 -o $m = 11 -o $m = 12 -o $m = 13 ];then
-         filecheck00=${COMINrrfs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f06.grib2
+         filecheck00=${COMINrefs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f06.grib2
 	 echo here TL with filecheck00 $filecheck00
          ln -sf $filecheck00  $DATA/${RUN}.m${m}.t${cyc}z.f00
          ln -sf $DATA/${RUN}.m${m}.t${cyc}z.f00  $DATA/${ff}/${RUN}.m${m}.t${cyc}z.f00
         else
-         filecheck00=${COMINrrfs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f00.grib2
+         filecheck00=${COMINrefs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f00.grib2
 	 echo here ontime with filecheck00 $filecheck00
          ln -sf $filecheck00  $DATA/${RUN}.m${m}.t${cyc}z.f00
          ln -sf $DATA/${RUN}.m${m}.t${cyc}z.f00  $DATA/${ff}/${RUN}.m${m}.t${cyc}z.f00
 	fi
        else
-        filecheck00=${COMINrrfs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f00.grib2
+        filecheck00=${COMINrefs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f00.grib2
         ln -sf $filecheck00  $DATA/${RUN}.m${m}.t${cyc}z.f00
         ln -sf $DATA/${RUN}.m${m}.t${cyc}z.f00  $DATA/${ff}/${RUN}.m${m}.t${cyc}z.f00
        fi
       fi
  
-        filecheck=${COMINrrfs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f${fcst}.grib2
+        filecheck=${COMINrefs}.${day[$m]}/fv3s.t${cycloc[$m]}z.${dom}.${nam[$m]}.f${fcst}.grib2
 
 	if [ -e $filecheck ]
         then
@@ -574,7 +574,7 @@ typeset -Z2 fcheckloc
 
         if [ ${ff}%3 -eq 0 ]
         then
-        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 $dom non |$EXECrrfs/enspost_get_prcip > $DATA/output.enspost_get_prcip3h.m${m}.f${ff} 2>&1
+        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 3 $dom non |$EXECrefs/enspost_get_prcip > $DATA/output.enspost_get_prcip3h.m${m}.f${ff} 2>&1
         export err=$? ; err_chk
         fi
 
@@ -586,7 +586,7 @@ typeset -Z2 fcheckloc
           let loop=loop+1
         done	
 
-        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 $dom yes |$EXECrrfs/enspost_get_prcip > $DATA/output.enspost_get_prcip1h.m${m}.f${ff} 2>&1
+        echo ${RUN}.m${m}.t${cyc}z. $ff .false. .false. .false. .false. .false. 1 $dom yes |$EXECrefs/enspost_get_prcip > $DATA/output.enspost_get_prcip1h.m${m}.f${ff} 2>&1
         export err=$? ; err_chk
 
         if [ ${ff}%3 -eq 0 ] 

@@ -34,7 +34,7 @@ type=${type}
 
 cd $DATA/${ff}/
 
-ln -sf $FIXrrfs/new*rrfs* .
+ln -sf $FIXrefs/new*rrfs* .
 
 # If testing without the flash flood products
 # if [ $NEST = 'conusavoidnow' ]
@@ -206,12 +206,12 @@ echo $dom is conus for defining the variable parm file
  then
   if [ ${ff}%3 -eq 0 ]
   then
-    ln -sf $PARMrrfs/enspost_variable_grib2.tbl_3h variable.tbl
+    ln -sf $PARMrefs/enspost_variable_grib2.tbl_3h variable.tbl
   else
-    ln -sf $PARMrrfs/enspost_variable_grib2.tbl    variable.tbl
+    ln -sf $PARMrefs/enspost_variable_grib2.tbl    variable.tbl
   fi
  else
-  ln -sf $PARMrrfs/enspost_variable_grib2.tbl    variable.tbl
+  ln -sf $PARMrefs/enspost_variable_grib2.tbl    variable.tbl
  fi
 
 else
@@ -221,17 +221,17 @@ echo $dom is nonconus for defining the variable parm file
  then
   if [ ${ff}%3 -eq 0 ]
   then
-    ln -sf $PARMrrfs/enspost_variable_grib2.tbl_3h_nonconus variable.tbl
+    ln -sf $PARMrefs/enspost_variable_grib2.tbl_3h_nonconus variable.tbl
   else
-    ln -sf $PARMrrfs/enspost_variable_grib2.tbl_nonconus    variable.tbl
+    ln -sf $PARMrefs/enspost_variable_grib2.tbl_nonconus    variable.tbl
   fi
  else
-  ln -sf $PARMrrfs/enspost_variable_grib2.tbl_nonconus    variable.tbl
+  ln -sf $PARMrefs/enspost_variable_grib2.tbl_nonconus    variable.tbl
  fi
 
 fi
 
-$EXECrrfs/enspost_ensprod   > $DATA/$ff/output_enspost_ensprod.$ff 2>&1
+$EXECrefs/enspost_ensprod   > $DATA/$ff/output_enspost_ensprod.$ff 2>&1
 errsave=$?
 echo past enspost_ensprod for ff $ff
 export err=$errsave; err_chk
@@ -268,7 +268,7 @@ if [ $SENDCOM = YES ]; then
   fi
 
   for m in $mbrs ; do
-   cp -d $DATA/rrfs.m${m}.t${cyc}z.f${ff}  $COMOUT/verf_g2g/rrfs.m${m}.t${cyc}z.${NEST}.f${ff}
+   cp -d $DATA/refs.m${m}.t${cyc}z.f${ff}  $COMOUT/verf_g2g/refs.m${m}.t${cyc}z.${NEST}.f${ff}
    cp -d $DATA/prcip.m${m}.t${cyc}z.f${ff} $COMOUT/verf_g2g/prcip.m${m}.t${cyc}z.${NEST}.f${ff}
    cp -d $DATA/${ff}/filename              $COMOUT/verf_g2g/filename.t${cyc}z.${NEST}.f${ff}
   done

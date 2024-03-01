@@ -1,0 +1,126 @@
+#!/bin/bash
+
+#############################################################
+# 02/02/2015 Binbin Zhou, create for run all scripts 
+# 04/26/2023 Jun Du, added a timelag version (type=timelag)
+# 02/06/2024 M. Pyle - switches things to REFS
+#############################################################
+
+########################################
+# Preliminary data setup step
+########################################
+
+set -xa
+export PS4='$SECONDS + ' 
+date
+
+###########################################################
+# obtain unique process id (pid) and make temp directories
+###########################################################
+export DATA=${DATA:-${DATAROOT:?}/${jobid:?}}
+mkdir -p $DATA
+rm -rf $DATA/*
+cd $DATA
+
+msg="JOB $job HAS BEGUN"
+postmsg "$msg"
+
+#
+# Run setpdy and initialize PDY variables
+#
+
+export cycle=${cycle:-t${cyc}z}
+
+setpdy.sh
+. ./PDY
+
+##################################################
+# SENDCOM  - Copy Files From TMPDIR to $COMOUT
+# SENDDBN  - Issue DBNet Client Calls
+##################################################
+export ndate=/apps/ops/prod/nco/core/prod_util.v2.0.8/exec/ndate
+
+export SENDCOM=${SENDCOM:-YES}
+export SENDECF=${SENDECF:-YES}
+export SENDDBN=${SENDDBN:-YES}
+export SENDDBN_NTC=${SENDDBN_NTC:-NO}
+
+export HOMErefs=${HOMErefs:-$PACKAGEROOT/refs.${refs_ver}} 
+export EXECrefs=${EXECrefs:-$HOMErefs/exec}
+export PARMrefs=${PARMrefs:-$HOMErefs/parm}
+export USHrefs=${USHrefs:-$HOMErefs/ush}
+export FIXrefs=${FIXrefs:-$HOMErefs/fix}
+export SCRIPTSrefs=${SCRIPTSrefs:-$HOMErefs/scripts}
+
+###################################
+# Specify NET and RUN Name and model
+####################################
+export NET=${NET:-refs}
+export RUN=${RUN:-refs}
+
+export IOBUF_PARAMS='*:size=8M:count=8'
+
+##############################################
+# Define running directory and COM directories
+##############################################
+
+## PDY not included here as pull data from PDYm1 as well
+
+# think about this one.  is it COMINrefs?  Or just COMIN, as is internal to system?
+export COMINrefs=${COMINrefs:-$GESROOT/${RUN}}
+
+export COMOUT=${COMOUT:-$(compath.py -o $NET/${refs_ver})/$RUN.${PDY}}
+export COMINffg=${COMINffg:-$(compath.py -o $NET/${refs_ver})/${RUN}.${PDY}}
+export COMINffgm1=${COMINffg:-$(compath.py -o $NET/${refs_ver})/${RUN}.${PDYm1}}
+
+if [ ! -d $COMOUT/ensprod ] ; then 
+ mkdir -p $COMOUT/ensprod
+ mkdir -p $COMOUT/verf_g2g
+ mkdir -p $COMOUT/wmo
+fi
+
+export pgmout="OUTPUT.$$"
+
+#######################################################
+# Pass information which is needed to run the Script
+#######################################################
+
+# export VERBOSE=YES
+
+###################################################
+# Execute the Script exrefs_ensprod.sh.ecf
+
+if [ -e ./poe.* ]
+then
+rm -rf ./poe.*
+fi
+
+hrlist="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 \
+        26 27 28 29 30 31 32 33 34 35 36"
+
+for hr in $hrlist
+do
+echo "$SCRIPTSrefs/exrefs_ensprod_link.sh.ecf $hr $type" >> poe.link.all
+echo "$SCRIPTSrefs/exrefs_ensprod.sh.ecf $hr $type" >> poe.ensprod.all
+done
+
+chmod 775 poe.link.all
+chmod 775 poe.ensprod.all
+
+mpiexec -n $NTASK -ppn $PTILE --cpu-bind verbose,core cfp ./poe.link.all
+export err=$?; err_chk
+
+echo to try running ensprod.all
+
+mpiexec -n $NTASK -ppn $PTILE --cpu-bind verbose,core cfp ./poe.ensprod.all
+export err=$?; err_chk
+
+
+msg="JOB $job HAS COMPLETED NORMALLY."
+postmsg "$msg"
+date
+
+cd $DATAROOT
+if [ $KEEPDATA = NO ]; then rm -rf $DATA; fi
+
+date

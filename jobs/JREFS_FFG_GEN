@@ -1,0 +1,64 @@
+#!/bin/bash
+
+set -xa
+# #### 08/25/1999 ###################
+# SET SHELL PROCESSING VARIABLES
+# ###################################
+export PS4='$SECONDS + ' 
+date
+
+###########################################################
+# obtain unique process id (pid) and make temp directories
+###########################################################
+export DATA=${DATA:-${DATAROOT:?}/${jobid:?}}
+mkdir -p $DATA
+cd $DATA 
+
+# Run setpdy and initialize PDY variables
+export cycle=${cycle:-t${cyc}z}
+
+setpdy.sh 10
+. ./PDY
+
+##################################################
+# SENDECF  - Flag Events on ecFLOW
+# SENDCOM  - Copy Files From TMPDIR to $COMOUT
+# SENDDBN  - Issue DBNet Client Calls
+##################################################
+export SENDCOM=${SENDCOM:-YES}
+export SENDECF=${SENDECF:-YES}
+export SENDDBN=${SENDDBN:-YES}
+
+export HOMErefs=${HOMErefs:-$PACKAGEROOT/refs.${refs_ver}}
+export USHrefs=${USHrefs:-$HOMErefs/ush}
+export EXECrefs=${EXECrefs:-$HOMErefs/exec}
+
+###############################
+# Specify NET and RUN name
+###############################
+export NET=${NET:-refs}
+export RUN=${RUN:-refs} 
+  
+# how handle DCOMROOT - hardcode backup definition, or use $envir?
+
+export DCOMROOT=${DCOMROOT:-/lfs/h1/ops/${envir}/dcom}
+#export COMIN=${COMIN:-$(compath.py -o $NET/${refs_ver})/${RUN}.${PDY}}
+#export COMOUT=${COMOUT:-$(compath.py -o $NET/${refs_ver})/${RUN}.${PDY}}
+export COMIN=${COMIN:-$(compath.py -o $NET/${refs_ver})/${RUN}.${PDY}}
+export COMOUT=${COMOUT:-$(compath.py -o $NET/${refs_ver})/${RUN}.${PDY}}
+
+
+if [ ! -f $COMOUT ] ; then
+  mkdir -p -m 775 $COMOUT
+fi
+
+export pgmout=OUTPUT.$$
+
+#################################################################
+# Execute the script
+$HOMErefs/scripts/exrefs_ffggen.sh.ecf
+#################################################################
+
+cd ${DATAROOT}
+if [ $KEEPDATA = NO ]; then rm -rf $DATA; fi
+date

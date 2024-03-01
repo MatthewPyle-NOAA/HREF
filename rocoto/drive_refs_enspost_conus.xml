@@ -1,0 +1,1010 @@
+<?xml version="1.0"?>
+<!DOCTYPE workflow
+[
+
+<!ENTITY STARTYEAR "2023">
+<!ENTITY STARTMONTH "09">
+<!ENTITY STARTDAY "20">
+<!ENTITY STARTHOUR "00">
+
+<!ENTITY ENDYEAR "2024">
+<!ENTITY ENDMONTH "12">
+<!ENTITY ENDDAY "31">
+<!ENTITY ENDHOUR "12">
+
+<!ENTITY USER "emc.lam">
+<!ENTITY ACCOUNT "RRFS-DEV">
+<!ENTITY TYPE "timelag">
+<!ENTITY PHYS "singlephys">
+<!ENTITY RUN "refs">
+
+<!ENTITY USERLAM "emc.lam">
+<!ENTITY HOMErefs "/lfs/h2/emc/lam/noscrub/&USER;/enspost/refs.v1.0.0">
+<!ENTITY domain "conus">
+<!ENTITY machine "WCOSS2">
+<!ENTITY envir "para">
+<!ENTITY JOBS "&HOMErefs;/jobs">
+<!ENTITY PRE "&HOMErefs;/rocoto/launch.ksh">
+
+<!ENTITY SCRIPTS "&HOMErefs;/scripts">
+<!ENTITY COMINhrrr "/lfs/h1/ops/prod/com/hrrr/v4.1/hrrr">
+<!ENTITY COMINrrfsdet "/lfs/h2/emc/ptmp/&USERLAM;/rrfs/na/prod"> 
+<!ENTITY COMINall "/lfs/h2/emc/ptmp/&USER;/&envir;/com/refs/v1.0/nwges/&RUN;">
+<!ENTITY GESROOT "/lfs/h2/emc/ptmp/&USER;/&envir;/com/refs/v1.0/nwges/">
+<!ENTITY MYCOMROOT "/lfs/h2/emc/ptmp/&USER;/&envir;/com/refs/v1.0/">
+<!ENTITY COMROOT "/lfs/h2/emc/ptmp/&USER;/&envir;/com">
+<!ENTITY COMPATH "/lfs/h2/emc/ptmp/&USER;">
+<!ENTITY DATAROOT "/lfs/h2/emc/stmp/&USER;/tmp">
+<!ENTITY OUTDIR "/lfs/h2/emc/ptmp/&USER;/&envir;">
+<!ENTITY KEEPDATA "YES">
+<!ENTITY TIMEOFFSET_SIX "-00:06:00:00">
+<!ENTITY TIMEOFFSET_TWELVE "-00:12:00:00">
+
+
+<!ENTITY RESERVATION '<queue>pridev</queue><account>&ACCOUNT;</account>'>
+
+<!ENTITY RESERVATION_TRANSFER '<queue>dev_transfer</queue><account>&ACCOUNT;</account>'>
+<!ENTITY TRANSFER_RESOURCES '<nodes>1:ppn=1</nodes><walltime>04:59:00</walltime>'>
+
+
+<!ENTITY CLEANUP_RESOURCES '<walltime>00:10:00</walltime>'>
+<!ENTITY PREPROC_RESOURCES '<walltime>00:39:00</walltime><native></native>'>
+
+<!ENTITY FFG_RESOURCES '<walltime>00:10:00</walltime><native></native>'>
+<!ENTITY EAS_RESOURCES '<walltime>00:45:00</walltime><native></native>'>
+<!ENTITY ENSPROD_RESOURCES '<walltime>00:45:00</walltime><native></native>'>
+<!ENTITY GEMPAK_RESOURCES '<walltime>00:59:00</walltime><native></native>'>
+
+]>
+
+
+<!--  ************************************************************* -->
+<!--  ******************* STARTING THE WORKFLOW ******************* -->
+
+<!-- <workflow realtime="F" scheduler="pbspro" taskthrottle="11"> -->
+<workflow realtime="T" scheduler="pbspro" taskthrottle="10" cyclethrottle="6" cyclelifespan="00:23:30:00">
+
+  <cycledef group="regional">&STARTYEAR;&STARTMONTH;&STARTDAY;&STARTHOUR;00 &ENDYEAR;&ENDMONTH;&ENDDAY;&ENDHOUR;00 06:00:00</cycledef>
+  <cycledef group="regional_justontime">&STARTYEAR;&STARTMONTH;&STARTDAY;&STARTHOUR;00 &ENDYEAR;&ENDMONTH;&ENDDAY;&ENDHOUR;00 12:00:00</cycledef>
+
+  <log>
+    <cyclestr>&OUTDIR;/logfiles_refs/workflow_regional_single_&TYPE;_&domain;_@Y@m@d@H.log</cyclestr>
+  </log>
+
+
+<!--  **********************************************************************  -->
+<!--  **************************** Run preproc ******************************  -->
+
+
+  <task name="preproc_fv3" cycledefs="regional" maxtries="3">
+  &RESERVATION;
+  &PREPROC_RESOURCES;
+  <nodes>1:ppn=61</nodes>
+    <command>&PRE; &JOBS;/JREFS_PREPROC_FV3</command>
+    <jobname><cyclestr>preprocfv3_&TYPE;_&PHYS;_&domain;_@H</cyclestr></jobname>
+    <join><cyclestr>&OUTDIR;/logfiles_refs/preprocfv3_&TYPE;_&PHYS;_&domain;_@H.log</cyclestr></join>
+
+    <envar>
+      <name>NTASK</name>
+      <value>61</value>
+    </envar>
+    <envar>
+      <name>PTILE</name>
+      <value>61</value>
+    </envar>
+
+    <envar>
+     <name>NEST</name>
+     <value>&domain;</value>
+    </envar>
+
+    <envar>
+     <name>type</name>
+     <value>&TYPE;</value>
+    </envar>
+
+    <envar>
+     <name>GESROOT</name>
+     <value>&GESROOT;</value>
+    </envar>
+
+    <envar>
+      <name>COMINrrfs</name>
+      <value>&COMINrrfsdet;</value>
+    </envar>
+
+    <envar>
+      <name>HOMErefs</name>
+      <value>&HOMErefs;</value>
+    </envar>
+    <envar>
+      <name>job</name>
+      <value>preprocrefs_&TYPE;_&PHYS;_&domain;</value>
+    </envar>
+
+    <envar>
+     <name>MYCOMROOT</name>
+     <value>&MYCOMROOT;</value>
+    </envar>
+
+    <envar>
+     <name>COMROOT</name>
+     <value>&COMROOT;</value>
+    </envar>
+
+    <envar>
+      <name>machine</name>
+      <value>&machine;</value>
+    </envar>
+
+    <envar>
+      <name>envir</name>
+      <value>&envir;</value>
+    </envar>
+
+    <envar>
+      <name>KEEPDATA</name>
+      <value>&KEEPDATA;</value>
+    </envar>
+    <envar>
+      <name>DATAROOT</name>
+      <value>&DATAROOT;</value>
+    </envar>
+
+    <envar>
+      <name>USER</name>
+      <value>&USER;</value>
+    </envar>
+
+    <envar>
+      <name>CDATE</name>
+      <value><cyclestr>@Y@m@d@H</cyclestr></value>
+    </envar>
+    <envar>
+      <name>PDY</name>
+      <value><cyclestr>@Y@m@d</cyclestr></value>
+    </envar>
+    <envar>
+      <name>cyc</name>
+      <value><cyclestr>@H</cyclestr></value>
+    </envar>
+
+    <envar><name>jobid</name><value>refs_ensprodpreprocfv3_&TYPE;_&PHYS;_&domain;_<cyclestr>@H</cyclestr>_&envir;</value></envar>
+
+
+    <dependency>
+    <and>
+          <datadep age="05:00" minsize="300000000"><cyclestr>&COMINrrfsdet;/refs.@Y@m@d/@H/mem0001/rrfs.t@Hz.prslev.f060.conus_3km.grib2</cyclestr></datadep>
+          <datadep age="05:00" minsize="300000000"><cyclestr>&COMINrrfsdet;/refs.@Y@m@d/@H/mem0002/rrfs.t@Hz.prslev.f060.conus_3km.grib2</cyclestr></datadep>
+          <datadep age="05:00" minsize="300000000"><cyclestr>&COMINrrfsdet;/refs.@Y@m@d/@H/mem0003/rrfs.t@Hz.prslev.f060.conus_3km.grib2</cyclestr></datadep>
+          <datadep age="05:00" minsize="300000000"><cyclestr>&COMINrrfsdet;/refs.@Y@m@d/@H/mem0004/rrfs.t@Hz.prslev.f060.conus_3km.grib2</cyclestr></datadep>
+          <datadep age="05:00" minsize="300000000"><cyclestr>&COMINrrfsdet;/refs.@Y@m@d/@H/mem0005/rrfs.t@Hz.prslev.f060.conus_3km.grib2</cyclestr></datadep>
+          <datadep age="05:00" minsize="300000000"><cyclestr>&COMINrrfsdet;/rrfs.@Y@m@d/@H/rrfs.t@Hz.prslev.f060.conus_3km.grib2</cyclestr></datadep>
+    </and>
+    </dependency>
+
+  </task>
+
+  <task name="preproc_hrrr" cycledefs="regional" maxtries="3">
+  &RESERVATION;
+  &PREPROC_RESOURCES;
+  <nodes>1:ppn=49</nodes>
+    <command>&PRE; &JOBS;/JREFS_PREPROC_HRRR</command>
+    <jobname><cyclestr>preprochrrr_&TYPE;_&PHYS;_&domain;_@H</cyclestr></jobname>
+    <join><cyclestr>&OUTDIR;/logfiles_refs/preprochrrr_&TYPE;_&PHYS;_&domain;_@H.log</cyclestr></join>
+
+    <envar>
+      <name>NTASK</name>
+      <value>49</value>
+    </envar>
+    <envar>
+      <name>PTILE</name>
+      <value>49</value>
+    </envar>
+
+    <envar>
+     <name>NEST</name>
+     <value>&domain;</value>
+    </envar>
+
+    <envar>
+     <name>type</name>
+     <value>&TYPE;</value>
+    </envar>
+
+    <envar>
+     <name>GESROOT</name>
+     <value>&GESROOT;</value>
+    </envar>
+
+    <envar>
+      <name>COMINrrfs</name>
+      <value>&COMINrrfsdet;</value>
+    </envar>
+
+    <envar>
+      <name>COMINhrrr</name>
+      <value>&COMINhrrr;</value>
+    </envar>
+
+    <envar>
+      <name>HOMErefs</name>
+      <value>&HOMErefs;</value>
+    </envar>
+    <envar>
+      <name>job</name>
+      <value>preprochrrr_&TYPE;_&PHYS;_&domain;</value>
+    </envar>
+
+    <envar>
+     <name>MYCOMROOT</name>
+     <value>&MYCOMROOT;</value>
+    </envar>
+
+    <envar>
+     <name>COMROOT</name>
+     <value>&COMROOT;</value>
+    </envar>
+
+    <envar>
+      <name>machine</name>
+      <value>&machine;</value>
+    </envar>
+
+    <envar>
+      <name>envir</name>
+      <value>&envir;</value>
+    </envar>
+
+    <envar>
+      <name>KEEPDATA</name>
+      <value>&KEEPDATA;</value>
+    </envar>
+    <envar>
+      <name>DATAROOT</name>
+      <value>&DATAROOT;</value>
+    </envar>
+
+    <envar>
+      <name>USER</name>
+      <value>&USER;</value>
+    </envar>
+
+    <envar>
+      <name>CDATE</name>
+      <value><cyclestr>@Y@m@d@H</cyclestr></value>
+    </envar>
+    <envar>
+      <name>PDY</name>
+      <value><cyclestr>@Y@m@d</cyclestr></value>
+    </envar>
+    <envar>
+      <name>cyc</name>
+      <value><cyclestr>@H</cyclestr></value>
+    </envar>
+
+    <envar><name>jobid</name><value>refs_ensprodpreprochrrr_&TYPE;_&PHYS;_&domain;_<cyclestr>@H</cyclestr>_&envir;</value></envar>
+
+
+    <dependency>
+    <and>
+          <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf48.grib2</cyclestr></datadep>
+          <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf12.grib2</cyclestr></datadep>
+          <datadep age="05:00" minsize="300000000"><cyclestr>&COMINhrrr;.@Y@m@d/conus/hrrr.t@Hz.wrfprsf36.grib2</cyclestr></datadep>
+    </and>
+    </dependency>
+
+  </task>
+
+
+<!--  ***********************************************************************  -->
+<!-- dont forget to do FFG piece                                               -->
+<!--  ***********************************************************************  -->
+
+  <task name="ffg_gen" cycledefs="regional" maxtries="2">
+    &RESERVATION;
+    &FFG_RESOURCES;
+    <nodes>1:ppn=1</nodes>
+      <command>&PRE; &JOBS;/JREFS_FFG_GEN</command>
+      <jobname><cyclestr>ffg_gen_&TYPE;_&PHYS;_&domain;_@Hz</cyclestr></jobname>
+      <join><cyclestr>&OUTDIR;/logfiles_refs/ffg_gen_&TYPE;_&PHYS;_&domain;@H.log</cyclestr></join>
+   
+      <envar>
+        <name>HOMErefs</name>
+        <value>&HOMErefs;</value>
+      </envar>
+      <envar>
+        <name>job</name>
+        <value>ffg_gen_&TYPE;_&PHYS;_&domain;</value>
+      </envar>
+      <envar>
+        <name>machine</name>
+        <value>&machine;</value>
+      </envar>
+
+      <envar>
+        <name>USER</name>
+        <value>&USER;</value>
+      </envar>
+      <envar>
+        <name>CDATE</name>
+        <value><cyclestr>@Y@m@d@H</cyclestr></value>
+      </envar>
+      <envar>
+        <name>PDY</name>
+        <value><cyclestr>@Y@m@d</cyclestr></value>
+      </envar>
+      <envar>
+        <name>cyc</name>
+        <value><cyclestr>@H</cyclestr></value>
+      </envar>
+      <envar>
+       <name>NEST</name>
+       <value>&domain;</value>
+      </envar>
+    <envar>
+      <name>DATAROOT</name>
+      <value>&DATAROOT;</value>
+    </envar>
+    <envar>
+     <name>MYCOMROOT</name>
+     <value>&MYCOMROOT; </value>
+    </envar>
+
+    <envar>
+     <name>type</name>
+     <value>&TYPE;</value>
+    </envar>
+
+    <envar>
+     <name>COMROOT</name>
+     <value>&COMROOT;</value>
+    </envar>
+
+    <envar>
+      <name>KEEPDATA</name>
+      <value>&KEEPDATA;</value>
+    </envar>
+    <envar>
+      <name>envir</name>
+      <value>&envir;</value>
+    </envar>
+    <envar><name>jobid</name><value>refs_ffggen_&TYPE;_&PHYS;_&domain;_<cyclestr>@H</cyclestr>_&envir;</value></envar>
+
+      <dependency>
+       <and>
+        <datadep age="05:00" minsize="300000000"><cyclestr>&COMINrrfsdet;/refs.@Y@m@d/@H/mem0001/rrfs.t@Hz.prslev.f060.conus_3km.grib2</cyclestr></datadep>
+        <datadep age="05:00" minsize="300000000"><cyclestr>&COMINrrfsdet;/refs.@Y@m@d/@H/mem0002/rrfs.t@Hz.prslev.f060.conus_3km.grib2</cyclestr></datadep>
+       </and>
+      </dependency>
+  </task>
+
+
+
+<!--  *******************************************************************  -->
+<!--  ********************** Run the main EAS piece *************************  -->
+
+
+  <task name="eas_gen_1" cycledefs="regional" maxtries="2">
+    &RESERVATION;
+    &EAS_RESOURCES;
+    <nodes>6:ppn=41</nodes>
+      <command>&PRE; &JOBS;/JREFS_EAS_1</command>
+      <jobname><cyclestr>easgen_1_&TYPE;_&PHYS;_&domain;_@Hz</cyclestr></jobname>
+      <join><cyclestr>&OUTDIR;/logfiles_refs/eas_gen_1_&TYPE;_&PHYS;_&domain;@H.log</cyclestr></join>
+   
+    <envar>
+      <name>NODES</name>
+      <value>6</value>
+    </envar>
+    <envar>
+      <name>NTASK</name>
+      <value>244</value>
+    </envar>
+    <envar>
+      <name>PTILE</name>
+      <value>41</value>
+    </envar>
+
+    <envar>
+     <name>type</name>
+     <value>&TYPE;</value>
+    </envar>
+
+      <envar>
+        <name>HOMErefs</name>
+        <value>&HOMErefs;</value>
+      </envar>
+      <envar>
+        <name>job</name>
+        <value>eas_gen_1_&TYPE;_&PHYS;_&domain;</value>
+      </envar>
+      <envar>
+        <name>machine</name>
+        <value>&machine;</value>
+      </envar>
+      <envar>
+        <name>USER</name>
+        <value>&USER;</value>
+      </envar>
+      <envar>
+        <name>CDATE</name>
+        <value><cyclestr>@Y@m@d@H</cyclestr></value>
+      </envar>
+      <envar>
+        <name>PDY</name>
+        <value><cyclestr>@Y@m@d</cyclestr></value>
+      </envar>
+      <envar>
+        <name>cyc</name>
+        <value><cyclestr>@H</cyclestr></value>
+      </envar>
+      <envar>
+       <name>NEST</name>
+       <value>&domain;</value>
+      </envar>
+    <envar>
+     <name>dom</name>
+     <value>&domain;</value>
+    </envar>
+    <envar>
+     <name>MYCOMROOT</name>
+     <value>&MYCOMROOT; </value>
+    </envar>
+
+    <envar>
+     <name>COMROOT</name>
+     <value>&COMROOT;</value>
+    </envar>
+
+    <envar>
+      <name>COMINrefs</name>
+      <value>&COMINall;</value>
+    </envar>
+
+    <envar>
+      <name>COMINhrrr</name>
+      <value>&COMINall;</value>
+    </envar>
+
+    <envar>
+      <name>DATAROOT</name>
+      <value>&DATAROOT;</value>
+    </envar>
+    <envar>
+      <name>KEEPDATA</name>
+      <value>&KEEPDATA;</value>
+    </envar>
+    <envar>
+      <name>envir</name>
+      <value>&envir;</value>
+    </envar>
+    <envar><name>jobid</name><value>refs_qpfeasfrac_1_&TYPE;_&PHYS;_&domain;_<cyclestr>@H</cyclestr>_&envir;</value></envar>
+
+
+      <dependency>
+        <and>
+       <taskdep task="preproc_fv3"/>
+       <taskdep task="preproc_fv3" cycle_offset="-6:00:00"/>
+       <taskdep task="preproc_hrrr"/>
+       <taskdep task="preproc_hrrr" cycle_offset="-6:00:00"/>
+       <taskdep task="ffg_gen"/>
+       </and>
+      </dependency>
+  </task>
+
+  <task name="eas_gen_2" cycledefs="regional" maxtries="2">
+    &RESERVATION;
+    &EAS_RESOURCES;
+    <nodes>6:ppn=32</nodes>
+      <command>&PRE; &JOBS;/JREFS_EAS_2</command>
+      <jobname><cyclestr>easgen_2_&TYPE;_&PHYS;_&domain;_@Hz</cyclestr></jobname>
+      <join><cyclestr>&OUTDIR;/logfiles_refs/eas_gen_2_&TYPE;_&PHYS;_&domain;@H.log</cyclestr></join>
+   
+    <envar>
+      <name>NODES</name>
+      <value>6</value>
+    </envar>
+    <envar>
+      <name>NTASK</name>
+      <value>192</value>
+    </envar>
+    <envar>
+      <name>PTILE</name>
+      <value>32</value>
+    </envar>
+
+      <envar>
+        <name>HOMErefs</name>
+        <value>&HOMErefs;</value>
+      </envar>
+      <envar>
+        <name>job</name>
+        <value>eas_gen_2_&TYPE;_&PHYS;_&domain;</value>
+      </envar>
+      <envar>
+        <name>machine</name>
+        <value>&machine;</value>
+      </envar>
+      <envar>
+        <name>USER</name>
+        <value>&USER;</value>
+      </envar>
+      <envar>
+        <name>CDATE</name>
+        <value><cyclestr>@Y@m@d@H</cyclestr></value>
+      </envar>
+      <envar>
+        <name>PDY</name>
+        <value><cyclestr>@Y@m@d</cyclestr></value>
+      </envar>
+      <envar>
+        <name>cyc</name>
+        <value><cyclestr>@H</cyclestr></value>
+      </envar>
+      <envar>
+       <name>NEST</name>
+       <value>&domain;</value>
+      </envar>
+    <envar>
+     <name>dom</name>
+     <value>&domain;</value>
+    </envar>
+    <envar>
+     <name>MYCOMROOT</name>
+     <value>&MYCOMROOT; </value>
+    </envar>
+
+    <envar>
+      <name>COMINrefs</name>
+      <value>&COMINall;</value>
+    </envar>
+
+    <envar>
+      <name>COMINhrrr</name>
+      <value>&COMINall;</value>
+    </envar>
+
+    <envar>
+     <name>type</name>
+     <value>&TYPE;</value>
+    </envar>
+
+    <envar>
+     <name>COMROOT</name>
+     <value>&COMROOT;</value>
+    </envar>
+
+    <envar>
+      <name>DATAROOT</name>
+      <value>&DATAROOT;</value>
+    </envar>
+    <envar>
+      <name>KEEPDATA</name>
+      <value>&KEEPDATA;</value>
+    </envar>
+    <envar>
+      <name>envir</name>
+      <value>&envir;</value>
+    </envar>
+
+    <envar><name>jobid</name><value>refs_qpfeasfrac_2_&TYPE;_&PHYS;_&domain;_<cyclestr>@H</cyclestr>_&envir;</value></envar>
+
+
+      <dependency>
+        <and>
+       <taskdep task="preproc_fv3"/>
+       <taskdep task="preproc_fv3" cycle_offset="-6:00:00"/>
+       <taskdep task="ffg_gen"/>
+       <taskdep task="preproc_hrrr"/>
+       <taskdep task="preproc_hrrr"  cycle_offset="-6:00:00"/>
+        </and>
+      </dependency>
+  </task>
+
+
+<!--  ***********************************************************************  -->
+<!--  ************************* main ensprod piece *****************************  -->
+
+  <task name="ensprod_1" cycledefs="regional" maxtries="2">
+  &RESERVATION;
+  &ENSPROD_RESOURCES;
+  <nodes>6:ppn=6</nodes>
+    <command>&PRE; &JOBS;/JREFS_ENSPROD_1</command>
+    <jobname><cyclestr>ensprod_1_&TYPE;_&PHYS;_&domain;_@H</cyclestr></jobname>
+    <join><cyclestr>&OUTDIR;/logfiles_refs/ensprod_1_&TYPE;_&PHYS;_&domain;_@H.log</cyclestr></join>
+
+    <envar>
+      <name>NTASK</name>
+      <value>36</value>
+    </envar>
+    <envar>
+      <name>PTILE</name>
+      <value>6</value>
+    </envar>
+
+    <envar>
+      <name>NTASK_LINK</name>
+      <value>36</value>
+    </envar>
+    <envar>
+      <name>PTILE_LINK</name>
+      <value>12</value>
+    </envar>
+
+    <envar>
+     <name>type</name>
+     <value>&TYPE;</value>
+    </envar>
+
+    <envar>
+      <name>HOMErefs</name>
+      <value>&HOMErefs;</value>
+    </envar>
+    <envar>
+      <name>job</name>
+      <value><cyclestr>ensprod_1_&TYPE;_&PHYS;_&domain;_@Y@m@d</cyclestr></value>
+    </envar>
+    <envar>
+      <name>machine</name>
+      <value>&machine;</value>
+    </envar>
+    <envar>
+      <name>USER</name>
+      <value>&USER;</value>
+    </envar>
+    <envar>
+      <name>CDATE</name>
+      <value><cyclestr>@Y@m@d@H</cyclestr></value>
+    </envar>
+    <envar>
+      <name>PDY</name>
+      <value><cyclestr>@Y@m@d</cyclestr></value>
+    </envar>
+    <envar>
+      <name>cyc</name>
+      <value><cyclestr>@H</cyclestr></value>
+    </envar>
+    <envar>
+     <name>NEST</name>
+     <value>&domain;</value>
+    </envar>
+    <envar>
+      <name>DATAROOT</name>
+      <value>&DATAROOT;</value>
+    </envar>
+    <envar>
+     <name>MYCOMROOT</name>
+     <value>&MYCOMROOT; </value>
+    </envar>
+
+    <envar>
+      <name>COMINrefs</name>
+      <value>&COMINall;</value>
+    </envar>
+
+    <envar>
+      <name>COMINhrrr</name>
+      <value>&COMINall;</value>
+    </envar>
+
+    <envar>
+     <name>COMROOT</name>
+     <value>&COMROOT;</value>
+    </envar>
+
+    <envar>
+      <name>KEEPDATA</name>
+      <value>&KEEPDATA;</value>
+    </envar>
+    <envar>
+      <name>envir</name>
+      <value>&envir;</value>
+    </envar>
+
+
+    <envar><name>jobid</name><value>refs_ensprod_1_&TYPE;_&PHYS;_&domain;_<cyclestr>@H</cyclestr>_&envir;</value></envar>
+
+
+    <dependency>
+     <and>
+       <taskdep task="preproc_fv3"/>
+       <taskdep task="preproc_fv3" cycle_offset="-6:00:00"/>
+       <taskdep task="preproc_hrrr"/>
+       <taskdep task="preproc_hrrr"  cycle_offset="-6:00:00"/>
+       <taskdep task="ffg_gen"/>
+     </and>
+    </dependency>
+
+  </task>
+
+  <task name="ensprod_2" cycledefs="regional" maxtries="2">
+  &RESERVATION;
+  &ENSPROD_RESOURCES;
+  <nodes>4:ppn=6</nodes>
+    <command>&PRE; &JOBS;/JREFS_ENSPROD_2</command>
+    <jobname><cyclestr>ensprod_2_&TYPE;_&PHYS;_&domain;_@H</cyclestr></jobname>
+    <join><cyclestr>&OUTDIR;/logfiles_refs/ensprod_2_&TYPE;_&PHYS;_&domain;_@H.log</cyclestr></join>
+
+    <envar>
+      <name>NTASK</name>
+      <value>24</value>
+    </envar>
+    <envar>
+      <name>PTILE</name>
+      <value>6</value>
+    </envar>
+    <envar>
+      <name>NTASK_LINK</name>
+      <value>60</value>
+    </envar>
+    <envar>
+      <name>PTILE_LINK</name>
+      <value>60</value>
+    </envar>
+
+    <envar>
+     <name>type</name>
+     <value>&TYPE;</value>
+    </envar>
+
+    <envar>
+      <name>HOMErefs</name>
+      <value>&HOMErefs;</value>
+    </envar>
+    <envar>
+      <name>job</name>
+      <value><cyclestr>ensprod_2_&TYPE;_&PHYS;_&domain;_@Y@m@d</cyclestr></value>
+    </envar>
+    <envar>
+      <name>machine</name>
+      <value>&machine;</value>
+    </envar>
+    <envar>
+      <name>USER</name>
+      <value>&USER;</value>
+    </envar>
+    <envar>
+      <name>CDATE</name>
+      <value><cyclestr>@Y@m@d@H</cyclestr></value>
+    </envar>
+    <envar>
+      <name>PDY</name>
+      <value><cyclestr>@Y@m@d</cyclestr></value>
+    </envar>
+    <envar>
+      <name>cyc</name>
+      <value><cyclestr>@H</cyclestr></value>
+    </envar>
+    <envar>
+     <name>NEST</name>
+     <value>&domain;</value>
+    </envar>
+    <envar>
+      <name>DATAROOT</name>
+      <value>&DATAROOT;</value>
+    </envar>
+    <envar>
+     <name>MYCOMROOT</name>
+     <value>&MYCOMROOT; </value>
+    </envar>
+
+    <envar>
+      <name>COMINrefs</name>
+      <value>&COMINall;</value>
+    </envar>
+
+    <envar>
+      <name>COMINhrrr</name>
+      <value>&COMINall;</value>
+    </envar>
+
+    <envar>
+     <name>COMROOT</name>
+     <value>&COMROOT;</value>
+    </envar>
+
+    <envar>
+      <name>KEEPDATA</name>
+      <value>&KEEPDATA;</value>
+    </envar>
+    <envar>
+      <name>envir</name>
+      <value>&envir;</value>
+    </envar>
+
+    <envar><name>jobid</name><value>refs_ensprod_2_&TYPE;_&PHYS;_&domain;_<cyclestr>@H</cyclestr>_&envir;</value></envar>
+
+
+    <dependency>
+     <and>
+     <taskdep task="preproc_fv3"/>
+     <taskdep task="preproc_fv3" cycle_offset="-6:00:00"/>
+     <taskdep task="preproc_hrrr"/>
+     <taskdep task="preproc_hrrr"  cycle_offset="-6:00:00"/>
+     <taskdep task="ffg_gen"/>
+     </and>
+    </dependency>
+
+  </task>
+
+
+<!--  ***********************************************************************  -->
+<!--  ************************* WMO/AWIP piece *****************************  -->
+
+  <task name="refs_awips" cycledefs="regional" maxtries="2">
+  &RESERVATION;
+  &GEMPAK_RESOURCES;
+  <nodes>1:ppn=1</nodes>
+    <command>&PRE; &JOBS;/JREFS_AWIPS</command>
+    <jobname><cyclestr>refsawips_&TYPE;_&PHYS;_&domain;_@H</cyclestr></jobname>
+    <join><cyclestr>&OUTDIR;/logfiles_refs/refsawips_&TYPE;_&PHYS;_&domain;_@H.log</cyclestr></join>
+
+
+    <envar>
+      <name>HOMErefs</name>
+      <value>&HOMErefs;</value>
+    </envar>
+    <envar>
+      <name>job</name>
+      <value><cyclestr>awips_&TYPE;_&PHYS;_&domain;_@Y@m@d</cyclestr></value>
+    </envar>
+    <envar>
+      <name>machine</name>
+      <value>&machine;</value>
+    </envar>
+    <envar>
+      <name>USER</name>
+      <value>&USER;</value>
+    </envar>
+    <envar>
+      <name>CDATE</name>
+      <value><cyclestr>@Y@m@d@H</cyclestr></value>
+    </envar>
+    <envar>
+      <name>PDY</name>
+      <value><cyclestr>@Y@m@d</cyclestr></value>
+    </envar>
+    <envar>
+      <name>cyc</name>
+      <value><cyclestr>@H</cyclestr></value>
+    </envar>
+    <envar>
+     <name>NEST</name>
+     <value>&domain;</value>
+    </envar>
+    <envar>
+      <name>DATAROOT</name>
+      <value>&DATAROOT;</value>
+    </envar>
+    <envar>
+     <name>MYCOMROOT</name>
+     <value>&MYCOMROOT; </value>
+    </envar>
+
+    <envar>
+     <name>type</name>
+     <value>&TYPE;</value>
+    </envar>
+
+    <envar>
+     <name>COMROOT</name>
+     <value>&COMROOT;</value>
+    </envar>
+
+    <envar>
+      <name>KEEPDATA</name>
+      <value>&KEEPDATA;</value>
+    </envar>
+    <envar>
+      <name>envir</name>
+      <value>&envir;</value>
+    </envar>
+
+    <envar><name>jobid</name><value>refs_awips_&TYPE;_&PHYS;_&domain;_<cyclestr>@H</cyclestr>_&envir;</value></envar>
+
+    <dependency>
+     <and>
+     <taskdep task="ensprod_1"/>
+     <taskdep task="eas_gen_1"/>
+     <taskdep task="ensprod_2"/>
+     <taskdep task="eas_gen_2"/>
+     </and>
+    </dependency>
+
+  </task>
+
+<!--  ***********************************************************************  -->
+<!--  ************************* GEMPAK piece *****************************  -->
+
+  <task name="refs_gempak" cycledefs="regional" maxtries="1">
+  &RESERVATION;
+  &GEMPAK_RESOURCES;
+  <nodes>1:ppn=8</nodes>
+    <command>&PRE; &JOBS;/JREFS_GEMPAK</command>
+    <jobname><cyclestr>refsgempak_&TYPE;_&PHYS;_&domain;_@H</cyclestr></jobname>
+    <join><cyclestr>&OUTDIR;/logfiles_refs/refsgempak_&TYPE;_&PHYS;_&domain;_@H.log</cyclestr></join>
+
+    <envar>
+      <name> PTILE </name>
+      <value>8</value>
+    </envar>
+
+    <envar>
+      <name> NTASK</name>
+      <value>8</value>
+    </envar>
+    <envar>
+      <name>HOMErefs</name>
+      <value>&HOMErefs;</value>
+    </envar>
+    <envar>
+      <name>job</name>
+      <value><cyclestr>gempak_&TYPE;_&PHYS;_&domain;_@Y@m@d</cyclestr></value>
+    </envar>
+    <envar>
+      <name>machine</name>
+      <value>&machine;</value>
+    </envar>
+    <envar>
+      <name>USER</name>
+      <value>&USER;</value>
+    </envar>
+    <envar>
+      <name>CDATE</name>
+      <value><cyclestr>@Y@m@d@H</cyclestr></value>
+    </envar>
+    <envar>
+      <name>PDY</name>
+      <value><cyclestr>@Y@m@d</cyclestr></value>
+    </envar>
+    <envar>
+      <name>cyc</name>
+      <value><cyclestr>@H</cyclestr></value>
+    </envar>
+    <envar>
+     <name>NEST</name>
+     <value>&domain;</value>
+    </envar>
+    <envar>
+      <name>DATAROOT</name>
+      <value>&DATAROOT;</value>
+    </envar>
+    <envar>
+     <name>MYCOMROOT</name>
+     <value>&MYCOMROOT; </value>
+    </envar>
+
+    <envar>
+     <name>type</name>
+     <value>&TYPE;</value>
+    </envar>
+
+    <envar>
+     <name>COMROOT</name>
+     <value>&COMROOT;</value>
+    </envar>
+
+    <envar>
+      <name>KEEPDATA</name>
+      <value>&KEEPDATA;</value>
+    </envar>
+    <envar>
+      <name>envir</name>
+      <value>&envir;</value>
+    </envar>
+
+    <envar><name>jobid</name><value>refs_gempak_&TYPE;_&PHYS;_&domain;_<cyclestr>@H</cyclestr>_&envir;</value></envar>
+
+    <dependency>
+     <and>
+     <taskdep task="ensprod_1"/>
+     <taskdep task="eas_gen_1"/>
+     <taskdep task="ensprod_2"/>
+     <taskdep task="eas_gen_2"/>
+     </and>
+    </dependency>
+
+  </task>
+
+</workflow>

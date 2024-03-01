@@ -26,7 +26,7 @@ COMMAND=$1
 
 module list
 
-source /lfs/h2/emc/lam/noscrub/Matthew.Pyle/enspost/rrfs.v1.1.0/versions/run_enspost.ver
+source /lfs/h2/emc/lam/noscrub/emc.lam/enspost/refs.v1.0.0/versions/run.ver
 
 module load prod_envir/2.0.6
 module load cfp/2.0.4
@@ -49,6 +49,7 @@ module load python/${python_ver}
 module load libjpeg/${libjpeg_ver}
 module load grib_util/${grib_util_ver}
 module load gempak/${gempak_ver}
+module load awscli/2.7.35
 
 echo now have 
 module list

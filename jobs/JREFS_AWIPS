@@ -1,0 +1,59 @@
+#!/bin/bash
+
+set -xa
+# #### 08/25/1999 ###################
+# SET SHELL PROCESSING VARIABLES
+# ###################################
+export PS4='$SECONDS + ' 
+date
+
+###########################################################
+# obtain unique process id (pid) and make temp directories
+###########################################################
+export DATA=${DATA:-${DATAROOT:?}/${jobid:?}}
+mkdir $DATA
+cd $DATA 
+
+# Run setpdy and initialize PDY variables
+export cycle=${cycle:-t${cyc}z}
+setpdy.sh
+. ./PDY
+
+##################################################
+# SENDECF  - Flag Events on ecFLOW
+# SENDCOM  - Copy Files From TMPDIR to $COMOUT
+# SENDDBN  - Issue DBNet Client Calls
+##################################################
+export SENDCOM=${SENDCOM:-YES}
+export SENDECF=${SENDECF:-YES}
+export SENDDBN=${SENDDBN:-YES}
+
+export HOMErefs=${HOMErefs:-$PACKAGEROOT/refs.${refs_ver}}
+export USHrefs=${USHrefs:-$HOMErefs/ush}
+export PARMwmo=${PARMwmo:-$HOMErefs/parm/wmo}
+
+###############################
+# Specify NET and RUN name
+###############################
+export NET=${NET:-refs}
+export RUN=${RUN:-refs} 
+
+export COMIN=${COMIN:-$(compath.py -o $NET/${refs_ver})/$RUN.${PDY}/ensprod}
+export COMOUT=${COMOUT:-$(compath.py -o $NET/${refs_ver})/$RUN.${PDY}/wmo}
+
+if [ ! -f $COMOUT ] ; then
+  mkdir -p -m 775 $COMOUT
+fi
+
+export pgmout=OUTPUT.$$
+
+#################################################################
+# Execute the script
+$HOMErefs/scripts/exrefs_awips.sh.ecf $type
+#################################################################
+
+cd ${DATAROOT}
+echo in AWIPS jobs down here with KEEPDATA $KEEPDATA
+echo in AWIPS jobs down here with DATA $DATA
+if [ $KEEPDATA = NO ]; then rm -rf $DATA; fi
+date

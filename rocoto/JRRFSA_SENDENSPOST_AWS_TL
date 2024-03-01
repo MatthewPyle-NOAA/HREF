@@ -4,7 +4,9 @@ set -x
 export RUN=rrfs_a
 
 # If the data directory does not exist, then stop the job
-export DATA=/lfs/h2/emc/ptmp/emc.lam/para/com/rrfs/v1.1/rrfs.${PDY}/ensprod/
+export DATA=/lfs/h2/emc/ptmp/emc.lam/para/com/refs/v1.0/refs.${PDY}/ensprod/
+export DATASNOW=/lfs/h2/emc/ptmp/emc.lam/para/com/refs/v1.2/refs.${PDY}/ensprod/
+
 
 if [ -d $DATA ]; then
   echo "Run directory exists, transferring data inside of it"
@@ -19,31 +21,24 @@ export pgmout="OUTPUT.${pid}"
 
 . /lfs/h2/emc/lam/noscrub/Benjamin.Blake/key.bdp
 
-# Copy the bufr sounding file to AWS
-
 types="prob avrg eas ffri lpmm mean pmmn sprd"
 
-# for typ in $types
-# do
-
-# posthr=01
-# while [ $posthr -le 60 ] ; do
+aws s3 cp ./ s3://noaa-rrfs-pds/rrfs_a/rrfs_a.${PDY}/${cyc}/enspost_timelag/ --recursive --exclude "*" --include "refs.t${cyc}z.*.grib2*"
 
 
-aws s3 cp ./ s3://noaa-rrfs-pds/rrfs_a/rrfs_a.${PDY}/${cyc}/enspost_timelag/ --recursive --exclude "*" --include "rrfs.t${cyc}z.*.grib2*"
+if [ -d $DATASNOW ]; then
+cd $DATASNOW
 
 
-#  let "posthr=$(( ${posthr#0} + 1 ))"
-#  if [ $posthr -le 10 ] ; then
-#    posthr=$(printf "%02d" $posthr)
-#  fi
-# done
+aws s3 cp ./ s3://noaa-rrfs-pds/rrfs_a/rrfs_a.${PDY}/${cyc}/enspost_timelag/ --recursive --exclude "*" --include "refs.t${cyc}z.*snow*.grib2*"
 
-# done
+else
+echo "WARNING: no snow data"
+exit
+fi
 
 
 if [ $cyc -eq 00 -o $cyc -eq 06 -o $cyc -eq 12 -o $cyc -eq 18 ]; then
-  cd /lfs/h2/emc/ptmp/Benjamin.Blake/logfiles
   echo "I am done" > donefile.enspostaws.${CDATE}
   aws s3 cp donefile.enspostaws.${CDATE} s3://noaa-rrfs-pds/rrfs_a/rrfs_a.${PDY}/enspost_timelag/
 fi

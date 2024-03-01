@@ -34,7 +34,7 @@ fi
 
 cd $DATA
 
-EXECrrfs=${HOMErrfs}/exec
+EXECrefs=${HOMErefs}/exec
 
 hrsln="00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48"
 
@@ -67,7 +67,7 @@ then
         echo here a $hr
 
 ## the hourly will sum up three hourly at the appropriate time.
-        echo hrrr.t${cyc}z.f $hr .false. .false. .true. .false. .false. 1 ${NEST} no |$EXECrrfs/enspost_get_prcip > output.rrfs_get_prcip1h.f${hr}.${NEST}
+        echo hrrr.t${cyc}z.f $hr .false. .false. .true. .false. .false. 1 ${NEST} no |$EXECrefs/enspost_get_prcip > output.refs_get_prcip1h.f${hr}.${NEST}
         export err=$? ; err_chk
 
         if [ ${hr}%3 -eq 0 ]

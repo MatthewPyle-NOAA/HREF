@@ -1,74 +1,98 @@
 
 
 ##############################
-base=grib2_awips_href_conus_prob_non3h
-basealt=grib2_awips_href_conus_prob_non3h_noffri
+base=grib2_awips_rrfs_conus_prob_non3h
+basealt=grib2_awips_rrfs_conus_prob_non3h_noffri
 ##############################
 
 hr=1
 TCODE=B
 hrold=0
-cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf0${hr}
-cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf0${hr}_noffri
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf0${hr}
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf0${hr}_noffri
 
 hr=2
 TCODE=C
 hrold=1
-cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf0${hr}
-cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf0${hr}_noffri
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf0${hr}
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf0${hr}_noffri
 
 hr=4
 TCODE=E
 hrold=3
-cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf0${hr}
-cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf0${hr}_noffri
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf0${hr}
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf0${hr}_noffri
 
 hr=5
 TCODE=F
 hrold=4
-cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf0${hr}
-cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf0${hr}_noffri
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf0${hr}
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf0${hr}_noffri
 
 hr=7
 TCODE=H
 hrold=6
-cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf0${hr}
-cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf0${hr}_noffri
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf0${hr}
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf0${hr}_noffri
 
 hr=8
 TCODE=I
 hrold=7
-cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf0${hr}
-cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf0${hr}_noffri
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf0${hr}
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf0${hr}_noffri
 
 hr=10
 TCODE=K
 hrold=9
-cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf${hr}
-cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf${hr}_noffri
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 hr=11
 hrold=10
 TCODE=L
-cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf${hr}
-cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf${hr}_noffri
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
+
+hr=13
+hrold=12
+TCODE=N
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
+
+hr=14
+hrold=13
+TCODE=O
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
+
+hr=16
+hrold=15
+TCODE=Q
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
+
+hr=17
+hrold=16
+TCODE=R
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 # hrs="13 14 16 17 19 20 22 23 25 26 28 29 31 32 34 35"
-hrs="13 14 16 17 19 20 22 23 25 26 28 29"
+hrs="19 20 22 23 25 26 28 29"
 
 for hr in $hrs
 do
 let hrold=hr-1
 TCODE=Z
-cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf${hr}
-cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_href_conus_probf${hr}_noffri
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 done
 
 echo DONE non3h
 
 #########################################################
-base=grib2_awips_href_conus_prob_3h
-basealt=grib2_awips_href_conus_prob_3h_noffri
+base=grib2_awips_rrfs_conus_prob_3h
+basealt=grib2_awips_rrfs_conus_prob_3h_noffri
 #########################################################
 
 hr=3
@@ -77,14 +101,14 @@ hr3old=0
 TCODE=D
 
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g > grib2_awips_href_conus_probf0${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g > grib2_awips_rrfs_conus_probf0${hr}
 
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g > grib2_awips_href_conus_probf0${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g > grib2_awips_rrfs_conus_probf0${hr}_noffri
 
 ###########################################################################
-base=grib2_awips_href_conus_prob_6h
-basealt=grib2_awips_href_conus_prob_6h_noffri
+base=grib2_awips_rrfs_conus_prob_6h
+basealt=grib2_awips_rrfs_conus_prob_6h_noffri
 ###########################################################################
 
 hr=6
@@ -93,10 +117,10 @@ hr3old=3
 hr6old=0
 TCODE=G
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g > grib2_awips_href_conus_probf0${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g > grib2_awips_rrfs_conus_probf0${hr}
 
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g > grib2_awips_href_conus_probf0${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g > grib2_awips_rrfs_conus_probf0${hr}_noffri
 
 hr=9
 hrold=8
@@ -104,15 +128,15 @@ hr3old=6
 hr6old=3
 TCODE=J
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g > grib2_awips_href_conus_probf0${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g > grib2_awips_rrfs_conus_probf0${hr}
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g > grib2_awips_href_conus_probf0${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g > grib2_awips_rrfs_conus_probf0${hr}_noffri
 
 echo DONE 6h
 
 ###########################################################################
-base=grib2_awips_href_conus_prob_12h
-basealt=grib2_awips_href_conus_prob_12h_noffri
+base=grib2_awips_rrfs_conus_prob_12h
+basealt=grib2_awips_rrfs_conus_prob_12h_noffri
 ###########################################################################
 
 hr=12
@@ -122,32 +146,32 @@ hr6old=6
 hr12old=0
 TCODE=M
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_href_conus_probf${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_rrfs_conus_probf${hr}
 
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_href_conus_probf${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 hr=15
 hrold=14
 hr3old=12
 hr6old=9
 hr12old=3
-TCODE=Z
+TCODE=P
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_href_conus_probf${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_rrfs_conus_probf${hr}
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_href_conus_probf${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 hr=18
 hrold=17
 hr3old=15
 hr6old=12
 hr12old=6
-TCODE=N
+TCODE=S
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_href_conus_probf${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_rrfs_conus_probf${hr}
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_href_conus_probf${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 hr=21
 hrold=20
@@ -156,16 +180,16 @@ hr6old=15
 hr12old=9
 TCODE=Z
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_href_conus_probf${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_rrfs_conus_probf${hr}
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_href_conus_probf${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 echo DONE 12h
 
 ###########################################################################
 ###########################################################################
-base=grib2_awips_href_conus_prob_24h
-basealt=grib2_awips_href_conus_prob_24h_noffri
+base=grib2_awips_rrfs_conus_prob_24h
+basealt=grib2_awips_rrfs_conus_prob_24h_noffri
 ###########################################################################
 
 hr=24
@@ -174,12 +198,12 @@ hr3old=21
 hr6old=18
 hr12old=12
 hr24old=0
-TCODE=O
+TCODE=T
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}
 
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 hr=27
 hrold=26
@@ -189,10 +213,10 @@ hr12old=15
 hr24old=3
 TCODE=Z
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}
 
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 hr=30
 hrold=29
@@ -200,12 +224,12 @@ hr3old=27
 hr6old=24
 hr12old=18
 hr24old=6
-TCODE=P
+TCODE=Z
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}
 
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 hr=33
 hrold=32
@@ -215,10 +239,10 @@ hr12old=21
 hr24old=9
 TCODE=Z
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}
 
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 hr=36
 hrold=35
@@ -226,12 +250,12 @@ hr3old=33
 hr6old=30
 hr12old=24
 hr24old=12
-TCODE=Q
+TCODE=U
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}
 
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 hr=39
 hrold=38
@@ -241,10 +265,10 @@ hr12old=27
 hr24old=15
 TCODE=Z
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}
 
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 hr=42
 hrold=41
@@ -252,11 +276,11 @@ hr3old=39
 hr6old=36
 hr12old=30
 hr24old=18
-TCODE=R
+TCODE=Z
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 hr=45
 hrold=44
@@ -266,10 +290,10 @@ hr12old=33
 hr24old=21
 TCODE=Z
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}
 
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 hr=48
 hrold=47
@@ -277,11 +301,66 @@ hr3old=45
 hr6old=42
 hr12old=36
 hr24old=24
-TCODE=R
+TCODE=V
 cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}
 
 cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
-            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_href_conus_probf${hr}_noffri
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
+
+# TCODE=Z beyond f48????
+#
+hr=51
+hrold=50
+hr3old=48
+hr6old=45
+hr12old=39
+hr24old=27
+TCODE=Z
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}
+
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
+
+
+hr=54
+hrold=53
+hr3old=51
+hr6old=48
+hr12old=42
+hr24old=30
+TCODE=Z
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}
+
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
+
+hr=57
+hrold=56
+hr3old=54
+hr6old=51
+hr12old=45
+hr24old=33
+TCODE=Z
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}
+
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
+
+hr=60
+hrold=59
+hr3old=57
+hr6old=54
+hr12old=48
+hr24old=36
+TCODE=W
+cat ${base} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}
+
+cat ${basealt} | sed s:_CHAR_:${TCODE}:g | sed s:_F_:${hr}:g | sed s:_FOLD_:${hrold}:g \
+            | sed s:_FOLD3_:${hr3old}:g | sed s:_FOLD6_:${hr6old}:g | sed s:_FOLD12_:${hr12old}:g | sed s:_FOLD24_:${hr24old}:g > grib2_awips_rrfs_conus_probf${hr}_noffri
 
 echo DONE 24h

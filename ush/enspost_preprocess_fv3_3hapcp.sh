@@ -61,7 +61,7 @@ mkdir -p $DATA/pcp_${name1}
 
 cd $DATA/pcp_${name1}
 
-EXECrrfs=${HOMErrfs}/exec
+EXECrefs=${HOMErefs}/exec
 
 hrsln="00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 \
         25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 \
@@ -119,7 +119,7 @@ fi
 
   echo "$dim1 $dim2" >> input.card.${mem}.${hr}
 
- $EXECrrfs/enspost_fv3_3hqpf < input.card.${mem}.${hr}
+ $EXECrefs/enspost_fv3_3hqpf < input.card.${mem}.${hr}
  export err=$? # ; err_chk
  cat ./PCP3HR${hr}.tm00 >> $filecheck
  cp PCP3HR${hr}.tm00 PCP3HR${hr}.tm00_qpf

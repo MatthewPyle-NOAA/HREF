@@ -40,20 +40,20 @@ print('found WGRIB2 as ', WGRIB2)
 
 
 try:
-  os.environ["HOMErrfs"]
+  os.environ["HOMErefs"]
 except KeyError:
-  print("NEED TO DEFINE HOMErrfs")
+  print("NEED TO DEFINE HOMErefs")
   exit(1)
-HOMErrfs=os.environ.get('HOMErrfs','trash')
-print('found HOMErrfs as ', HOMErrfs)
+HOMErefs=os.environ.get('HOMErefs','trash')
+print('found HOMErefs as ', HOMErefs)
 
 try:
-  os.environ["COMINrrfs"]
+  os.environ["COMINrefs"]
 except KeyError:
-  print("NEED TO DEFINE COMINrrfs")
+  print("NEED TO DEFINE COMINrefs")
   exit(1)
-COMINrrfs=os.environ.get('COMINrrfs','trash')
-print ('found COMINrrfs as ', COMINrrfs)
+COMINrefs=os.environ.get('COMINrefs','trash')
+print ('found COMINrefs as ', COMINrefs)
 
 try:
   os.environ["COMINhrrr"]
@@ -103,12 +103,12 @@ except KeyError:
 DATA=os.environ.get('DATA','trash')
 print('found DATA as ', DATA)
 
-sys.path.append(HOMErrfs)
+sys.path.append(HOMErefs)
 from eas_config import *
 
 # output directory
 # grib-2 template 
-template = HOMErrfs + '/fix/weasd_rrfs'+dom+'template.grib2'
+template = HOMErefs + '/fix/weasd_rrfs'+dom+'template.grib2'
 record = 1		# SNOW from SREF pgrb212 file
 
 print('template file is: ', template)
@@ -295,7 +295,7 @@ nlats, nlons = np.shape(lats)
 
 if dom == 'ak':
   print('defining ak maskfile')
-  maskfile = HOMErrfs + '/fix/akrrfs_mask.grib2'
+  maskfile = HOMErefs + '/fix/akrrfs_mask.grib2'
   print('maskfile is: ', maskfile)
   os.system(WGRIB2+' '+maskfile+'  -text mask.txt ')
   undefmask,nx,ny=simplewgrib2('mask.txt')
@@ -304,16 +304,16 @@ if dom == 'ak':
 
 
 if qpf_interval == 1:
-  outbase = 'rrfs.t'+cyc[0:2]+'z.'+dom+'.snow01_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
+  outbase = 'refs.t'+cyc[0:2]+'z.'+dom+'.snow01_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
   print('defined outbase: ', outbase)
   incr = 1
   thresh_use=snow_1h_thresh
 if qpf_interval == 3:
-  outbase = 'rrfs.t'+cyc[0:2]+'z.'+dom+'.snow03_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
+  outbase = 'refs.t'+cyc[0:2]+'z.'+dom+'.snow03_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
   incr = 3
   thresh_use=snow_3h_thresh
 if qpf_interval == 6:
-  outbase = 'rrfs.t'+cyc[0:2]+'z.'+dom+'.snow06_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
+  outbase = 'refs.t'+cyc[0:2]+'z.'+dom+'.snow06_easfrac.f%02d'%(start_hour+qpf_interval)+'.grib2'
   incr = 3
   thresh_use=snow_6h_thresh
   print('thresh_use: ', thresh_use)
@@ -344,13 +344,13 @@ for mem in members:
     print('itime for this member: ', itime)
 
     if memname == 'rrfs':
-      file3 = COMINrrfs + '.%02d'%itime.year+'%02d'%itime.month+'%02d'%itime.day + '/fv3s.t%02d'%itime.hour+'z.'+dom+'.m'+memnum+'.f%02d'%(start_hour+latency+incr)+'.grib2'
+      file3 = COMINrefs + '.%02d'%itime.year+'%02d'%itime.month+'%02d'%itime.day + '/fv3s.t%02d'%itime.hour+'z.'+dom+'.m'+memnum+'.f%02d'%(start_hour+latency+incr)+'.grib2'
       print('file3 is: ', file3)
-      file6 = COMINrrfs + '.%02d'%itime.year+'%02d'%itime.month+'%02d'%itime.day + '/fv3s.t%02d'%itime.hour+'z.'+dom+'.m'+memnum+'.f%02d'%(start_hour+latency+incr+incr)+'.grib2'
+      file6 = COMINrefs + '.%02d'%itime.year+'%02d'%itime.month+'%02d'%itime.day + '/fv3s.t%02d'%itime.hour+'z.'+dom+'.m'+memnum+'.f%02d'%(start_hour+latency+incr+incr)+'.grib2'
       print('file6 is: ', file6)
-      file3alt = COMINrrfs + '.%02d'%itime_alt.year+'%02d'%itime_alt.month+'%02d'%itime_alt.day + '/fv3s.t%02d'%itime_alt.hour+'z.'+dom+'.m'+memnum+'.f%02d'%(start_hour+latency+incr+6)+'.grib2'
+      file3alt = COMINrefs + '.%02d'%itime_alt.year+'%02d'%itime_alt.month+'%02d'%itime_alt.day + '/fv3s.t%02d'%itime_alt.hour+'z.'+dom+'.m'+memnum+'.f%02d'%(start_hour+latency+incr+6)+'.grib2'
       print('file3alt is: ', file3alt)
-      file6alt = COMINrrfs + '.%02d'%itime_alt.year+'%02d'%itime_alt.month+'%02d'%itime_alt.day + '/fv3s.t%02d'%itime_alt.hour+'z.'+dom+'.m'+memnum+'.f%02d'%(start_hour+latency+2*incr+6)+'.grib2'
+      file6alt = COMINrefs + '.%02d'%itime_alt.year+'%02d'%itime_alt.month+'%02d'%itime_alt.day + '/fv3s.t%02d'%itime_alt.hour+'z.'+dom+'.m'+memnum+'.f%02d'%(start_hour+latency+2*incr+6)+'.grib2'
       print('file6alt is: ', file6alt)
     elif memname == 'hrrr':
       file3 = COMINhrrr + '.%02d'%itime.year+'%02d'%itime.month+'%02d'%itime.day+'/hrrr.t%02d'%itime.hour+'z.'+dom+'.f%02d'%(start_hour+latency+incr)+'.grib2'

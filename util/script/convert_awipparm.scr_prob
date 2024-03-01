@@ -1,7 +1,7 @@
 
 
 types="prob"
-hrs="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 33 36 39 42 45 48" 
+hrs="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 33 36 39 42 45 48 51 54 57 60" 
 
 
 # make AK (map=C)
@@ -12,14 +12,14 @@ do
 for type in $types
 do
 
-file=grib2_awips_href_conus_${type}f${hr}_noffri
-fileout=grib2_awips_href_ak_${type}f${hr}
+file=grib2_awips_rrfs_conus_${type}f${hr}_noffri
+fileout=grib2_awips_rrfs_ak_${type}f${hr}
 
-cat $file | sed s:YBM:YB${TMAP}:g | sed s:YCM:YC${TMAP}:g | sed s:YDM:YD${TMAP}:g | sed s:YEM:YE${TMAP}:g \
-          | sed s:YFM:YF${TMAP}:g | sed s:YGM:YG${TMAP}:g | sed s:YHM:YH${TMAP}:g | sed s:YIM:YI${TMAP}:g \
-          | sed s:YKM:YK${TMAP}:g | sed s:YLM:YL${TMAP}:g | sed s:YMM:YM${TMAP}:g | sed s:YNM:YN${TMAP}:g | sed s:YOM:YO${TMAP}:g \
-          | sed s:YQM:YQ${TMAP}:g | sed s:YRM:YR${TMAP}:g | sed s:YSM:YS${TMAP}:g | sed s:YTM:YT${TMAP}:g | sed s:YUM:YU${TMAP}:g \
-          | sed s:YVM:YV${TMAP}:g | sed s:YWM:YW${TMAP}:g | sed s:YXM:YX${TMAP}:g | sed s:YYM:YY${TMAP}:g | sed s:YZM:YZ${TMAP}:g  > $fileout
+cat $file | sed s:YBB:YB${TMAP}:g | sed s:YCB:YC${TMAP}:g | sed s:YDB:YD${TMAP}:g | sed s:YEB:YE${TMAP}:g \
+          | sed s:YFB:YF${TMAP}:g | sed s:YGB:YG${TMAP}:g | sed s:YHB:YH${TMAP}:g | sed s:YIB:YI${TMAP}:g \
+          | sed s:YKB:YK${TMAP}:g | sed s:YLB:YL${TMAP}:g | sed s:YMB:YM${TMAP}:g | sed s:YNB:YN${TMAP}:g | sed s:YOB:YO${TMAP}:g \
+          | sed s:YQB:YQ${TMAP}:g | sed s:YRB:YR${TMAP}:g | sed s:YSB:YS${TMAP}:g | sed s:YTB:YT${TMAP}:g | sed s:YUB:YU${TMAP}:g \
+          | sed s:YVB:YV${TMAP}:g | sed s:YWB:YW${TMAP}:g | sed s:YXB:YX${TMAP}:g | sed s:YYB:YY${TMAP}:g | sed s:YZB:YZ${TMAP}:g  > $fileout
 
 done
 done
@@ -33,14 +33,14 @@ do
 for type in $types
 do
 
-file=grib2_awips_href_conus_${type}f${hr}_noffri
-fileout=grib2_awips_href_hi_${type}f${hr}
+file=grib2_awips_rrfs_conus_${type}f${hr}_noffri
+fileout=grib2_awips_rrfs_hi_${type}f${hr}
 
-cat $file | sed s:YBM:YB${TMAP}:g | sed s:YCM:YC${TMAP}:g | sed s:YDM:YD${TMAP}:g | sed s:YEM:YE${TMAP}:g \
-          | sed s:YFM:YF${TMAP}:g | sed s:YGM:YG${TMAP}:g | sed s:YHM:YH${TMAP}:g | sed s:YIM:YI${TMAP}:g \
-          | sed s:YKM:YK${TMAP}:g | sed s:YLM:YL${TMAP}:g | sed s:YMM:YM${TMAP}:g | sed s:YNM:YN${TMAP}:g | sed s:YOM:YO${TMAP}:g \
-          | sed s:YQM:YQ${TMAP}:g | sed s:YRM:YR${TMAP}:g | sed s:YSM:YS${TMAP}:g | sed s:YTM:YT${TMAP}:g | sed s:YUM:YU${TMAP}:g \
-          | sed s:YVM:YV${TMAP}:g | sed s:YWM:YW${TMAP}:g | sed s:YXM:YX${TMAP}:g | sed s:YYM:YY${TMAP}:g | sed s:YZM:YZ${TMAP}:g  > $fileout
+cat $file | sed s:YBB:YB${TMAP}:g | sed s:YCB:YC${TMAP}:g | sed s:YDB:YD${TMAP}:g | sed s:YEB:YE${TMAP}:g \
+          | sed s:YFB:YF${TMAP}:g | sed s:YGB:YG${TMAP}:g | sed s:YHB:YH${TMAP}:g | sed s:YIB:YI${TMAP}:g \
+          | sed s:YKB:YK${TMAP}:g | sed s:YLB:YL${TMAP}:g | sed s:YMB:YM${TMAP}:g | sed s:YNB:YN${TMAP}:g | sed s:YOB:YO${TMAP}:g \
+          | sed s:YQB:YQ${TMAP}:g | sed s:YRB:YR${TMAP}:g | sed s:YSB:YS${TMAP}:g | sed s:YTB:YT${TMAP}:g | sed s:YUB:YU${TMAP}:g \
+          | sed s:YVB:YV${TMAP}:g | sed s:YWB:YW${TMAP}:g | sed s:YXB:YX${TMAP}:g | sed s:YYB:YY${TMAP}:g | sed s:YZB:YZ${TMAP}:g  > $fileout
 
 done
 done
@@ -53,14 +53,14 @@ do
 for type in $types
 do
 
-file=grib2_awips_href_conus_${type}f${hr}_noffri
-fileout=grib2_awips_href_pr_${type}f${hr}
+file=grib2_awips_rrfs_conus_${type}f${hr}_noffri
+fileout=grib2_awips_rrfs_pr_${type}f${hr}
 
-cat $file | sed s:YBM:YB${TMAP}:g | sed s:YCM:YC${TMAP}:g | sed s:YDM:YD${TMAP}:g | sed s:YEM:YE${TMAP}:g \
-          | sed s:YFM:YF${TMAP}:g | sed s:YGM:YG${TMAP}:g | sed s:YHM:YH${TMAP}:g | sed s:YIM:YI${TMAP}:g \
-          | sed s:YKM:YK${TMAP}:g | sed s:YLM:YL${TMAP}:g | sed s:YMM:YM${TMAP}:g | sed s:YNM:YN${TMAP}:g | sed s:YOM:YO${TMAP}:g \
-          | sed s:YQM:YQ${TMAP}:g | sed s:YRM:YR${TMAP}:g | sed s:YSM:YS${TMAP}:g | sed s:YTM:YT${TMAP}:g | sed s:YUM:YU${TMAP}:g \
-          | sed s:YVM:YV${TMAP}:g | sed s:YWM:YW${TMAP}:g | sed s:YXM:YX${TMAP}:g | sed s:YYM:YY${TMAP}:g | sed s:YZM:YZ${TMAP}:g  > $fileout
+cat $file | sed s:YBB:YB${TMAP}:g | sed s:YCB:YC${TMAP}:g | sed s:YDB:YD${TMAP}:g | sed s:YEB:YE${TMAP}:g \
+          | sed s:YFB:YF${TMAP}:g | sed s:YGB:YG${TMAP}:g | sed s:YHB:YH${TMAP}:g | sed s:YIB:YI${TMAP}:g \
+          | sed s:YKB:YK${TMAP}:g | sed s:YLB:YL${TMAP}:g | sed s:YMB:YM${TMAP}:g | sed s:YNB:YN${TMAP}:g | sed s:YOB:YO${TMAP}:g \
+          | sed s:YQB:YQ${TMAP}:g | sed s:YRB:YR${TMAP}:g | sed s:YSB:YS${TMAP}:g | sed s:YTB:YT${TMAP}:g | sed s:YUB:YU${TMAP}:g \
+          | sed s:YVB:YV${TMAP}:g | sed s:YWB:YW${TMAP}:g | sed s:YXB:YX${TMAP}:g | sed s:YYB:YY${TMAP}:g | sed s:YZB:YZ${TMAP}:g  > $fileout
 
 done
 done

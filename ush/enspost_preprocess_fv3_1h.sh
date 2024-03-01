@@ -106,7 +106,7 @@ echo filecheck is $filecheck
 
         if [ -s $filecheck ]
         then
-        $WGRIB2 $filecheck | grep -F -f $PARMrrfs/enspost_fv3_filter.txt | $WGRIB2 -i -grib fv3.t${cyc}z.f${hr} $filecheck
+        $WGRIB2 $filecheck | grep -F -f $PARMrefs/enspost_fv3_filter.txt | $WGRIB2 -i -grib fv3.t${cyc}z.f${hr} $filecheck
         $WGRIB2 $filecheck -match ":(HINDEX|TSOIL|SOILW|CSNOW|CICEP|CFRZR|CRAIN|RETOP|REFD|MAXREF|MXUPHL|REFC|APCP|LTNG):" -grib nn.t${cyc}z.f${hr}.grb
         $WGRIB2 $filecheck -match "WEASD" -match "acc fcst" -grib nn2.t${cyc}z.f${hr}.grb
 #       $WGRIB2 $filecheck -match "WEASD" -match "hour acc fcst" -grib nn2.t${cyc}z.f${hr}.grb
@@ -192,7 +192,7 @@ echo 0 >> input.${hr}.mem${mem}.snow
 echo "$dim1 $dim2" >> input.${hr}.mem${mem}.snow
 echo 0 >> input.${hr}.mem${mem}.snow
 
-$EXECrrfs/enspost_fv3snowbucket < input.${hr}.mem${mem}.snow
+$EXECrefs/enspost_fv3snowbucket < input.${hr}.mem${mem}.snow
 export err=$? # ; err_chk
 
 # 1 h added to f01
@@ -200,7 +200,7 @@ export err=$? # ; err_chk
 
 if [ -s ../fv3s.t${cyc}z.${region}.m${mem}.f${hr}.grib2 -a -s temp.t${cyc}z.f${hrold}.grib2 ]
 then
-$EXECrrfs/enspost_fv3snowbucket < input.${hr}.mem${mem}.snow
+$EXECrefs/enspost_fv3snowbucket < input.${hr}.mem${mem}.snow
 export err=$? # ; err_chk
 cat ./PCP1HR${hr}.tm00 >> ../fv3s.t${cyc}z.${region}.m${mem}.f${hr}.grib2
 fi
@@ -245,12 +245,12 @@ echo 0 >> input.${hr}.mem${mem}.snow
 echo "$dim1 $dim2" >> input.${hr}.mem${mem}.snow
 echo 0 >> input.${hr}.mem${mem}.snow
 
-$EXECrrfs/enspost_fv3snowbucket < input.${hr}.mem${mem}.snow
+$EXECrefs/enspost_fv3snowbucket < input.${hr}.mem${mem}.snow
 export err=$? # ; err_chk
 
 if [ -s ../fv3s.t${cyc}z.${region}.m${mem}.f${hr}.grib2 -a -s temp.t${cyc}z.f${hrold}.grib2 ]
 then
-$EXECrrfs/enspost_fv3snowbucket < input.${hr}.mem${mem}.snow
+$EXECrefs/enspost_fv3snowbucket < input.${hr}.mem${mem}.snow
 export err=$? # ; err_chk
 cat ./PCP3HR${hr}.tm00 >> ../fv3s.t${cyc}z.${region}.m${mem}.f${hr}.grib2
 fi

@@ -6,7 +6,7 @@ module list
 
 echo WGRIB2 is $WGRIB2
 
-dir="/lfs/h2/emc/lam/noscrub/emc.lam/enspost/rrfs.v1.1.0/rocoto"
+dir="/lfs/h2/emc/lam/noscrub/emc.lam/enspost/refs.v1.0.0/rocoto"
 
 # make sure we are on prod machine
 
@@ -21,6 +21,6 @@ then
                         echo "looks like prod, so proceed"
 fi
 
-thing=drive_rrfsa_enspost
+thing=drive_refs_transfers
 rocotorun -v 10 -w ${dir}/${thing}.xml -d ${dir}/${thing}.db
 

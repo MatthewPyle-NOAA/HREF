@@ -1,0 +1,47 @@
+#!/bin/ksh
+# Name of Script: exrrfs_runall.sh.sms 
+# This script runs 1 USH script:
+#  (1) rrfs_ensprod.sh to get final ensemble products 
+# Arguments: cycle
+# Author: Binbin Zhou, EMC/NCEP, 02/02/2015
+#         Matthew Pyle, 9 April 2015 - eliminated most arguments in USH calls
+#         Matthew Pyle, 29 Mar 2016 - removed call to linking script from this script
+#         Jun Du: 03/21/2023 - All names have been changed from href to 
+#                              rrfs_enspost or enspost
+#         
+###########################################################
+set -x
+
+
+cd $DATA
+
+export fhr=$1
+export type=$2
+
+echo "$0 STRDATE "`date`
+
+msg="$job HAS BEGUN"
+postmsg "$msg"
+
+location=`hostname`
+
+echo running on $location
+
+#
+# Prepare to run ensemble product generator
+#
+
+$USHrefs/enspost_ensprod.sh ${NEST} $type
+
+#####################################################################
+# GOOD RUN
+set +x
+echo "**************$job COMPLETED NORMALLY on `date`"
+set -x
+#####################################################################
+
+msg="HAS COMPLETED NORMALLY!"
+echo $msg
+postmsg  "$msg"
+echo $msg
+############## END OF SCRIPT #######################

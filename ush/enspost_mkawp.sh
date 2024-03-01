@@ -1,8 +1,8 @@
 ################################################################################
 ####  UNIX Script Documentation Block
 #                      .                                             .
-# Script name:         href_mkawp.sh
-# Script description:  To generate the AWIPS products for the HREF
+# Script name:         enspost_mkawp.sh
+# Script description:  To generate the AWIPS products for the RRFS ensemble prods
 #
 # Author:      G Manikin /  EMC         Date: 2014-06-30
 #
@@ -18,12 +18,7 @@ set -xa
 NEST=${1}
 type=${2}
 
-if [ $type = single ];then
- runhrs="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 33 36 39 42 45 48 51 54 57 60"
-#runhrs="03 06 09 12 15 18 21 24 27 30 33 36 39 42 45 48 51 54 57 60"
-else
- runhrs="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 33 36 39 42 45 48 51 54"
-fi
+runhrs="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 33 36 39 42 45 48 51 54 57 60"
 
 # only every 3 h for off-time CONUS runs
 #if [ $NEST = "conus" ]
@@ -88,8 +83,6 @@ then
          msg="FATAL ERROR: ${COMIN}/${RUN}.t${cyc}z.${NEST}.${type}.f${fhr}.grib2 or ${COMIN}/${RUN}.t${cyc}z.${NEST}.${alttype}.f${fhr}.grib2 missing but required"
          err_exit $msg
 fi
-
-  # Processing AWIPS grid 227 
 
   if [ $type = "prob" ]
   then

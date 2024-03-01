@@ -34,55 +34,35 @@ do
   for i in $indx
   do
    if [ "$cyc" == $i ]; then
-   proddir_enspost_sinphys=/lfs/h2/emc/ptmp/emc.lam/test/com/rrfs/v1.0/rrfs.${PDY}/single
-   proddir_enspost_sinphys_tl=/lfs/h2/emc/ptmp/emc.lam/test/com/rrfs/v1.0/rrfs.${PDY}/timelag
-   proddir_enspost_mphys=/lfs/h2/emc/ptmp/emc.lam/testmp/com/rrfs/v1.0/rrfs.${PDY}/single
-   proddir_enspost_mphys_tl=/lfs/h2/emc/ptmp/emc.lam/testmp/com/rrfs/v1.0/rrfs.${PDY}/timelag
+   proddir_enspost_sinphys_tl=/lfs/h2/emc/ptmp/emc.lam/para/com/refs/v1.0/refs.${PDY}
+   proddir_enspost_mphys_tl=/lfs/h2/emc/ptmp/emc.lam/testmp/com/refs/v1.0/refs.${PDY}
+   proddir_enspost_sinphys_tl_nwges=/lfs/h2/emc/ptmp/emc.lam/para/com/refs/v1.0/nwges/refs.${PDY}
 
-# single phys, single time
-     destination_refs=$proddir_enspost_sinphys
-     proddir_refs=$destination_refs
-     destination_refs_cyc=$destination_refs/ensprod
 
-     ssh $desmachine "mkdir -p $destination_refs_cyc"
-     touch $proddir_refs/dummy
-     rsync -aq $proddir_refs/dummy $desmachine:$destination_refs/
-     rsync -aq $proddir_refs/dummy $desmachine:$destination_refs_cyc/
-     rsync -arv $destination_refs_cyc/rrfs.t${cyc}z.*   $desmachine:$destination_refs_cyc
+nwges_hrs="00 03 06 09 12 15 18 21 24 27 30 33 36 39 42 45 48 51 54 57 60"
 
 # single phys, timelag
      destination_refs=$proddir_enspost_sinphys_tl
+     destination_nwges=$proddir_enspost_sinphys_tl_nwges
      proddir_refs=$destination_refs
      destination_refs_cyc=$destination_refs/ensprod
+     destination_refs_cyc_g2g=$destination_refs/verf_g2g
 
      ssh $desmachine "mkdir -p $destination_refs_cyc"
      touch $proddir_refs/dummy
      rsync -aq $proddir_refs/dummy $desmachine:$destination_refs/
      rsync -aq $proddir_refs/dummy $desmachine:$destination_refs_cyc/
-     rsync -arv $destination_refs_cyc/rrfs.t${cyc}z.*   $desmachine:$destination_refs_cyc
+     rsync -aq $proddir_refs/dummy $desmachine:$destination_refs_cyc_g2g/
+     rsync -aq $proddir_refs/dummy $desmachine:$destination_nwges/
+     rsync -arv $destination_refs_cyc/refs.t${cyc}z.*   $desmachine:$destination_refs_cyc/
+     rsync -av $proddir_refs/refs.t${cyc}z.*   $desmachine:$destination_refs/
+     rsync -arv $destination_refs_cyc_g2g/*   $desmachine:$destination_refs_cyc_g2g/
 
-# multi phys, single time
-     destination_refs=$proddir_enspost_mphys
-     proddir_refs=$destination_refs
-     destination_refs_cyc=$destination_refs/ensprod
-
-     ssh $desmachine "mkdir -p $destination_refs_cyc"
-     touch $proddir_refs/dummy
-     rsync -aq $proddir_refs/dummy $desmachine:$destination_refs/
-     rsync -aq $proddir_refs/dummy $desmachine:$destination_refs_cyc/
-     rsync -arv $destination_refs_cyc/rrfs.t${cyc}z.*   $desmachine:$destination_refs_cyc
-
-# multi phys, timelag
-     destination_refs=$proddir_enspost_mphys_tl
-     proddir_refs=$destination_refs
-     destination_refs_cyc=$destination_refs/ensprod
-
-     ssh $desmachine "mkdir -p $destination_refs_cyc"
-     touch $proddir_refs/dummy
-     rsync -aq $proddir_refs/dummy $desmachine:$destination_refs/
-     rsync -aq $proddir_refs/dummy $desmachine:$destination_refs_cyc/
-     rsync -arv $destination_refs_cyc/rrfs.t${cyc}z.*   $desmachine:$destination_refs_cyc
-
+     for hr in $nwges_hrs
+do
+     rsync -arv $destination_nwges/fv3s.t${cyc}z.*.m??.f${hr}.grib2  $desmachine:$destination_nwges
+     rsync -arv $destination_nwges/hrrr.t${cyc}z.*.f${hr}.grib2  $desmachine:$destination_nwges
+done
    fi
   done
 

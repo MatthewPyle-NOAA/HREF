@@ -70,8 +70,9 @@ fi
         if [ -e $filecheck ]
         then
 
-         $WGRIB2 $filecheck | grep -F -f $PARMrrfs/enspost_hrrr_filter.txt | $WGRIB2 -i -grib hrrr.t${cyc}z.f${hr} $filecheck
+         $WGRIB2 $filecheck | grep -F -f $PARMrefs/enspost_hrrr_filter.txt | $WGRIB2 -i -grib hrrr.t${cyc}z.f${hr} $filecheck
          $WGRIB2 $filecheck -match ":(HINDEX|TSOIL|SOILW|CSNOW|CICEP|CFRZR|CRAIN|REFD|MAXREF|APCP):" -grib nn.t${cyc}z.f${hr}.grb
+         $WGRIB2 nn.t${cyc}z.f${hr}.grb -match "REFD" -set_byte 4 11 4 -grib refd.t${cyc}z.f${hr}.grb
          $WGRIB2 $filecheck -match "LTNG" -set_byte 4 23 1 -grib ltng.t${cyc}z.f${hr}.grb
          $WGRIB2 $filecheck -match "MSLMA" -set_byte 4 11 192 -grib mslet.t${cyc}z.f${hr}.grb
 	 $WGRIB2 $filecheck -match MAXUVV -set_byte 4 23 100 -set_byte 4 29 100 -grib maxuvv.t${cyc}z.f${hr}.grb
@@ -81,10 +82,11 @@ fi
 	 $WGRIB2 pblh_mid.t${cyc}z.f${hr}.grb -set_byte 4 23 220 -grib pblh.t${cyc}z.f${hr}.grb
 
          $WGRIB2 $filecheck -match "RETOP" -set_byte 4 23 200 -grib retop.t${cyc}z.f${hr}.grb
-         $WGRIB2 retop.t${cyc}z.f${hr}.grb -set_byte 4 11 197 -grib new_retop.t${cyc}z.f${hr}.grb
-         mv  new_retop.t${cyc}z.f${hr}.grb retop.t${cyc}z.f${hr}.grb
+# does commenting work, or need to do 4 11 3 ??
+#         $WGRIB2 retop.t${cyc}z.f${hr}.grb -set_byte 4 11 197 -grib new_retop.t${cyc}z.f${hr}.grb
+#         mv  new_retop.t${cyc}z.f${hr}.grb retop.t${cyc}z.f${hr}.grb
 
-         $WGRIB2 $filecheck -match "REFC" -set_byte 4 23 200 -grib refc.t${cyc}z.f${hr}.grb
+         $WGRIB2 $filecheck -match "REFC" -set_byte 4 23 200 -set_byte 4 11 5 -grib refc.t${cyc}z.f${hr}.grb
          $WGRIB2 $filecheck -match "TCDC" -set_byte 4 23 200 -grib tcdc.t${cyc}z.f${hr}.grb
 
          $WGRIB2 $filecheck -match "WEASD" -match "hour acc fcst" -grib nn2.t${cyc}z.f${hr}.grb
@@ -100,7 +102,7 @@ fi
          cat nn.t${cyc}z.f${hr}.grb  nn2.t${cyc}z.f${hr}.grb  nn3.t${cyc}z.f${hr}.grb \
 	 nn3b.t${cyc}z.f${hr}.grb ceiling.t${cyc}z.f${hr}.grb retop.t${cyc}z.f${hr}.grb  \
          top.t${cyc}z.f${hr}.grb base.t${cyc}z.f${hr}.grb frzh.t${cyc}z.f${hr}.grb \
-         refc.t${cyc}z.f${hr}.grb tcdc.t${cyc}z.f${hr}.grb ltng.t${cyc}z.f${hr}.grb > inputs_nn.t${cyc}z.f${hr}.grb
+         refd.t${cyc}z.f${hr}.grb refc.t${cyc}z.f${hr}.grb tcdc.t${cyc}z.f${hr}.grb ltng.t${cyc}z.f${hr}.grb > inputs_nn.t${cyc}z.f${hr}.grb
 
          rm nn.t${cyc}z.f${hr}.grb  nn2.t${cyc}z.f${hr}.grb nn3.t${cyc}z.f${hr}.grb \
 	 nn3b.t${cyc}z.f${hr}.grb ceiling.t${cyc}z.f${hr}.grb retop.t${cyc}z.f${hr}.grb  \
@@ -181,14 +183,14 @@ fi
     echo "$dim1 $dim2" >> input.${hr}.hrrr.snow
     echo 1 >> input.${hr}.hrrr.snow
 
-    $EXECrrfs/enspost_fv3snowbucket < input.${hr}.hrrr.snow
+    $EXECrefs/enspost_fv3snowbucket < input.${hr}.hrrr.snow
     export err=$? # ; err_chk
 
  # 1 h added to f01
  
  if [ -s ../hrrr.t${cyc}z.${NEST}.f${hr}.grib2 -a -s temp.t${cyc}z.f${hrold}.grib2 ]
  then
-	 $EXECrrfs/enspost_fv3snowbucket < input.${hr}.hrrr.snow
+	 $EXECrefs/enspost_fv3snowbucket < input.${hr}.hrrr.snow
 	 export err=$? # ; err_chk
 	 cat ./PCP1HR${hr}.tm00 >> ../hrrr.t${cyc}z.${NEST}.f${hr}.grib2
  fi
@@ -232,7 +234,7 @@ echo 1 >> input.${hr}.hrrr.snow
 
 if [ -s ../hrrr.t${cyc}z.${NEST}.f${hr}.grib2 -a -s temp.t${cyc}z.f${hrold}.grib2 ]
 then
-	$EXECrrfs/enspost_fv3snowbucket < input.${hr}.hrrr.snow
+	$EXECrefs/enspost_fv3snowbucket < input.${hr}.hrrr.snow
 	export err=$? # ; err_chk
 	cat ./PCP3HR${hr}.tm00 >> ../hrrr.t${cyc}z.${NEST}.f${hr}.grib2
 fi
