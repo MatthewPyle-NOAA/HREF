@@ -190,7 +190,7 @@ fi
 
 for mem in $mems
 do
-echo " calling preprocess_fv3_3hapcp.sh for mem " $mem
+echo " calling preprocess_hrrr_3hapcp.sh for mem " $mem
 if [ $type = single ]; then
 if [ $mem = 01 ]; then name=00; fi
 if [ $mem = 02 ]; then name=01; fi
