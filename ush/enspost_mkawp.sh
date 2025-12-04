@@ -20,15 +20,8 @@ NEST=${1}
 type=${2}
 
 runhrs="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 27 30 33 36 39 42 45 48 51 54 57 60"
-
-# only every 3 h for off-time CONUS runs
-#if [ $NEST = "conus" ]
-#then
-#if [ $cyc -eq 00 -o $cyc -eq 06 -o $cyc -eq 12 -o $cyc -eq 18 ]
-#then
-#runhrs="03 06 09 12 15 18 21 24 27 30 33 36 39 42 45 48 51 54 57 60"
-#fi
-#fi
+runhrs="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 18 21 24 27 30 33 36 39 42 45 48 54 60"
+altrunhrs="03 06 09 12 15 18 21 24 27 30 33 36 39 42 45 48 54 60"
 
 looplim=90
 sleeptime=15

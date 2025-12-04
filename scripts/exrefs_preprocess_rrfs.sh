@@ -87,6 +87,10 @@ chmod 775 ./poe.3hqpf.${hr}
 mpiexec -n $nproc -ppn ${nproc} --cpu-bind verbose,core cfp ./poe.3hqpf.${hr}
 export err=$?; err_chk
 
+	fi
+	fi
+
+
 
 #####################################################################
 # GOOD RUN

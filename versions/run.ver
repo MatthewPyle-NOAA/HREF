@@ -14,6 +14,7 @@ export hrrr_ver=v4.1
 export python_ver=3.8.6
 export gempak_ver=7.15.1
 export cfp_ver=2.0.4
+export g2_ver=3.5.1
 export g2c_ver=2.3.0
 export prod_util_ver=2.0.8
 export wgrib2_ver=3.8.0  # or 2.0.8_mpi?
