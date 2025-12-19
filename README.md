@@ -1,13 +1,13 @@
 # RRFS_ENSPOST
 
-Contains the workflow and codes and other files needed to run the Rapid Refresh Forecast System (RRFS) enspost.  
+Contains the workflow and codes and other files needed to run the Rapid Refresh Ensemble Forecast System (REFS) enspost.  
 
 Very simple setup instructions (just for WCOSS2):
 
-cd rrfs.v1.0.0/sorc/
+cd refs.v1.0.0/sorc/
 
-./build_enspost.sh 
+./build_refs.sh 
 
-./install_enspost.sh (to copy executables to exec/)
+./install_refs.sh (to copy executables to exec/)
 
-./link_enspost_fix.sh  (to populate fix files)
+./link_refs_fix.sh  (to populate fix files)

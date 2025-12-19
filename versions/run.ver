@@ -1,11 +1,10 @@
 #! /bin/sh
 
-export craype_ver=2.7.17
+export craype_ver=2.7.31
 export intel_ver=19.1.3.304
 export cray_mpich_ver=8.1.19
 export cray_pals_ver=1.3.2
 export PrgEnv_intel_ver=8.5.0
-
 
 export refs_ver=v1.0
 export rrfs_ver=v1.0
@@ -17,7 +16,7 @@ export cfp_ver=2.0.4
 export g2_ver=3.5.1
 export g2c_ver=2.3.0
 export prod_util_ver=2.0.8
-export wgrib2_ver=3.8.0  # or 2.0.8_mpi?
+export wgrib2_ver=3.8.0 
 export netcdf_ver=4.9.2
 export libaec_ver=1.1.3
 export libjpeg_ver=9c
